@@ -110,7 +110,9 @@ def tirex(m: dict, device: str):
 
 
 def timesfm25(m: dict, device: str):
-    """TimesFM 2.5 with the ForecastConfig of its GIFT-Eval notebook (context up to 15 360, flip invariance, ...)."""
+    """TimesFM 2.5 with the ForecastConfig of its GIFT-Eval notebook (context up to 15 360, flip invariance, ...), except
+    per_core_batch_size 32 instead of 128: at a 15 360-point context, 128 series do not fit in 24 GB. The batch size
+    changes memory use only; every series is forecast on its own."""
     import timesfm
     tf = timesfm.TimesFM_2p5_200M_torch.from_pretrained(m["repo_id"], revision=m["revision"])
     p = tf.model.p
@@ -120,7 +122,7 @@ def timesfm25(m: dict, device: str):
         tf.compile(forecast_config=timesfm.ForecastConfig(
             max_context=mc, max_horizon=max(1024, H), infer_is_positive=True, use_continuous_quantile_head=True,
             fix_quantile_crossing=True, force_flip_invariance=True, return_backcast=False, normalize_inputs=True,
-            per_core_batch_size=128))
+            per_core_batch_size=32))
         _, q = tf.forecast(horizon=H, inputs=[np.asarray(c, np.float64) for c in no_empty(contexts)])
         return np.asarray(q)[:, :H, 1:]                                  # [mean, 0.1 ... 0.9] -> 0.1 ... 0.9
     return fn
