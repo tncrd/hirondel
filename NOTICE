@@ -1,0 +1,62 @@
+Nom
+Copyright 2026 The Nom Authors
+
+The model weights were trained on third-party data. The notices below are required by the licenses of
+that data; DATA.md gives the license, origin and changes for each source.
+
+- 6-second load measurement dataset (Borealis): None required (CC0)
+- AEMO regional electricity demand (VIC1, 2014): AEMO (Australian Energy Market Operator), regional demand VIC1 2014
+- AEMO wind farms (NEMweb): AEMO (Australian Energy Market Operator), NEMweb
+- AEMO wind power (NEMweb): AEMO (Australian Energy Market Operator), NEMweb
+- Azure Functions traces (2019, 2021): Microsoft Azure, Azure Public Dataset: Azure Functions Trace 2019 (M. Shahrad et al., "Serverless in the Wild", USENIX ATC 2020) and Azure Functions Invocation Trace 2021 (Y. Zhang et al., "Faster and Cheaper Serverless Computing on Harvested Resources", SOSP 2021), CC BY 4.0
+- Azure Public Dataset V1 (VM traces, 2017): Microsoft Azure, Azure Public Dataset V1 (SOSP'17), CC BY 4.0
+- Bosch CNC machining data: M.-A. Tnani, M. Feil, K. Diepold, Smart Data Collection System for Brownfield CNC Milling Machines: A New Benchmark Dataset for Data-Driven Machine Monitoring, Procedia CIRP 107 (2022) 131-136, doi:10.1016/j.procir.2022.04.022; data CC BY 4.0
+- Building Data Genome Project 2 (Bear site): C. Miller et al., Building Data Genome Project 2, Zenodo archive v1.0 (2020-06-10), CC BY 4.0
+- Building Data Genome Project 2 (Bull site): C. Miller et al., Building Data Genome Project 2, Zenodo archive v1.0 (2020-06-10), CC BY 4.0
+- Building Data Genome Project 2 (Cockatoo site): C. Miller et al., Building Data Genome Project 2, Zenodo archive v1.0 (2020-06-10), CC BY 4.0
+- Building Data Genome Project 2 (Fox site): C. Miller et al., Building Data Genome Project 2, Zenodo archive v1.0 (2020-06-10), CC BY 4.0
+- Building Data Genome Project 2 (Hog site): C. Miller et al., Building Data Genome Project 2, Zenodo archive v1.0 (2020-06-10), CC BY 4.0
+- Building Data Genome Project 2 (Panther site): C. Miller et al., Building Data Genome Project 2, Zenodo archive v1.0 (2020-06-10), CC BY 4.0
+- Building Data Genome Project 2 (Rat site): C. Miller et al., Building Data Genome Project 2, Zenodo archive v1.0 (2020-06-10), CC BY 4.0
+- Buildings-900K (BuildingsBench): P. Emami, P. Graf, BuildingsBench: A Large-Scale Dataset of 900K Buildings and Benchmark for Short-Term Load Forecasting, National Renewable Energy Laboratory, Open Energy Data Initiative (OEDI), doi:10.25984/1986147, CC BY 4.0
+- Caltrans PeMS (hourly and weekly traffic): None required (public domain); credit: Caltrans PeMS
+- Caltrans PeMS (PEMS-BAY subset): None required (public domain); credit: Caltrans PeMS
+- Caltrans PeMS (PEMS03 subset): None required (public domain); credit: Caltrans PeMS
+- Caltrans PeMS (PEMS04 subset): None required (public domain); credit: Caltrans PeMS
+- Caltrans PeMS (PEMS07 subset): None required (public domain); credit: Caltrans PeMS
+- Caltrans PeMS (PEMS08 subset): None required (public domain); credit: Caltrans PeMS
+- CDC FluView ILINet: None required (public domain); credit: CDC
+- CMIP6, MPI-ESM1.2-HR (historical): J. Jungclaus et al. (2019), MPI-M MPI-ESM1.2-HR model output prepared for CMIP6 CMIP historical, Earth System Grid Federation, doi:10.22033/ESGF/CMIP6.6594, CC BY 4.0. We acknowledge the World Climate Research Programme, which, through its Working Group on Coupled Modelling, coordinated and promoted CMIP6. We thank the climate modeling groups for producing and making available their model output, the Earth System Grid Federation (ESGF) for archiving the data and providing access, and the multiple funding agencies who support CMIP6 and ESGF.
+- Condition monitoring of hydraulic systems (ZeMA, UCI): N. Helwig, E. Pignanelli, A. Schütze (ZeMA gGmbH), Condition monitoring of hydraulic systems, UCI Machine Learning Repository, doi:10.24432/C5CW21, CC BY 4.0
+- EIA-930 Hourly Electric Grid Monitor: None required (public domain); acknowledgment requested ("you should use an acknowledgment"): Source: U.S. Energy Information Administration, Hourly Electric Grid Monitor (EIA-930), Oct 2026
+- EPA Air Quality System (AQS): None required (public domain); citation requested by the EPA: US Environmental Protection Agency. Air Quality System Data Mart [internet database] available via https://www.epa.gov/outdoor-air-quality-data. Accessed October 19, 2026.
+- ERA5 reanalysis: Modified from ECMWF Reanalysis data (ERA5), © European Centre for Medium-Range Weather Forecasts (ECMWF), 2026, accessed via the GiftEvalPretrain dataset (Salesforce, Hugging Face). Licensed under CC-BY-4.0.
+- Eurostat short-term business statistics: Source: Eurostat, sts_inpr_m, sts_trtu_m, sts_copr_m (accessed 2026-10-20); modified data (raw monthly series extracted, split at missing values); Eurostat is not responsible for this re-use
+- Google Borg cluster trace (2011): Google, cluster-data 2011, CC BY 4.0
+- Google PowerData2019: Google, cluster-data PowerData2019 (V. Sakalkar et al., "Data Center Power Oversubscription with a Medium Voltage Power Plane and Priority-Aware Capping", ASPLOS 2020), CC BY 4.0
+- IDEAL Household Energy Dataset: University of Edinburgh DataShare, IDEAL, CC BY 4.0
+- Individual household electric power consumption (UCI): UCI Machine Learning Repository, Individual household electric power consumption, CC BY 4.0
+- London smart meter data (per household): UK Power Networks, London Datastore, SmartMeter Energy Consumption Data in London Households, CC BY 4.0
+- Low Carbon London smart meter data (LCL): UK Power Networks, London Datastore, SmartMeter Energy Use Data in London Households, CC BY 4.0
+- M1 competition data: International Institute of Forecasters (IIF), M competition data
+- M3 competition data: International Institute of Forecasters (IIF), M competition data
+- M3 competition data (other): International Institute of Forecasters (IIF), M competition data
+- Melbourne Pedestrian Counting System: City of Melbourne, Pedestrian Counting System, CC BY 4.0
+- N2O in wastewater treatment (Aalborg University): L. D. Hansen, A. Rani, D. Ortiz Arroyo, P. Durdevic (Aalborg University), Time Series Dataset for Modeling and Forecasting of N2O in Wastewater Treatment, Mendeley Data v4, doi:10.17632/xmbxhscgpr.4, CC BY 4.0
+- National Highways WebTRIS traffic counts: Contains public sector information licensed under the Open Government Licence v3.0 (National Highways, WebTRIS, TMU / TAME sites, 15-minute counts)
+- NOAA CO-OPS hourly water levels: None required (public domain); attribution requested ("NOS requests that attribution be given whenever NOS material is reproduced and re-disseminated"): NOAA National Ocean Service, CO-OPS, verified hourly water levels (Tides & Currents)
+- NREL PVDAQ public datasets: C. Deline, K. Perry, M. Deceglie, M. Muller, W. Sekulic, D. Jordan (NREL), Photovoltaic Data Acquisition (PVDAQ) Public Datasets, Open Energy Data Initiative (OEDI), doi:10.25984/1846021, CC BY 4.0
+- Penmanshiel and Kelmarsh wind farm data (Cubico): Cubico Sustainable Investments Ltd; C. Plumley, R. Takeuchi, Penmanshiel wind farm data (Zenodo, doi:10.5281/zenodo.16807304) and Kelmarsh wind farm data (Zenodo, doi:10.5281/zenodo.16807551), CC BY 4.0
+- Project Tycho: Project Tycho, University of Pittsburgh, CC BY 4.0
+- Residential Power and Battery Data (load): SwitchDin / Monash University, CC BY 4.0
+- Residential Power and Battery Data (PV): SwitchDin / Monash University, CC BY 4.0
+- Statistics Canada tables: Adapted from Statistics Canada, tables 16-10-0047-01, 20-10-0008-01, 25-10-0015-01 (2026-10-20). This does not constitute an endorsement by Statistics Canada of this product.
+- Steel Industry Energy Consumption (UCI): V E Sathishkumar, C. Shin, Y. Cho, Steel Industry Energy Consumption, UCI Machine Learning Repository, doi:10.24432/C52G8C, CC BY 4.0
+- SubseasonalClimateUSA: S. Mouatadid et al., SubseasonalClimateUSA: A Dataset for Subseasonal Forecasting and Benchmarking, Advances in Neural Information Processing Systems 36 (NeurIPS 2023), CC BY 4.0; the subseasonal_data package (https://github.com/microsoft/subseasonal_data); and the individual data sources listed in https://github.com/microsoft/subseasonal_data/blob/main/DATA.md (Data Sources and Citation), including NOAA/OAR/ESRL PSL CPC global temperature data and CPC global and US unified precipitation data
+- SubseasonalClimateUSA (precipitation): S. Mouatadid et al., SubseasonalClimateUSA: A Dataset for Subseasonal Forecasting and Benchmarking, Advances in Neural Information Processing Systems 36 (NeurIPS 2023), CC BY 4.0; the subseasonal_data package (https://github.com/microsoft/subseasonal_data); and the individual data sources listed in https://github.com/microsoft/subseasonal_data/blob/main/DATA.md (Data Sources and Citation), including NOAA/OAR/ESRL PSL CPC global temperature data and CPC global and US unified precipitation data
+- Transport for NSW permanent hourly traffic counts: Transport for NSW, NSW Roads Traffic Volume Counts (Permanent Hourly Traffic Counts), CC BY 4.0
+- UMass Smart* data set: UMass Trace Repository, Smart*, CC BY 4.0
+- USGS NWIS instantaneous streamflow: None required (public domain); credit requested ("we ask that proper credit be given"): U.S. Geological Survey, National Water Information System (NWIS), instantaneous streamflow values
+- Wikipedia page views (extended web traffic): None required (CC0); credit: Wikimedia
+- Wikipedia page views (rolling): None required (CC0); credit: Wikimedia
+- Wikipedia page views (weekly web traffic): None required (CC0); credit: Wikimedia
