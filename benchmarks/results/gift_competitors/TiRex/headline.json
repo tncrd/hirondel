@@ -1,0 +1,12 @@
+{
+ "model": "TiRex",
+ "repo_id": "NX-AI/TiRex-1.1-gifteval",
+ "revision": "01b1ebc83a87e82b119f907fe7e43d015db23e9d",
+ "package": "tirex-ts",
+ "package_version": "1.4.2",
+ "date": "2026-10-22",
+ "protocol": "forced univariate, computed by us",
+ "n_tasks": 97,
+ "MASE": 0.7212606154092949,
+ "CRPS": 0.4920889163688999
+}

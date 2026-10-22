@@ -1,0 +1,12 @@
+{
+ "model": "Chronos-2",
+ "repo_id": "amazon/chronos-2",
+ "revision": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+ "package": "chronos-forecasting",
+ "package_version": "2.3.2",
+ "date": "2026-10-22",
+ "protocol": "forced univariate, computed by us",
+ "n_tasks": 97,
+ "MASE": 0.7036638635021708,
+ "CRPS": 0.4911391567712251
+}

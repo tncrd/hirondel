@@ -1,0 +1,12 @@
+{
+ "model": "Toto-2.0-22m",
+ "repo_id": "Datadog/Toto-2.0-22m",
+ "revision": "685e4ae3e2be8d8998025e53dd98e7fdcb296a89",
+ "package": "toto-models",
+ "package_version": "1.0.0",
+ "date": "2026-10-22",
+ "protocol": "forced univariate, computed by us",
+ "n_tasks": 97,
+ "MASE": 0.7226004960252601,
+ "CRPS": 0.5008515010164892
+}

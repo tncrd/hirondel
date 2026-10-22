@@ -1,0 +1,12 @@
+{
+ "model": "Timestral-5M",
+ "repo_id": "mistralai/Timestral-5M",
+ "revision": "bdd20cfc15a3fea0e4cb5ccef37f8d3ca7aa335f",
+ "package": "timestral",
+ "package_version": "1.0.0",
+ "date": "2026-10-22",
+ "protocol": "forced univariate, computed by us",
+ "n_tasks": 97,
+ "MASE": 0.7102410193628446,
+ "CRPS": 0.483613153217226
+}
