@@ -9,6 +9,7 @@ description = "A small univariate time-series foundation model for zero-shot pro
 readme = "README.md"
 requires-python = ">=3.10"
 license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE", "DATA.md"]
 dependencies = [
     "torch>=2.4",
     "numpy",

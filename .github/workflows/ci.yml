@@ -26,6 +26,12 @@ jobs:
         env:
           NOM_WEIGHTS: ${{ vars.NOM_WEIGHTS }}
         run: pytest -v
+      - name: Build sdist and wheel
+        if: matrix.python-version == '3.12'
+        run: |
+          pip install build
+          python -m build
+          python -c "import zipfile, glob; n = zipfile.ZipFile(glob.glob('dist/*.whl')[0]).namelist(); assert any(x.endswith('licenses/LICENSE') for x in n), n"
 
   # Oldest supported torch, without pandas (forecast_df tests skip): everything must pass; the parity gap is
   # reported, not required.

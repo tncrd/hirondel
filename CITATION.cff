@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this model, please cite it as below."
+title: "Nom: a small univariate time-series foundation model"
+type: software
+authors:
+  - name: "The Nom Authors"
+version: 1.0.0
+license: Apache-2.0
+repository-code: "https://github.com/tncrd/nom"
+keywords:
+  - time series
+  - forecasting
+  - foundation model
+  - probabilistic forecasting
