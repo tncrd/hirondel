@@ -1,7 +1,49 @@
-# nom
+<p align="center"><img src="showcase/figures/banner.png" alt="Nom" width="100%"></p>
 
-A small univariate time-series foundation model for zero-shot probabilistic forecasting: 7.5M parameters,
-9 quantiles from 0.1 to 0.9, any horizon, CPU-friendly.
+# Nom
+
+A small foundation model for zero-shot probabilistic time-series forecasting: **7.5M parameters**, 9 quantiles from 0.1
+to 0.9 (tails to 0.01 and 0.99 by extrapolation), any horizon, CPU-friendly, **Apache-2.0** code and weights.
+
+**The most accurate forecasting model under 10M parameters with public weights and a permissive license, on GIFT-Eval, fev-bench and TIME** (official leaderboards, read on 2026-10-22; how this was checked: `showcase/README.md`).
+
+## Results
+
+Headline numbers of this package (float32), computed with each benchmark's official harness
+(`benchmarks/`, per-task details in `benchmarks/results/`):
+
+<!-- results:start -->
+| Benchmark | MASE | CRPS (fev-bench: SQL) |
+|---|---|---|
+| GIFT-Eval (97 tasks, normalised by Seasonal Naive; lower is better) | 0.7011 | 0.4825 |
+| fev-bench (100 tasks, skill score in %; higher is better) | 32.80 | 44.80 |
+| TIME (98 tasks, normalised by Seasonal Naive; lower is better) | 0.6555 | 0.5527 |
+<!-- results:end -->
+
+On the fev-bench leaderboard this ranks 7 of 33 (SQL) and 6 of 33 (MASE) among the models the site shows by default (2026-10-22).
+
+<p align="center"><img src="showcase/figures/pareto.png" alt="Accuracy against size on GIFT-Eval, TIME and fev-bench" width="100%"></p>
+
+Official leaderboard results of well-known models, read on 2026-10-22, against their size. The Pareto fronts are drawn
+over models with a permissive license; models under a non-commercial or restricted license are shown hollow. Every
+value, with its source, is in `showcase/data/official.csv`. Some of these models use covariates or forecast the
+variables of a series jointly on the leaderboards; this model forecasts each series alone.
+
+### Same protocol, computed by us
+
+The same comparison with every model in the same setting: each series forecast alone, no covariates, public packages,
+GIFT-Eval (97 tasks). Settings and the list (written before any score) are in `benchmarks/competitors.yaml`.
+
+| Model | Parameters | License | GIFT-Eval MASE | GIFT-Eval CRPS |
+|---|---|---|---|---|
+| Timestral-28M | 27.8M | Modified MIT (revenue cap) | 0.6817 | 0.4641 |
+| **Nom (ours)** | 7.5M | Apache-2.0 | 0.7011 | 0.4825 |
+| Chronos-2 | 119.5M | Apache-2.0 | 0.7037 | 0.4911 |
+| Timestral-5M | 5.2M | Modified MIT (revenue cap) | 0.7102 | 0.4836 |
+| TiRex | 35.0M | NX-AI Community License | 0.7213 | 0.4921 |
+| Toto-2.0-22m | 21.9M | Apache-2.0 | 0.7226 | 0.5009 |
+
+<p align="center"><img src="showcase/figures/same_protocol.png" alt="Same protocol on GIFT-Eval" width="85%"></p>
 
 ## Install
 
@@ -65,6 +107,20 @@ inputs (CPU, float32, one thread). With torch 2.12.1 every case matches bit for 
 strict (1e-6). With other torch versions small rounding differences remain; measured with torch
 2.4.1 (the oldest supported version), the largest gap over all cases is 1.5e-5 standard deviations
 of the input series; on the ROCm GPU above (float32), 2.7e-5.
+
+## Limitations
+
+- Univariate: each series is forecast on its own; covariates and cross-series information are not used. Models that use
+  them (for example Chronos-2 on GIFT-Eval, Timestral with covariates on fev-bench) can do better on such tasks.
+- Context: the last 2 048 points at full resolution, plus a coarse reading of up to 8 192 points. Very long seasonal
+  histories are read coarsely.
+- Tail levels 0.01, 0.05, 0.95, 0.99 are extrapolated, not learned; the upper tail runs slightly short.
+- Tested on CPU and on one AMD GPU (ROCm); not yet on CUDA.
+
+## Reproducing the numbers
+
+`benchmarks/README.md` gives the commands for GIFT-Eval, fev-bench, TIME and the competitors, and `showcase/README.md`
+how this page and its figures are regenerated (`python -m showcase.build`).
 
 ## License and data
 

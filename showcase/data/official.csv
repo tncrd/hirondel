@@ -1,0 +1,65 @@
+model,params,license,permissive,benchmark,metric,value,source,date
+Nom,7462049,Apache-2.0,True,GIFT-Eval,MASE,0.701121,"this repository, benchmarks/results/gift/all_results.csv",2026-10-22
+Nom,7462049,Apache-2.0,True,GIFT-Eval,CRPS,0.482488,"this repository, benchmarks/results/gift/all_results.csv",2026-10-22
+Nom,7462049,Apache-2.0,True,fev-bench,MASE,32.803888,"this repository, benchmarks/results/fev/summaries.json",2026-10-22
+Nom,7462049,Apache-2.0,True,fev-bench,SQL,44.796054,"this repository, benchmarks/results/fev/summaries.json",2026-10-22
+Nom,7462049,Apache-2.0,True,TIME,MASE,0.655467,"this repository, benchmarks/results/time/tasks.csv",2026-10-22
+Nom,7462049,Apache-2.0,True,TIME,CRPS,0.552690,"this repository, benchmarks/results/time/tasks.csv",2026-10-22
+Chronos-2,119477664,Apache-2.0,True,GIFT-Eval,MASE,0.697793,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/chronos-2/all_results.csv",2026-10-22
+Chronos-2,119477664,Apache-2.0,True,GIFT-Eval,CRPS,0.485416,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/chronos-2/all_results.csv",2026-10-22
+Chronos-2,119477664,Apache-2.0,True,fev-bench,MASE,35.496048,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results",2026-10-22
+Chronos-2,119477664,Apache-2.0,True,fev-bench,SQL,47.280561,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results",2026-10-22
+Chronos-2,119477664,Apache-2.0,True,TIME,MASE,0.662004,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/Chronos-2",2026-10-22
+Chronos-2,119477664,Apache-2.0,True,TIME,CRPS,0.556326,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/Chronos-2",2026-10-22
+TiRex,35000000,NX-AI Community License,False,GIFT-Eval,MASE,0.715758,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/TiRex/all_results.csv",2026-10-22
+TiRex,35000000,NX-AI Community License,False,GIFT-Eval,CRPS,0.488464,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/TiRex/all_results.csv",2026-10-22
+TiRex,35000000,NX-AI Community License,False,fev-bench,MASE,30.012262,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results",2026-10-22
+TiRex,35000000,NX-AI Community License,False,fev-bench,SQL,42.576108,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results",2026-10-22
+TiRex,35000000,NX-AI Community License,False,TIME,MASE,0.683122,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/TiRex",2026-10-22
+TiRex,35000000,NX-AI Community License,False,TIME,CRPS,0.573097,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/TiRex",2026-10-22
+TimesFM-2.5,231289280,Apache-2.0,True,GIFT-Eval,MASE,0.705031,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/TimesFM-2.5/all_results.csv",2026-10-22
+TimesFM-2.5,231289280,Apache-2.0,True,GIFT-Eval,CRPS,0.490288,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/TimesFM-2.5/all_results.csv",2026-10-22
+TimesFM-2.5,231289280,Apache-2.0,True,fev-bench,MASE,30.197591,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results",2026-10-22
+TimesFM-2.5,231289280,Apache-2.0,True,fev-bench,SQL,42.200621,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results",2026-10-22
+TimesFM-2.5,231289280,Apache-2.0,True,TIME,MASE,0.668601,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/TimesFM-2.5",2026-10-22
+TimesFM-2.5,231289280,Apache-2.0,True,TIME,CRPS,0.567352,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/TimesFM-2.5",2026-10-22
+TimesFM-3,330710976,TimesFM Non-Commercial License v1.0,False,GIFT-Eval,MASE,0.666826,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/TimesFM-3/all_results.csv",2026-10-22
+TimesFM-3,330710976,TimesFM Non-Commercial License v1.0,False,GIFT-Eval,CRPS,0.455680,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/TimesFM-3/all_results.csv",2026-10-22
+TimesFM-3,330710976,TimesFM Non-Commercial License v1.0,False,fev-bench,MASE,37.815508,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results",2026-10-22
+TimesFM-3,330710976,TimesFM Non-Commercial License v1.0,False,fev-bench,SQL,48.993825,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results",2026-10-22
+TimesFM-3,330710976,TimesFM Non-Commercial License v1.0,False,TIME,MASE,0.639768,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/TimesFM-3",2026-10-22
+TimesFM-3,330710976,TimesFM Non-Commercial License v1.0,False,TIME,CRPS,0.536336,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/TimesFM-3",2026-10-22
+Toto-2.0-4m,4144448,Apache-2.0,True,GIFT-Eval,MASE,0.756540,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/Toto-2.0-4m/all_results.csv",2026-10-22
+Toto-2.0-4m,4144448,Apache-2.0,True,GIFT-Eval,CRPS,0.524162,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/Toto-2.0-4m/all_results.csv",2026-10-22
+Toto-2.0-4m,4144448,Apache-2.0,True,TIME,MASE,0.691002,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/Toto-2.0-4m",2026-10-22
+Toto-2.0-4m,4144448,Apache-2.0,True,TIME,CRPS,0.582490,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/Toto-2.0-4m",2026-10-22
+Toto-2.0-22m,21915584,Apache-2.0,True,GIFT-Eval,MASE,0.718796,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/Toto-2.0-22m/all_results.csv",2026-10-22
+Toto-2.0-22m,21915584,Apache-2.0,True,GIFT-Eval,CRPS,0.496281,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/Toto-2.0-22m/all_results.csv",2026-10-22
+Toto-2.0-22m,21915584,Apache-2.0,True,fev-bench,MASE,30.608733,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results",2026-10-22
+Toto-2.0-22m,21915584,Apache-2.0,True,fev-bench,SQL,42.906974,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results",2026-10-22
+Toto-2.0-22m,21915584,Apache-2.0,True,TIME,MASE,0.670321,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/Toto-2.0-22m",2026-10-22
+Toto-2.0-22m,21915584,Apache-2.0,True,TIME,CRPS,0.561593,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/Toto-2.0-22m",2026-10-22
+Timestral-5M,5208960,Modified MIT (revenue cap),False,fev-bench,MASE,34.544209,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results",2026-10-22
+Timestral-5M,5208960,Modified MIT (revenue cap),False,fev-bench,SQL,46.193939,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results",2026-10-22
+Timestral-5M,5208960,Modified MIT (revenue cap),False,TIME,MASE,0.651839,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/Timestral-5M",2026-10-22
+Timestral-5M,5208960,Modified MIT (revenue cap),False,TIME,CRPS,0.544479,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/Timestral-5M",2026-10-22
+Timestral-28M,27821184,Modified MIT (revenue cap),False,fev-bench,MASE,37.267045,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results",2026-10-22
+Timestral-28M,27821184,Modified MIT (revenue cap),False,fev-bench,SQL,48.420428,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results",2026-10-22
+Timestral-28M,27821184,Modified MIT (revenue cap),False,TIME,MASE,0.638159,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/Timestral-28M",2026-10-22
+Timestral-28M,27821184,Modified MIT (revenue cap),False,TIME,CRPS,0.534382,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/Timestral-28M",2026-10-22
+Timestral-209M,209312256,Modified MIT,False,fev-bench,MASE,39.490012,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results",2026-10-22
+Timestral-209M,209312256,Modified MIT,False,fev-bench,SQL,50.390156,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results",2026-10-22
+Timestral-209M,209312256,Modified MIT,False,TIME,MASE,0.626229,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/Timestral-209M",2026-10-22
+Timestral-209M,209312256,Modified MIT,False,TIME,CRPS,0.522279,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/Timestral-209M",2026-10-22
+FlowState-r1.1,18500000,Apache-2.0,True,GIFT-Eval,MASE,0.701391,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/Granite-FlowState-r1.1/all_results.csv",2026-10-22
+FlowState-r1.1,18500000,Apache-2.0,True,GIFT-Eval,CRPS,0.490133,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/Granite-FlowState-r1.1/all_results.csv",2026-10-22
+Moirai-2.0-small,11387208,CC-BY-NC-4.0,False,GIFT-Eval,MASE,0.728130,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/Moirai2/all_results.csv",2026-10-22
+Moirai-2.0-small,11387208,CC-BY-NC-4.0,False,GIFT-Eval,CRPS,0.516438,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/Moirai2/all_results.csv",2026-10-22
+Moirai-2.0-small,11387208,CC-BY-NC-4.0,False,fev-bench,MASE,27.224649,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results",2026-10-22
+Moirai-2.0-small,11387208,CC-BY-NC-4.0,False,fev-bench,SQL,39.313741,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results",2026-10-22
+Moirai-2.0-small,11387208,CC-BY-NC-4.0,False,TIME,MASE,0.702996,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/Moirai2",2026-10-22
+Moirai-2.0-small,11387208,CC-BY-NC-4.0,False,TIME,CRPS,0.588487,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/Moirai2",2026-10-22
+t0-gamma,255614293,Apache-2.0,True,fev-bench,MASE,37.991582,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results",2026-10-22
+t0-gamma,255614293,Apache-2.0,True,fev-bench,SQL,49.416652,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results",2026-10-22
+t0-gamma,255614293,Apache-2.0,True,TIME,MASE,0.637016,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/t0_gamma",2026-10-22
+t0-gamma,255614293,Apache-2.0,True,TIME,CRPS,0.534025,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/t0_gamma",2026-10-22

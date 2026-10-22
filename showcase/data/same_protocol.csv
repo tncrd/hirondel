@@ -1,0 +1,6 @@
+model,MASE,CRPS,package,package_version,revision,date
+Chronos-2,0.703664,0.491139,chronos-forecasting,2.3.2,29ec376,2026-10-22
+TiRex,0.721261,0.492089,tirex-ts,1.4.2,01b1ebc,2026-10-22
+Timestral-28M,0.681696,0.464089,timestral,1.0.0,49b2640,2026-10-22
+Timestral-5M,0.710241,0.483613,timestral,1.0.0,bdd20cf,2026-10-22
+Toto-2.0-22m,0.722600,0.500852,toto-models,1.0.0,685e4ae,2026-10-22
