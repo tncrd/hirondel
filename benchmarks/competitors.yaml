@@ -90,3 +90,10 @@ gift_eval_variants:
 # Amendment, 2026-10-22 (user decision): the "TiRex (resampling)" run is cancelled because it is too long (about
 # 2.5 hours on our GPU). The variant stays in the code; the only TiRex line computed by us is the card's default setting.
 # TiRex's leaderboard number (with resampling) can be shown as an official number.
+
+# Amendment, 2026-10-22, 22:30 (user decision), before any fev-bench or TIME score of a competitor: the forced-univariate
+# comparison is extended to fev-bench and TIME for the models whose official numbers there come from joint multivariate
+# forecasting and/or covariates (Chronos-2, Toto-2.0, Timestral). TiRex and TimesFM-2.5 forecast each series alone by
+# design; their official fev-bench and TIME numbers are already in the univariate setting and are used as they are.
+fev_time_univariate_runs: [Chronos-2, Toto-2.0-22m, Timestral-5M, Timestral-28M]
+natively_univariate: [TiRex, TimesFM-2.5]

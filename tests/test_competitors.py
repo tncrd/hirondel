@@ -54,3 +54,16 @@ def test_tirex_resampling_variant_is_a_second_line():
     assert competitors.result_name("TiRex", "resample") == "TiRex (resampling)"
     with pytest.raises(ValueError, match="no variant"):
         competitors.result_name("Chronos-2", "resample")
+
+
+def test_result_folders_per_benchmark():
+    assert competitors.out_dir("gift", "TiRex").endswith("results/gift_competitors/TiRex")
+    assert competitors.out_dir("fev", "Chronos-2").endswith("results/fev_competitors/Chronos-2")
+    assert competitors.out_dir("time", "Timestral-5M").endswith("results/time_competitors/Timestral-5M")
+
+
+def test_univariate_runs_on_fev_and_time_are_listed():
+    pytest.importorskip("yaml")
+    c = competitors.load_list(os.path.join(ROOT, "benchmarks", "competitors.yaml"))
+    assert c["fev_time_univariate_runs"] == ["Chronos-2", "Toto-2.0-22m", "Timestral-5M", "Timestral-28M"]
+    assert c["natively_univariate"] == ["TiRex", "TimesFM-2.5"]

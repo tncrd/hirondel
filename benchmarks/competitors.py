@@ -52,6 +52,10 @@ def level_indices(levels) -> list[int]:
     return out
 
 
+def out_dir(benchmark: str, line: str) -> str:
+    return os.path.join(HERE, "results", f"{benchmark}_competitors", line)
+
+
 def no_empty(contexts: list) -> list:
     """A context with no observed value (649 in GIFT-Eval: bitbrains, electricity/W) becomes a single observed 0, for the
     packages that refuse such a context (TimesFM-2.5). The other packages receive it as it is."""
@@ -170,9 +174,11 @@ LOADERS = {"Timestral-5M": timestral, "Timestral-28M": timestral, "Chronos-2": c
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("benchmark", choices=["gift"])
+    ap.add_argument("benchmark", choices=["gift", "fev", "time"])
     ap.add_argument("--name", required=True, choices=sorted(LOADERS))
-    ap.add_argument("--gift-eval", required=True, help="clone of github.com/SalesforceAIResearch/gift-eval")
+    ap.add_argument("--gift-eval", help="gift: clone of github.com/SalesforceAIResearch/gift-eval")
+    ap.add_argument("--fev-bench", help="fev: benchmarks/fev_bench of a clone of github.com/autogluon/fev")
+    ap.add_argument("--work", help="time: work folder with the contexts of `benchmarks.time_bench dump`")
     ap.add_argument("--out", default=None)
     ap.add_argument("--device", default="cpu")
     ap.add_argument("--resume", action="store_true", help="skip the tasks already in all_results.csv")
@@ -185,21 +191,36 @@ def main():
     m = entry(load_list(), a.name, a.benchmark)
     line = result_name(a.name, a.variant)
     fn = LOADERS[a.name](m, a.device, a.variant) if a.variant else LOADERS[a.name](m, a.device)
-    out = a.out or os.path.join(HERE, "results", "gift_competitors", line)
+    out = a.out or out_dir(a.benchmark, line)
     os.makedirs(out, exist_ok=True)
-    with open(os.path.join(a.gift_eval, "notebooks", "dataset_properties.json")) as f:
-        properties = json.load(f)
-    out_csv = os.path.join(out, "all_results.csv")
-    gift.evaluate(lambda pl: GluonTSAdapter(fn, pl, batch_size=256), line, properties, out_csv, resume=a.resume)
-    h = gift.headline(out_csv, os.path.join(a.gift_eval, "results", "seasonal_naive", "all_results.csv"))
     package = m["package"].split()[0].split(">")[0].split("=")[0]
     import datetime
     meta = {"model": line, "variant": a.variant, "repo_id": m["repo_id"], "revision": m["revision"], "package": package,
-            "package_version": version(package if package != "toto-models" else "toto-models"),
-            "date": datetime.date.today().isoformat(), "protocol": "forced univariate, computed by us", **h}
+            "package_version": version(package), "date": datetime.date.today().isoformat(),
+            "protocol": "forced univariate, computed by us"}
+    if a.benchmark == "gift":
+        with open(os.path.join(a.gift_eval, "notebooks", "dataset_properties.json")) as f:
+            properties = json.load(f)
+        out_csv = os.path.join(out, "all_results.csv")
+        gift.evaluate(lambda pl: GluonTSAdapter(fn, pl, batch_size=256), line, properties, out_csv, resume=a.resume)
+        h = gift.headline(out_csv, os.path.join(a.gift_eval, "results", "seasonal_naive", "all_results.csv"))
+        meta.update(h)
+        print(f"\n{line} GIFT-Eval ({h['n_tasks']} tasks): MASE {h['MASE']:.4f}  CRPS {h['CRPS']:.4f}")
+    elif a.benchmark == "fev":
+        from benchmarks import fev_bench
+        run = f"{line} [univariate]"                 # distinct from the model's own entry on the leaderboard
+        s = fev_bench.evaluate(fn, run, a.fev_bench)
+        with open(os.path.join(out, "summaries.json"), "w") as f:
+            json.dump(s, f, indent=1, default=str)
+        h = fev_bench.headline(s, run, a.fev_bench, out)
+        meta.update({k: v["skill_score"] for k, v in h.items()})
+        print(f"\n{line} fev-bench: skill SQL {h['SQL']['skill_score']:.2f}  MASE {h['MASE']['skill_score']:.2f}")
+    else:
+        from benchmarks import time_bench
+        time_bench.forecast(a.work, fn, line)
+        print(f"\n{line} TIME: quantiles written; score with `benchmarks.time_bench score --name '{line}'`")
     with open(os.path.join(out, "headline.json"), "w") as f:
         json.dump(meta, f, indent=1)
-    print(f"\n{line} GIFT-Eval ({h['n_tasks']} tasks): MASE {h['MASE']:.4f}  CRPS {h['CRPS']:.4f}")
 
 
 if __name__ == "__main__":
