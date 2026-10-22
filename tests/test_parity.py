@@ -85,3 +85,20 @@ def test_reference_quantiles_with_tails_never_cross():
         out = Forecast(ref[f"{case['name']}/quantiles"], levels)
         all13 = np.stack([out.quantile(q) for q in out.all_levels], -1)
         assert len(out.all_levels) == 13 and (np.diff(all13, axis=-1) >= 0).all(), case["name"]
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason="no GPU (CUDA or ROCm)")
+def test_gpu_agrees_with_reference():
+    """On a GPU (float32) the reference is not bit-exact; measured on ROCm 7.2 (RX 7900 XTX): 2.7e-5 standard deviations
+    of the input series at most, no crossing."""
+    src = _weights()
+    if src is None:
+        pytest.skip("no weights: set NOM_WEIGHTS to a folder or a Hugging Face repo id")
+    gpu = NomForecaster.from_pretrained(src, device="cuda")
+    ref = np.load(REFERENCE)
+    for case in json.loads(str(ref["cases"])):
+        context = [ref[f"{case['name']}/context_{j}"] for j in range(case["n_series"])]
+        q = gpu.forecast(context, case["prediction_length"], flip=case["flip"]).quantiles
+        scale = np.array([np.nanstd(c) for c in context])[:, None, None]
+        assert float((np.abs(q - ref[f"{case['name']}/quantiles"]) / scale).max()) < 1e-4, case["name"]
+        assert (np.diff(q, axis=-1) >= 0).all(), case["name"]

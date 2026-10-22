@@ -55,8 +55,8 @@ fev-bench). The upper tail runs slightly short, most on fev-bench (spiky and int
 
 ## Hardware
 
-Tested on CPU (Linux, PyTorch 2.12.1 and 2.4.1). GPUs (ROCm, CUDA) are expected to work through the `device` argument
-but have not been tested with this package yet.
+Tested on CPU (Linux, PyTorch 2.12.1 and 2.4.1) and on an AMD GPU with ROCm 7.2 (RX 7900 XTX, PyTorch 2.12.1,
+`device="cuda"`). CUDA GPUs are expected to work the same way but have not been tested.
 
 ## Numerical parity
 
@@ -64,7 +64,7 @@ but have not been tested with this package yet.
 inputs (CPU, float32, one thread). With torch 2.12.1 every case matches bit for bit and the test is
 strict (1e-6). With other torch versions small rounding differences remain; measured with torch
 2.4.1 (the oldest supported version), the largest gap over all cases is 1.5e-5 standard deviations
-of the input series.
+of the input series; on the ROCm GPU above (float32), 2.7e-5.
 
 ## License and data
 

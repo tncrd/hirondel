@@ -20,9 +20,11 @@ dependencies = [
 [project.optional-dependencies]
 pandas = ["pandas"]
 test = ["pytest"]
+bench = ["gluonts==0.16.3", "pandas"]   # plus gift-eval from its repository, see benchmarks/gift.py
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/nom"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]
