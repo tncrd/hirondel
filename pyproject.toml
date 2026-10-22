@@ -1,0 +1,27 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "nom"
+version = "1.0.0"
+description = "A small univariate time-series foundation model for zero-shot probabilistic forecasting."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+dependencies = [
+    "torch>=2.4",
+    "numpy",
+    "safetensors",
+    "huggingface_hub",
+]
+
+[project.optional-dependencies]
+pandas = ["pandas"]
+test = ["pytest"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/nom"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

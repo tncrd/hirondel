@@ -1,0 +1,54 @@
+{
+  "format_version": 1,
+  "d_model": 360,
+  "n_heads": 4,
+  "n_layers": 6,
+  "layer_types": [
+    "delta",
+    "attention",
+    "delta",
+    "attention",
+    "delta",
+    "attention"
+  ],
+  "ffn_hidden": 480,
+  "embed_hidden": 240,
+  "patch_size": 16,
+  "conv_kernel": 4,
+  "delta_write_max": 2.0,
+  "delta_chunk": 16,
+  "norm_eps": 1e-06,
+  "rope_base": 10000.0,
+  "time_scale": 8.0,
+  "loop_passes": 2,
+  "anchor_rank": 64,
+  "quantile_levels": [
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9
+  ],
+  "context_length": 2048,
+  "native_horizon": 720,
+  "coarse_factors": [
+    4
+  ],
+  "fusion": {
+    "state_dim": 32,
+    "spectral_bands": 16,
+    "basis_size": 8,
+    "hidden": 128,
+    "max_horizon": 720
+  },
+  "input_transform": "asinh",
+  "output_clip": 15.0,
+  "min_scale": 1e-05,
+  "range_margin": 10000.0,
+  "long_view_base_season": 24,
+  "flip": true
+}
