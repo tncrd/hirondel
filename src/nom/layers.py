@@ -1,8 +1,6 @@
 """Building blocks of the network: patch embedding, the two token mixers, and the quantile head."""
 from __future__ import annotations
 
-import math
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -199,25 +197,3 @@ class QuantileHead(nn.Module):
             acc = acc - step[..., i]
             out[..., i] = acc
         return out
-
-
-class FusionGate(nn.Module):
-    """Per-series, per-step mixing weights between the fine reading and the coarse readings.
-
-    Inputs per reading: its last context state, a log-band power spectrum and its observed fraction.
-    The logits are expanded over smooth Gaussian bumps in log(1 + step); an unavailable reading gets
-    weight exactly zero.
-    """
-
-    def __init__(self, cfg: NomConfig):
-        super().__init__()
-        f = cfg.fusion
-        self.n_readings = 1 + len(cfg.coarse_factors)
-        self.basis_size = f.basis_size
-        self.state_proj = nn.ModuleList([nn.Linear(cfg.d_model, f.state_dim) for _ in range(self.n_readings)])
-        self.mlp = nn.Sequential(nn.Linear(self.n_readings * (f.state_dim + f.spectral_bands + 1), f.hidden),
-                                 nn.GELU(), nn.Linear(f.hidden, self.n_readings * f.basis_size))
-        self.bias = nn.Parameter(torch.zeros(self.n_readings))
-        centers = torch.linspace(0.0, math.log1p(f.max_horizon), f.basis_size)
-        self.register_buffer("centers", centers, persistent=False)
-        self.width = float(centers[1] - centers[0]) if f.basis_size > 1 else 1.0

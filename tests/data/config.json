@@ -49,6 +49,5 @@
   "output_clip": 15.0,
   "min_scale": 1e-05,
   "range_margin": 10000.0,
-  "long_view_base_season": 24,
   "flip": true
 }

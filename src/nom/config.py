@@ -42,7 +42,6 @@ class NomConfig:
     output_clip: float = 15.0
     min_scale: float = 1e-5
     range_margin: float = 1e4
-    long_view_base_season: int = 24
     flip: bool = True
     format_version: int = FORMAT_VERSION
 

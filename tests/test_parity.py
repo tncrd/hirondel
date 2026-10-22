@@ -46,7 +46,7 @@ def _cases():
 @pytest.mark.parametrize("case, ref", _cases(), ids=lambda x: x["name"] if isinstance(x, dict) else "")
 def test_forecast_matches_reference(forecaster, case, ref):
     context = [ref[f"{case['name']}/context_{j}"] for j in range(case["n_series"])]
-    out = forecaster.forecast(context, case["prediction_length"], freq=case["freq"], flip=case["flip"])
+    out = forecaster.forecast(context, case["prediction_length"], flip=case["flip"])
     expected = ref[f"{case['name']}/quantiles"]
     scale = np.array([np.nanstd(c) for c in context])[:, None, None]
     gap = float((np.abs(out.quantiles - expected) / scale).max())

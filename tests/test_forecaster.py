@@ -80,10 +80,23 @@ def test_flip_is_sign_equivariant(forecaster):
     np.testing.assert_allclose(q_neg, -q[..., ::-1], rtol=1e-5, atol=1e-5)
 
 
-@pytest.mark.parametrize("n, kwargs, match", [
-    (100, {"freq": "H"}, "coarse view"),
-    (2052, {}, "coarse readings"),
-])
-def test_unported_branches_say_so(forecaster, n, kwargs, match):
-    with pytest.raises(NotImplementedError, match=match):
-        forecaster.forecast(_series(n), 24, **kwargs)
+def test_older_history_enters_through_the_coarse_reading(forecaster):
+    s = _series(6000)
+    with_history = forecaster.forecast(s, 96).quantiles
+    assert not np.array_equal(with_history, forecaster.forecast(s[-2048:], 96).quantiles)
+    # Only the last 4 x 2048 points are read.
+    long = _series(9000)
+    np.testing.assert_array_equal(forecaster.forecast(long, 96).quantiles,
+                                  forecaster.forecast(long[-4 * 2048:], 96).quantiles)
+
+
+def test_a_short_series_ignores_long_neighbours(forecaster):
+    short = _series(300, 3)
+    alone = forecaster.forecast(short, 48).quantiles
+    mixed = forecaster.forecast([short, _series(7000, 4)], 48).quantiles[:1]
+    np.testing.assert_allclose(mixed, alone, rtol=1e-5, atol=1e-5)
+
+
+def test_no_frequency_argument(forecaster):
+    with pytest.raises(TypeError):
+        forecaster.forecast(_series(100), 24, freq="H")

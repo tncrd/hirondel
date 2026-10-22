@@ -9,6 +9,7 @@ import numpy as np
 import torch
 
 from .config import NomConfig
+from .fusion import CoarseReadings, block_mean_view
 from .model import NomModel
 
 ArrayLike = Union[np.ndarray, torch.Tensor, Sequence[float]]
@@ -65,13 +66,13 @@ class NomForecaster:
             series.append(c.astype(np.float32))
         return series
 
-    def _window(self, series: list[np.ndarray]) -> np.ndarray:
-        """The last context_length points of each series, left-padded with NaN (unobserved) when shorter."""
-        L = self.cfg.context_length
-        out = np.full((len(series), L), np.nan, dtype=np.float32)
+    @staticmethod
+    def _last(series: list[np.ndarray], length: int) -> np.ndarray:
+        """The last `length` points of each series, left-padded with NaN (unobserved) when shorter."""
+        out = np.full((len(series), length), np.nan, dtype=np.float32)
         for i, s in enumerate(series):
-            s = s[-L:]
-            out[i, L - len(s):] = s
+            s = s[-length:]
+            out[i, length - len(s):] = s
         return out
 
     def _scale(self, ctx: torch.Tensor):
@@ -95,42 +96,54 @@ class NomForecaster:
         hi = (hi + self.cfg.range_margin * sigma).unsqueeze(-1)
         return torch.where(has_obs, raw.clamp(lo, hi), raw)
 
-    def _predict(self, ctx: torch.Tensor, prediction_length: int) -> torch.Tensor:
-        """One pass: [n, context_length] raw (NaN = unobserved) -> [n, prediction_length, n_quantiles] raw.
+    def _predict(self, ctx: torch.Tensor, views: list | None, available: torch.Tensor | None,
+                 prediction_length: int) -> torch.Tensor:
+        """One pass: fine window [n, context_length] raw (NaN = unobserved), optional coarse views
+        [n, context_length] raw -> [n, prediction_length, n_quantiles] raw.
 
         The model always decodes at least its native horizon, then the output is cut. Longer horizons
         are decoded in one pass with as many future tokens as needed."""
         x, observed, mu, sigma = self._scale(ctx)
+        coarse = None
+        if views is not None:
+            scaled = [self._scale(v) for v in views]
+            coarse = CoarseReadings(values=[s[0] for s in scaled], observed=[s[1] for s in scaled],
+                                    mu=[s[2] for s in scaled], sigma=[s[3] for s in scaled],
+                                    available=available, fine_mu=mu, fine_sigma=sigma)
         horizon = max(prediction_length, self.cfg.native_horizon)
-        q = self.model(x, observed, horizon)[:, :prediction_length].float()
+        q = self.model(x, observed, horizon, coarse)[:, :prediction_length].float()
         return self._unscale(q, ctx, mu, sigma)
 
     @torch.no_grad()
-    def _forecast_batch(self, ctx: np.ndarray, prediction_length: int, flip: bool) -> np.ndarray:
-        ctx_t = torch.from_numpy(ctx).to(self.device)
-        q = self._predict(ctx_t, prediction_length)
+    def _forecast_batch(self, series: list[np.ndarray], prediction_length: int, flip: bool) -> np.ndarray:
+        L = self.cfg.context_length
+        ctx = torch.from_numpy(self._last(series, L)).to(self.device)
+        lengths = np.array([len(s) for s in series])
+        # A coarse reading k adds history only when the series extends at least k points before the fine window.
+        available = np.stack([(lengths >= L) & (lengths - L >= k) for k in self.cfg.coarse_factors], 1)
+        views = avail = None
+        if available.any():                       # otherwise the gate gives the coarse readings weight 0 exactly
+            views = [block_mean_view(torch.from_numpy(self._last(series, k * L)).to(self.device), k, L)
+                     for k in self.cfg.coarse_factors]
+            avail = torch.from_numpy(available).to(self.device)
+        q = self._predict(ctx, views, avail, prediction_length)
         if flip:
             # The q-th quantile of -x is minus the (1-q)-th quantile of x: reverse the levels, then average.
-            q = 0.5 * (q - self._predict(-ctx_t, prediction_length).flip(-1))
+            neg_views = None if views is None else [-v for v in views]
+            q = 0.5 * (q - self._predict(-ctx, neg_views, avail, prediction_length).flip(-1))
         return q.float().cpu().numpy()
 
-    def forecast(self, context, prediction_length: int, freq: str | None = None,
-                 flip: bool | None = None) -> Forecast:
+    def forecast(self, context, prediction_length: int, flip: bool | None = None) -> Forecast:
         """Forecast each series of `context` (1-D array, 2-D array [n, length], or a list of 1-D series).
 
-        NaN values are treated as missing. Only the last `context_length` points are read.
+        NaN values are treated as missing. The last `context_length` points are read at full resolution;
+        older history, when present, enters through the coarse readings.
         flip=True (default) averages the forecast of the series with the mirrored forecast of its negation;
         flip=False runs one pass instead of two."""
         flip = self.cfg.flip if flip is None else flip
         series = self._as_series(context)
-        if freq is not None:
-            raise NotImplementedError("the long coarse view (freq=...) is not available yet")
         if prediction_length < 1:
             raise ValueError("prediction_length must be >= 1")
-        reach = self.cfg.context_length + min(self.cfg.coarse_factors)
-        if any(len(s) >= reach for s in series):
-            raise NotImplementedError(f"series with {reach} points or more need the coarse readings, "
-                                      "which are not available yet")
-        out = [self._forecast_batch(self._window(series[i:i + self.batch_size]), prediction_length, flip)
+        out = [self._forecast_batch(series[i:i + self.batch_size], prediction_length, flip)
                for i in range(0, len(series), self.batch_size)]
         return Forecast(np.concatenate(out, 0), tuple(self.cfg.quantile_levels))
