@@ -17,6 +17,7 @@ import pytest
 import torch
 
 from nom import NomForecaster
+from nom.forecaster import Forecast
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REFERENCE = os.path.join(HERE, "data", "parity_reference.npz")
@@ -73,3 +74,14 @@ def test_forecast_never_crosses_on_reference_inputs(forecaster, case, ref):
     context = [ref[f"{case['name']}/context_{j}"] for j in range(case["n_series"])]
     q = forecaster.forecast(context, case["prediction_length"], flip=case["flip"]).quantiles
     assert (np.diff(q, axis=-1) >= 0).all(), case["name"]
+
+
+def test_reference_quantiles_with_tails_never_cross():
+    """The 13 levels (9 predicted + 4 extrapolated) stay ordered on every reference case."""
+    ref = np.load(REFERENCE)
+    with open(os.path.join(HERE, "data", "config.json")) as f:
+        levels = tuple(json.load(f)["quantile_levels"])
+    for case in json.loads(str(ref["cases"])):
+        out = Forecast(ref[f"{case['name']}/quantiles"], levels)
+        all13 = np.stack([out.quantile(q) for q in out.all_levels], -1)
+        assert len(out.all_levels) == 13 and (np.diff(all13, axis=-1) >= 0).all(), case["name"]

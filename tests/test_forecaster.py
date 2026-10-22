@@ -6,6 +6,7 @@ import pytest
 import torch
 
 from nom import NomConfig, NomForecaster, NomModel
+from nom.forecaster import Forecast
 
 CONFIG = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "config.json")
 
@@ -111,11 +112,72 @@ def test_quantile_reads_the_right_level(forecaster):
     assert out.quantile(0.1).shape == (2, 24)
 
 
-@pytest.mark.parametrize("q", [0.05, 0.25, 0.95, 1.5])
+@pytest.mark.parametrize("q", [0.02, 0.25, 0.97, 1.5])
 def test_quantile_refuses_a_level_not_predicted(forecaster, q):
     out = forecaster.forecast(_series(200), 24)
-    with pytest.raises(ValueError, match="is not predicted; available levels"):
+    with pytest.raises(ValueError, match="is not available; predicted levels: .*, extrapolated levels"):
         out.quantile(q)
+
+
+# ---- extrapolated tail levels ------------------------------------------------------------------------------------------
+def _expected_tails(Q):
+    """The formula of the tail levels, written out (levels 0.1, 0.2, 0.8, 0.9 at indices 0, 1, 7, 8)."""
+    a, b = (Q[..., 1] - Q[..., 0]) / np.log(2.0), (Q[..., 8] - Q[..., 7]) / np.log(2.0)
+    return {0.01: Q[..., 0] + a * np.log(0.1), 0.05: Q[..., 0] + a * np.log(0.5),
+            0.95: Q[..., 8] - b * np.log(0.5), 0.99: Q[..., 8] - b * np.log(0.1)}
+
+
+@pytest.mark.parametrize("flip", [False, True])
+def test_tail_levels_follow_the_exponential_formula(forecaster, flip):
+    out = forecaster.forecast([_series(200), _series(3000, 1)], 48, flip=flip)
+    for q, expected in _expected_tails(out.quantiles.astype(np.float64)).items():
+        got = out.quantile(q)
+        assert got.shape == (2, 48) and got.dtype == np.float32
+        np.testing.assert_allclose(got, expected, rtol=1e-6, atol=1e-6)
+
+
+def test_tail_levels_are_extrapolated_from_the_flip_averaged_quantiles(forecaster):
+    s = _series(400)
+    out = forecaster.forecast(s, 24, flip=True)
+    rebuilt = Forecast(out.quantiles.copy(), out.quantile_levels)       # only the averaged quantiles, nothing else
+    for q in Forecast.EXTRAPOLATED_LEVELS:
+        np.testing.assert_array_equal(out.quantile(q), rebuilt.quantile(q))
+
+
+def test_tail_levels_recover_laplace_quantiles():
+    """Laplace(mu, b) has exactly exponential tails: the extrapolation must return its true quantiles."""
+    levels = (0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)
+    mu = np.array([[0.0, 3.0], [-2.5, 1e3]])
+    b = np.array([[1.0, 0.2], [4.0, 30.0]])
+
+    def laplace(t):
+        return mu + b * (np.log(2 * t) if t < 0.5 else -np.log(2 * (1 - t)))
+
+    out = Forecast(np.stack([laplace(t) for t in levels], -1), levels)
+    for t in (0.01, 0.05, 0.95, 0.99):
+        np.testing.assert_allclose(out.quantile(t), laplace(t), rtol=0, atol=1e-9)
+
+
+def test_tail_levels_never_cross(forecaster):
+    out = forecaster.forecast([_series(300), _series(5000, 2)], 720)
+    all13 = np.stack([out.quantile(q) for q in out.all_levels], -1)
+    assert out.all_levels == (0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99)
+    assert (np.diff(all13, axis=-1) >= 0).all()
+
+
+def test_predicted_levels_are_untouched_by_the_tails(forecaster):
+    out = forecaster.forecast(_series(300), 24)
+    before = out.quantiles.copy()
+    for q in Forecast.EXTRAPOLATED_LEVELS:
+        out.quantile(q)
+    np.testing.assert_array_equal(out.quantiles, before)
+    assert out.quantiles.shape[-1] == 9
+
+
+def test_tails_need_the_outer_predicted_levels():
+    out = Forecast(np.zeros((1, 4, 3)), (0.25, 0.5, 0.75))
+    with pytest.raises(ValueError, match="needs the predicted levels 0.1, 0.2, 0.8 and 0.9"):
+        out.quantile(0.99)
 
 
 # ---- clear errors ------------------------------------------------------------------------------------------------------
@@ -176,6 +238,19 @@ def test_forecast_df_equals_forecast(forecaster):
         np.testing.assert_array_equal(part["predictions"].to_numpy(np.float32), ref.median[k])
     last = df[df["item_id"] == "s0"]["timestamp"].max()
     assert list(out[out["item_id"] == "s0"]["timestamp"])[:2] == [last + pd.Timedelta(hours=1), last + pd.Timedelta(hours=2)]
+
+
+def test_forecast_df_tail_columns_on_request(forecaster):
+    pd = pytest.importorskip("pandas")
+    df = _long_df(pd)
+    ref = forecaster.forecast([_series(150, 0), _series(400, 1)], 24)
+    out = forecaster.forecast_df(df, 24, tail_quantiles=True)
+    levels = ["0.01", "0.05"] + [str(q) for q in ref.quantile_levels] + ["0.95", "0.99"]
+    assert list(out.columns) == ["item_id", "timestamp", "predictions"] + levels
+    for k in range(2):
+        part = out[out["item_id"] == f"s{k}"]
+        for q in ref.all_levels:
+            np.testing.assert_array_equal(part[str(q)].to_numpy(np.float32), ref.quantile(q)[k])
 
 
 def test_forecast_df_missing_rows_are_missing_values(forecaster):

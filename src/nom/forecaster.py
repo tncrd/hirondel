@@ -1,6 +1,7 @@
 """User-facing forecaster: loading, and the inference procedure that turns raw series into quantiles."""
 from __future__ import annotations
 
+import math
 import os
 from dataclasses import dataclass
 from typing import Sequence, Union
@@ -20,17 +21,50 @@ class Forecast:
     quantiles: np.ndarray                 # [n_series, prediction_length, n_quantiles], raw scale
     quantile_levels: tuple[float, ...]
 
+    # Not predicted by the network: extrapolated from the predicted levels by an exponential tail (see `quantile`).
+    EXTRAPOLATED_LEVELS = (0.01, 0.05, 0.95, 0.99)
+
     @property
     def median(self) -> np.ndarray:
         """[n_series, prediction_length]: the 0.5 quantile."""
         return self.quantile(0.5)
 
-    def quantile(self, q: float) -> np.ndarray:
-        """[n_series, prediction_length] for one of the predicted levels; other levels are refused, not interpolated."""
+    @property
+    def all_levels(self) -> tuple[float, ...]:
+        """Predicted and extrapolated levels, sorted."""
+        extra = [t for t in self.EXTRAPOLATED_LEVELS if self._index(t) is None]
+        return tuple(sorted(tuple(self.quantile_levels) + tuple(extra)))
+
+    def _index(self, q: float) -> int | None:
         for i, level in enumerate(self.quantile_levels):
             if abs(level - q) < 1e-9:
-                return self.quantiles[..., i]
-        raise ValueError(f"quantile level {q} is not predicted; available levels: {list(self.quantile_levels)}")
+                return i
+        return None
+
+    def quantile(self, q: float) -> np.ndarray:
+        """[n_series, prediction_length] for a predicted level, or for one of the extrapolated levels 0.01, 0.05, 0.95,
+        0.99. Other levels are refused, not interpolated.
+
+        Extrapolated levels are not learned: each tail is exponential, fitted on the two outermost predicted levels
+        (GluonTS ExponentialTailApproximation). Low tail, tau < 0.1: q_tau = q_0.1 + a ln(tau / 0.1), a = (q_0.2 -
+        q_0.1) / ln 2. High tail, tau > 0.9: q_tau = q_0.9 - b ln((1 - tau) / 0.1), b = (q_0.9 - q_0.8) / ln 2. They are
+        computed from `quantiles`, i.e. after the flip average; non-crossing predicted levels give a, b >= 0, so the
+        tails never cross them."""
+        i = self._index(q)
+        if i is not None:
+            return self.quantiles[..., i]
+        if not any(abs(t - q) < 1e-9 for t in self.EXTRAPOLATED_LEVELS):
+            raise ValueError(f"quantile level {q} is not available; predicted levels: {list(self.quantile_levels)}, "
+                             f"extrapolated levels: {list(self.EXTRAPOLATED_LEVELS)}")
+        idx = [self._index(t) for t in (0.1, 0.2, 0.8, 0.9)]
+        if None in idx:
+            raise ValueError(f"the extrapolated level {q} needs the predicted levels 0.1, 0.2, 0.8 and 0.9; "
+                             f"predicted levels: {list(self.quantile_levels)}")
+        q10, q20, q80, q90 = (self.quantiles[..., k] for k in idx)
+        ln2 = math.log(2.0)                          # Python floats keep the dtype of the quantiles
+        if q < 0.5:
+            return q10 + (q20 - q10) / ln2 * math.log(q / 0.1)
+        return q90 - (q90 - q80) / ln2 * math.log((1 - q) / 0.1)
 
 
 class NomForecaster:
@@ -182,12 +216,14 @@ class NomForecaster:
         return Forecast(np.concatenate(out, 0), tuple(self.cfg.quantile_levels))
 
     def forecast_df(self, df, prediction_length: int, id_column: str = "item_id", timestamp_column: str = "timestamp",
-                    target: str = "target", freq: str | None = None, flip: bool | None = None):
+                    target: str = "target", freq: str | None = None, flip: bool | None = None,
+                    tail_quantiles: bool = False):
         """Forecast every series of a long DataFrame (one row per id and timestamp) and return a long DataFrame.
 
         Each series is sorted by timestamp and placed on a regular grid; missing rows and NaN targets count as
         missing values. `freq` (a pandas offset alias) fixes the grid and the future timestamps; when None it is
-        inferred per series. Returns columns [id_column, timestamp_column, "predictions" (the median), "0.1", ...].
+        inferred per series. Returns columns [id_column, timestamp_column, "predictions" (the median), "0.1", ...];
+        tail_quantiles=True adds the extrapolated levels "0.01", "0.05", "0.95", "0.99" (see `Forecast.quantile`).
         Requires pandas (`pip install "nom[pandas]"`)."""
         try:
             import pandas as pd
@@ -215,10 +251,11 @@ class NomForecaster:
             series.append(values)
             futures.append(pd.date_range(grid[-1], periods=prediction_length + 1, freq=f)[1:])
         out = self.forecast(series, prediction_length, flip=flip)
-        levels = [str(q) for q in out.quantile_levels]
+        levels = out.all_levels if tail_quantiles else out.quantile_levels
+        values = np.stack([out.quantile(q) for q in levels], -1)
         frames = []
         for i, item in enumerate(ids):
-            frame = pd.DataFrame(out.quantiles[i], columns=levels)
+            frame = pd.DataFrame(values[i], columns=[str(q) for q in levels])
             frame.insert(0, "predictions", out.median[i])
             frame.insert(0, timestamp_column, futures[i])
             frame.insert(0, id_column, item)
