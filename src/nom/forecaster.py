@@ -65,10 +65,12 @@ class NomForecaster:
             series.append(c.astype(np.float32))
         return series
 
-    def _left_pad(self, series: list[np.ndarray]) -> np.ndarray:
+    def _window(self, series: list[np.ndarray]) -> np.ndarray:
+        """The last context_length points of each series, left-padded with NaN (unobserved) when shorter."""
         L = self.cfg.context_length
         out = np.full((len(series), L), np.nan, dtype=np.float32)
         for i, s in enumerate(series):
+            s = s[-L:]
             out[i, L - len(s):] = s
         return out
 
@@ -93,29 +95,42 @@ class NomForecaster:
         hi = (hi + self.cfg.range_margin * sigma).unsqueeze(-1)
         return torch.where(has_obs, raw.clamp(lo, hi), raw)
 
-    @torch.no_grad()
-    def _forecast_batch(self, ctx: np.ndarray, prediction_length: int) -> np.ndarray:
-        ctx_t = torch.from_numpy(ctx).to(self.device)
-        x, observed, mu, sigma = self._scale(ctx_t)
+    def _predict(self, ctx: torch.Tensor, prediction_length: int) -> torch.Tensor:
+        """One pass: [n, context_length] raw (NaN = unobserved) -> [n, prediction_length, n_quantiles] raw.
+
+        The model always decodes at least its native horizon, then the output is cut. Longer horizons
+        are decoded in one pass with as many future tokens as needed."""
+        x, observed, mu, sigma = self._scale(ctx)
         horizon = max(prediction_length, self.cfg.native_horizon)
         q = self.model(x, observed, horizon)[:, :prediction_length].float()
-        return self._unscale(q, ctx_t, mu, sigma).cpu().numpy()
+        return self._unscale(q, ctx, mu, sigma)
+
+    @torch.no_grad()
+    def _forecast_batch(self, ctx: np.ndarray, prediction_length: int, flip: bool) -> np.ndarray:
+        ctx_t = torch.from_numpy(ctx).to(self.device)
+        q = self._predict(ctx_t, prediction_length)
+        if flip:
+            # The q-th quantile of -x is minus the (1-q)-th quantile of x: reverse the levels, then average.
+            q = 0.5 * (q - self._predict(-ctx_t, prediction_length).flip(-1))
+        return q.float().cpu().numpy()
 
     def forecast(self, context, prediction_length: int, freq: str | None = None,
                  flip: bool | None = None) -> Forecast:
-        """Forecast each series of `context` (1-D array, 2-D array [n, length], or a list of 1-D series)."""
+        """Forecast each series of `context` (1-D array, 2-D array [n, length], or a list of 1-D series).
+
+        NaN values are treated as missing. Only the last `context_length` points are read.
+        flip=True (default) averages the forecast of the series with the mirrored forecast of its negation;
+        flip=False runs one pass instead of two."""
         flip = self.cfg.flip if flip is None else flip
         series = self._as_series(context)
-        if flip:
-            raise NotImplementedError("flip averaging is not available yet; pass flip=False")
         if freq is not None:
             raise NotImplementedError("the long coarse view (freq=...) is not available yet")
         if prediction_length < 1:
             raise ValueError("prediction_length must be >= 1")
-        if prediction_length > self.cfg.native_horizon:
-            raise NotImplementedError(f"horizons beyond {self.cfg.native_horizon} steps are not available yet")
-        if any(len(s) > self.cfg.context_length for s in series):
-            raise NotImplementedError(f"contexts longer than {self.cfg.context_length} points are not available yet")
-        out = [self._forecast_batch(self._left_pad(series[i:i + self.batch_size]), prediction_length)
+        reach = self.cfg.context_length + min(self.cfg.coarse_factors)
+        if any(len(s) >= reach for s in series):
+            raise NotImplementedError(f"series with {reach} points or more need the coarse readings, "
+                                      "which are not available yet")
+        out = [self._forecast_batch(self._window(series[i:i + self.batch_size]), prediction_length, flip)
                for i in range(0, len(series), self.batch_size)]
         return Forecast(np.concatenate(out, 0), tuple(self.cfg.quantile_levels))

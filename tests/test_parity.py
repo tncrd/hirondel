@@ -1,7 +1,10 @@
 """Parity with the reference implementation the weights were trained with.
 
 `tests/data/parity_reference.npz` holds fixed input series and the quantiles the reference
-implementation returned for them (float32, CPU, one thread). `forecast()` must reproduce them to 1e-6.
+implementation returned for them (float32, CPU, one thread, the torch version stored in the file).
+`forecast()` must reproduce them to 1e-6. This holds with that same torch version on one thread; other
+torch versions agree to a few 1e-6 of the series' standard deviation (rounding differences), which is
+reported but not required.
 
 The weights are read from `NOM_WEIGHTS` (a local folder or a Hugging Face repo id), or from
 `./weights` when present. Without weights the test is skipped.
@@ -44,7 +47,13 @@ def _cases():
 def test_forecast_matches_reference(forecaster, case, ref):
     context = [ref[f"{case['name']}/context_{j}"] for j in range(case["n_series"])]
     out = forecaster.forecast(context, case["prediction_length"], freq=case["freq"], flip=case["flip"])
-    np.testing.assert_allclose(out.quantiles, ref[f"{case['name']}/quantiles"], rtol=1e-6, atol=1e-6)
+    expected = ref[f"{case['name']}/quantiles"]
+    scale = np.array([np.nanstd(c) for c in context])[:, None, None]
+    gap = float((np.abs(out.quantiles - expected) / scale).max())
+    np.testing.assert_allclose(
+        out.quantiles, expected, rtol=1e-6, atol=1e-6,
+        err_msg=f"torch {torch.__version__} vs reference torch {ref['torch_version']}; "
+                f"max gap {gap:.2e} context standard deviations")
 
 
 def test_config_matches_reference_config(forecaster):

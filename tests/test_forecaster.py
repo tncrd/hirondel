@@ -49,16 +49,41 @@ def test_batching_does_not_change_a_series(forecaster):
     np.testing.assert_allclose(small, whole, rtol=1e-5, atol=1e-5)
 
 
-@pytest.mark.parametrize("kwargs, match", [
-    ({"prediction_length": 721, "flip": False}, "horizons beyond"),
-    ({"prediction_length": 24, "flip": True}, "flip"),
-    ({"prediction_length": 24, "flip": False, "freq": "H"}, "coarse view"),
+def test_only_the_last_context_length_points_are_read(forecaster):
+    s = _series(2051)
+    np.testing.assert_array_equal(forecaster.forecast(s, 24).quantiles, forecaster.forecast(s[-2048:], 24).quantiles)
+
+
+def test_flip_is_the_default(forecaster):
+    s = _series(300)
+    default = forecaster.forecast(s, 24).quantiles
+    np.testing.assert_array_equal(default, forecaster.forecast(s, 24, flip=True).quantiles)
+    assert not np.array_equal(default, forecaster.forecast(s, 24, flip=False).quantiles)
+
+
+def test_horizon_beyond_native(forecaster):
+    q = forecaster.forecast(_series(500), 1000).quantiles
+    assert q.shape == (1, 1000, 9) and np.isfinite(q).all() and (np.diff(q, axis=-1) >= 0).all()
+
+
+def test_missing_values_are_accepted(forecaster):
+    s = _series(400)
+    s[:30] = np.nan
+    s[200:240] = np.nan
+    q = forecaster.forecast(s, 48).quantiles
+    assert np.isfinite(q).all()
+
+
+def test_flip_is_sign_equivariant(forecaster):
+    s = _series(300)
+    q, q_neg = forecaster.forecast(s, 24).quantiles, forecaster.forecast(-s, 24).quantiles
+    np.testing.assert_allclose(q_neg, -q[..., ::-1], rtol=1e-5, atol=1e-5)
+
+
+@pytest.mark.parametrize("n, kwargs, match", [
+    (100, {"freq": "H"}, "coarse view"),
+    (2052, {}, "coarse readings"),
 ])
-def test_unported_branches_say_so(forecaster, kwargs, match):
+def test_unported_branches_say_so(forecaster, n, kwargs, match):
     with pytest.raises(NotImplementedError, match=match):
-        forecaster.forecast(_series(100), **kwargs)
-
-
-def test_long_context_not_yet(forecaster):
-    with pytest.raises(NotImplementedError, match="longer than 2048"):
-        forecaster.forecast(_series(3000), 24, flip=False)
+        forecaster.forecast(_series(n), 24, **kwargs)
