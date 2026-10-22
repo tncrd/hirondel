@@ -1,0 +1,71 @@
+# Models we run ourselves, under our protocol, through the same adapter as our model (benchmarks/adapter.py).
+# Written on 2026-10-22, before any of them was scored. The list is fixed here and not chosen after seeing results.
+#
+# Selection rule: recent pretrained forecasting models with public weights and a public package, that are either
+# reference points on the public leaderboards or close to our size (up to about 30M parameters). The list is:
+# Timestral-5M and 28M, Chronos-2, TiRex, TimesFM-2.5 and Toto-2.0-22m.
+#
+# Protocol: forced univariate. Each target series is forecast on its own, without covariates and without information
+# from other series. The context is the model's own default maximum, the quantile levels are 0.1 ... 0.9, and each
+# model uses its public package with the settings documented on its model card. Each model runs in its own
+# environment, and downloaded weights are loaded without pickle when the format allows it. These numbers are labelled
+# "same protocol, computed by us". They are not the leaderboards' official numbers, which may use joint or covariate
+# modes.
+#
+# Size: the parameter count stated by the official model card (card_statement). When the Hub's safetensors metadata
+# gives an exact count it is recorded too (hub_count). Revision: the Hub commit read on 2026-10-22, pinned for the run.
+
+competitors:
+  - name: Timestral-5M
+    repo_id: mistralai/Timestral-5M
+    revision: bdd20cfc15a3fea0e4cb5ccef37f8d3ca7aa335f
+    card_statement: "Size: 5M parameters"
+    hub_count: 5208960
+    license: Modified MIT (no rights for companies above $20M monthly revenue, clause 2 of the LICENSE)
+    package: timestral (github.com/mistralai/timestral)
+    source: https://huggingface.co/mistralai/Timestral-5M
+
+  - name: Timestral-28M
+    repo_id: mistralai/Timestral-28M
+    revision: 49b26409ac87b5935539a5d8ffe7f397b720db47
+    card_statement: "Size: 28M parameters."
+    hub_count: 27821184
+    license: Modified MIT (no rights for companies above $20M monthly revenue, clause 2 of the LICENSE)
+    package: timestral (github.com/mistralai/timestral)
+    source: https://huggingface.co/mistralai/Timestral-28M
+
+  - name: Chronos-2
+    repo_id: amazon/chronos-2
+    revision: 29ec3766d36d6f73f0696f85560a422f50e8498c
+    card_statement: "Chronos-2 is a 120M-parameter, encoder-only time series foundation model"
+    hub_count: 119477664
+    license: Apache-2.0
+    package: chronos-forecasting>=2.0
+    source: https://huggingface.co/amazon/chronos-2
+
+  - name: TiRex
+    repo_id: NX-AI/TiRex
+    revision: 63c740922493f5fbe60b277609ec62babfba2762
+    card_statement: "TiRex is a 35M parameter pre-trained time series forecasting model based on xLSTM."
+    hub_count: null            # weights are a .ckpt file, no safetensors metadata
+    license: NX-AI Community License
+    package: tirex-ts
+    source: https://huggingface.co/NX-AI/TiRex
+
+  - name: TimesFM-2.5
+    repo_id: google/timesfm-2.5-200m-pytorch
+    revision: 1d952420fba87f3c6dee4f240de0f1a0fbc790e3
+    card_statement: "200M (model name); model size 0.2B params"
+    hub_count: 231289280
+    license: Apache-2.0
+    package: timesfm (github.com/google-research/timesfm)
+    source: https://huggingface.co/google/timesfm-2.5-200m-pytorch
+
+  - name: Toto-2.0-22m
+    repo_id: Datadog/Toto-2.0-22m
+    revision: 685e4ae3e2be8d8998025e53dd98e7fdcb296a89
+    card_statement: "21.9M params"
+    hub_count: 21915584
+    license: Apache-2.0
+    package: toto-models
+    source: https://huggingface.co/Datadog/Toto-2.0-22m
