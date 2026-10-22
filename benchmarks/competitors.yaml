@@ -69,3 +69,14 @@ competitors:
     license: Apache-2.0
     package: toto-models
     source: https://huggingface.co/Datadog/Toto-2.0-22m
+
+# Amendment, 2026-10-22, before any score: on GIFT-Eval, TiRex runs from NX-AI/TiRex-1.1-gifteval (revision
+# 01b1ebc83a87e82b119f907fe7e43d015db23e9d), the checkpoint of TiRex's leaderboard entry and official notebook,
+# whose card says "the pretraining dataset has been cleaned to remove overlaps with the GIFT-Eval test dataset".
+# The card of NX-AI/TiRex does not say this, so scoring it on GIFT-Eval could count training data as test data.
+# Same size and same license.
+gift_eval_overrides:
+  TiRex:
+    repo_id: NX-AI/TiRex-1.1-gifteval
+    revision: 01b1ebc83a87e82b119f907fe7e43d015db23e9d
+    source: https://huggingface.co/NX-AI/TiRex-1.1-gifteval
