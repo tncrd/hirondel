@@ -80,3 +80,9 @@ gift_eval_overrides:
     repo_id: NX-AI/TiRex-1.1-gifteval
     revision: 01b1ebc83a87e82b119f907fe7e43d015db23e9d
     source: https://huggingface.co/NX-AI/TiRex-1.1-gifteval
+
+# Amendment, 2026-10-22 (user decision), after the first TiRex score: TiRex also gets a second line, "TiRex
+# (resampling)", with resample_strategy="frequency" as in its official GIFT-Eval notebook. It is the setting of TiRex's
+# leaderboard entry. It is added as a second line next to the card's default setting, which is not replaced.
+gift_eval_variants:
+  TiRex: [resample]

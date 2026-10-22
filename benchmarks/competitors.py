@@ -97,14 +97,17 @@ def chronos2(m: dict, device: str):
     return fn
 
 
-def tirex(m: dict, device: str):
-    """TiRex `forecast` as on its model card, torch backend (the custom-kernel backend needs CUDA)."""
+def tirex(m: dict, device: str, variant: str | None = None):
+    """TiRex `forecast` as on its model card, torch backend (the custom-kernel backend needs CUDA). Variant "resample":
+    `resample_strategy="frequency"` as in TiRex's GIFT-Eval notebook (the context is downsampled so that one dominant
+    period spans about 64 points, the forecast is made at that rate and brought back)."""
     import torch
     from tirex import load_model
     model = load_model(m["repo_id"], device=device, backend="torch", hf_kwargs={"revision": m["revision"]})
 
     def fn(contexts, H):
-        q, _ = model.forecast(context=[torch.tensor(c) for c in contexts], prediction_length=H, batch_size=256)
+        kw = {"resample_strategy": "frequency"} if variant == "resample" else {}
+        q, _ = model.forecast(context=[torch.tensor(c) for c in contexts], prediction_length=H, batch_size=256, **kw)
         return np.asarray(q.float().cpu().numpy())[:, :H]
     return fn
 
@@ -149,6 +152,18 @@ def toto2(m: dict, device: str):
     return fn
 
 
+VARIANTS = {("TiRex", "resample"): "TiRex (resampling)"}
+
+
+def result_name(name: str, variant: str | None) -> str:
+    """Name of a result line: the model, or the model with an inference variant of its own official notebook."""
+    if variant is None:
+        return name
+    if (name, variant) not in VARIANTS:
+        raise ValueError(f"{name} has no variant {variant!r}")
+    return VARIANTS[(name, variant)]
+
+
 LOADERS = {"Timestral-5M": timestral, "Timestral-28M": timestral, "Chronos-2": chronos2, "TiRex": tirex,
            "TimesFM-2.5": timesfm25, "Toto-2.0-22m": toto2}
 
@@ -160,28 +175,30 @@ def main():
     ap.add_argument("--gift-eval", required=True, help="clone of github.com/SalesforceAIResearch/gift-eval")
     ap.add_argument("--out", default=None)
     ap.add_argument("--device", default="cpu")
+    ap.add_argument("--variant", default=None, help="inference variant from the model's own notebook (TiRex: resample)")
     a = ap.parse_args()
 
     from importlib.metadata import version
     from benchmarks import gift
     from benchmarks.adapter import GluonTSAdapter
     m = entry(load_list(), a.name, a.benchmark)
-    fn = LOADERS[a.name](m, a.device)
-    out = a.out or os.path.join(HERE, "results", "gift_competitors", a.name)
+    line = result_name(a.name, a.variant)
+    fn = LOADERS[a.name](m, a.device, a.variant) if a.variant else LOADERS[a.name](m, a.device)
+    out = a.out or os.path.join(HERE, "results", "gift_competitors", line)
     os.makedirs(out, exist_ok=True)
     with open(os.path.join(a.gift_eval, "notebooks", "dataset_properties.json")) as f:
         properties = json.load(f)
     out_csv = os.path.join(out, "all_results.csv")
-    gift.evaluate(lambda pl: GluonTSAdapter(fn, pl, batch_size=256), a.name, properties, out_csv)
+    gift.evaluate(lambda pl: GluonTSAdapter(fn, pl, batch_size=256), line, properties, out_csv)
     h = gift.headline(out_csv, os.path.join(a.gift_eval, "results", "seasonal_naive", "all_results.csv"))
     package = m["package"].split()[0].split(">")[0].split("=")[0]
     import datetime
-    meta = {"model": a.name, "repo_id": m["repo_id"], "revision": m["revision"], "package": package,
+    meta = {"model": line, "variant": a.variant, "repo_id": m["repo_id"], "revision": m["revision"], "package": package,
             "package_version": version(package if package != "toto-models" else "toto-models"),
             "date": datetime.date.today().isoformat(), "protocol": "forced univariate, computed by us", **h}
     with open(os.path.join(out, "headline.json"), "w") as f:
         json.dump(meta, f, indent=1)
-    print(f"\n{a.name} GIFT-Eval ({h['n_tasks']} tasks): MASE {h['MASE']:.4f}  CRPS {h['CRPS']:.4f}")
+    print(f"\n{line} GIFT-Eval ({h['n_tasks']} tasks): MASE {h['MASE']:.4f}  CRPS {h['CRPS']:.4f}")
 
 
 if __name__ == "__main__":

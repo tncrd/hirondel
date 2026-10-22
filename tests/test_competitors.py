@@ -47,3 +47,10 @@ def test_empty_contexts_become_a_single_zero_for_packages_that_refuse_them():
     a, b = np.array([1.0, np.nan], np.float32), np.full(5, np.nan, np.float32)
     out = competitors.no_empty([a, b])
     assert out[0] is a and out[1].tolist() == [0.0]
+
+
+def test_tirex_resampling_variant_is_a_second_line():
+    assert competitors.result_name("TiRex", None) == "TiRex"
+    assert competitors.result_name("TiRex", "resample") == "TiRex (resampling)"
+    with pytest.raises(ValueError, match="no variant"):
+        competitors.result_name("Chronos-2", "resample")
