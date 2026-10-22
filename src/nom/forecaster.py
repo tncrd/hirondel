@@ -22,7 +22,15 @@ class Forecast:
 
     @property
     def median(self) -> np.ndarray:
-        return self.quantiles[..., self.quantile_levels.index(0.5)]
+        """[n_series, prediction_length]: the 0.5 quantile."""
+        return self.quantile(0.5)
+
+    def quantile(self, q: float) -> np.ndarray:
+        """[n_series, prediction_length] for one of the predicted levels; other levels are refused, not interpolated."""
+        for i, level in enumerate(self.quantile_levels):
+            if abs(level - q) < 1e-9:
+                return self.quantiles[..., i]
+        raise ValueError(f"quantile level {q} is not predicted; available levels: {list(self.quantile_levels)}")
 
 
 class NomForecaster:
@@ -49,21 +57,44 @@ class NomForecaster:
         return cls(model, device=device, **kwargs)
 
     # ---- inference procedure ---------------------------------------------------------------------
+    @staticmethod
+    def _to_float(x, what: str) -> np.ndarray:
+        try:
+            return np.asarray(x, dtype=np.float32)
+        except (TypeError, ValueError) as e:
+            raise ValueError(f"{what} must be numeric ({e})") from None
+
     def _as_series(self, context) -> list[np.ndarray]:
+        """Accepts a 1-D array (one series), a 2-D array [n_series, length], or a list of 1-D series of any lengths."""
         if isinstance(context, torch.Tensor):
             context = context.detach().cpu().numpy()
+        if isinstance(context, np.generic):
+            context = np.asarray(context)
         if isinstance(context, np.ndarray) and context.dtype != object:
-            if context.ndim == 1:
-                context = context[None]
-            if context.ndim != 2:
-                raise ValueError(f"context must be 1-D or 2-D, got shape {context.shape}")
-            return [np.asarray(c, dtype=np.float32) for c in context]
-        series = []
-        for c in context:
-            c = c.detach().cpu().numpy() if isinstance(c, torch.Tensor) else np.asarray(c)
-            if c.ndim != 1:
-                raise ValueError(f"each series must be 1-D, got shape {c.shape}")
-            series.append(c.astype(np.float32))
+            if context.ndim == 0 or context.ndim > 2:
+                raise ValueError(f"context must be 1-D (one series) or 2-D [n_series, length], got shape {context.shape}")
+            context = self._to_float(context[None] if context.ndim == 1 else context, "context")
+            series = list(context)
+        else:
+            try:
+                items = list(context)
+            except TypeError:
+                raise ValueError(f"context must be an array, a tensor or a list of series, got {type(context).__name__}") \
+                    from None
+            series = []
+            for i, c in enumerate(items):
+                c = c.detach().cpu().numpy() if isinstance(c, torch.Tensor) else c
+                c = self._to_float(c, f"series {i}")
+                if c.ndim != 1:
+                    raise ValueError(f"series {i} must be 1-D, got shape {c.shape}")
+                series.append(c)
+        if not series:
+            raise ValueError("context is empty: pass at least one series")
+        for i, c in enumerate(series):
+            if c.size == 0:
+                raise ValueError(f"series {i} is empty")
+            if not np.isfinite(c).any():
+                raise ValueError(f"series {i} has no finite value (all missing)")
         return series
 
     @staticmethod
@@ -141,9 +172,55 @@ class NomForecaster:
         flip=True (default) averages the forecast of the series with the mirrored forecast of its negation;
         flip=False runs one pass instead of two."""
         flip = self.cfg.flip if flip is None else flip
+        if isinstance(prediction_length, bool) or not isinstance(prediction_length, (int, np.integer)) \
+                or prediction_length < 1:
+            raise ValueError(f"prediction_length must be a positive integer, got {prediction_length!r}")
+        prediction_length = int(prediction_length)
         series = self._as_series(context)
-        if prediction_length < 1:
-            raise ValueError("prediction_length must be >= 1")
         out = [self._forecast_batch(series[i:i + self.batch_size], prediction_length, flip)
                for i in range(0, len(series), self.batch_size)]
         return Forecast(np.concatenate(out, 0), tuple(self.cfg.quantile_levels))
+
+    def forecast_df(self, df, prediction_length: int, id_column: str = "item_id", timestamp_column: str = "timestamp",
+                    target: str = "target", freq: str | None = None, flip: bool | None = None):
+        """Forecast every series of a long DataFrame (one row per id and timestamp) and return a long DataFrame.
+
+        Each series is sorted by timestamp and placed on a regular grid; missing rows and NaN targets count as
+        missing values. `freq` (a pandas offset alias) fixes the grid and the future timestamps; when None it is
+        inferred per series. Returns columns [id_column, timestamp_column, "predictions" (the median), "0.1", ...].
+        Requires pandas (`pip install "nom[pandas]"`)."""
+        try:
+            import pandas as pd
+        except ImportError:
+            raise ImportError('forecast_df needs pandas: pip install "nom[pandas]"') from None
+        missing = [c for c in (id_column, timestamp_column, target) if c not in df.columns]
+        if missing:
+            raise ValueError(f"columns not found in df: {missing}")
+        if len(df) == 0:
+            raise ValueError("df is empty: pass at least one series")
+        ids, series, futures = [], [], []
+        for item, g in df.groupby(id_column, sort=False):
+            g = g.sort_values(timestamp_column)
+            ts = pd.DatetimeIndex(pd.to_datetime(g[timestamp_column]))
+            if ts.has_duplicates:
+                raise ValueError(f"series {item!r}: duplicate timestamps")
+            f = freq or (pd.infer_freq(ts) if len(ts) >= 3 else None)
+            if f is None:
+                raise ValueError(f"series {item!r}: cannot infer the frequency; pass freq=")
+            grid = pd.date_range(ts[0], ts[-1], freq=f)
+            if not ts.isin(grid).all():
+                raise ValueError(f"series {item!r}: timestamps do not lie on a regular {f!r} grid")
+            values = pd.Series(g[target].to_numpy(dtype=np.float64), index=ts).reindex(grid).to_numpy(np.float32)
+            ids.append(item)
+            series.append(values)
+            futures.append(pd.date_range(grid[-1], periods=prediction_length + 1, freq=f)[1:])
+        out = self.forecast(series, prediction_length, flip=flip)
+        levels = [str(q) for q in out.quantile_levels]
+        frames = []
+        for i, item in enumerate(ids):
+            frame = pd.DataFrame(out.quantiles[i], columns=levels)
+            frame.insert(0, "predictions", out.median[i])
+            frame.insert(0, timestamp_column, futures[i])
+            frame.insert(0, id_column, item)
+            frames.append(frame)
+        return pd.concat(frames, ignore_index=True)

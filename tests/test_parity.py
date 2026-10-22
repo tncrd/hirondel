@@ -59,3 +59,17 @@ def test_forecast_matches_reference(forecaster, case, ref):
 def test_config_matches_reference_config(forecaster):
     with open(os.path.join(HERE, "data", "config.json")) as f:
         assert json.load(f)["quantile_levels"] == list(forecaster.cfg.quantile_levels)
+
+
+def test_reference_quantiles_never_cross():
+    ref = np.load(REFERENCE)
+    for case in json.loads(str(ref["cases"])):
+        q = ref[f"{case['name']}/quantiles"]
+        assert np.isfinite(q).all() and (np.diff(q, axis=-1) >= 0).all(), case["name"]
+
+
+@pytest.mark.parametrize("case, ref", _cases(), ids=lambda x: x["name"] if isinstance(x, dict) else "")
+def test_forecast_never_crosses_on_reference_inputs(forecaster, case, ref):
+    context = [ref[f"{case['name']}/context_{j}"] for j in range(case["n_series"])]
+    q = forecaster.forecast(context, case["prediction_length"], flip=case["flip"]).quantiles
+    assert (np.diff(q, axis=-1) >= 0).all(), case["name"]

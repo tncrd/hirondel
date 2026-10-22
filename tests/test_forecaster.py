@@ -100,3 +100,121 @@ def test_a_short_series_ignores_long_neighbours(forecaster):
 def test_no_frequency_argument(forecaster):
     with pytest.raises(TypeError):
         forecaster.forecast(_series(100), 24, freq="H")
+
+
+# ---- result object ---------------------------------------------------------------------------------------------------
+def test_quantile_reads_the_right_level(forecaster):
+    out = forecaster.forecast([_series(200), _series(300, 1)], 24)
+    for i, q in enumerate(out.quantile_levels):
+        np.testing.assert_array_equal(out.quantile(q), out.quantiles[..., i])
+    np.testing.assert_array_equal(out.median, out.quantile(0.5))
+    assert out.quantile(0.1).shape == (2, 24)
+
+
+@pytest.mark.parametrize("q", [0.05, 0.25, 0.95, 1.5])
+def test_quantile_refuses_a_level_not_predicted(forecaster, q):
+    out = forecaster.forecast(_series(200), 24)
+    with pytest.raises(ValueError, match="is not predicted; available levels"):
+        out.quantile(q)
+
+
+# ---- clear errors ------------------------------------------------------------------------------------------------------
+@pytest.mark.parametrize("context, match", [
+    ([], "context is empty"),
+    (np.zeros((0, 10), np.float32), "context is empty"),
+    ([np.array([], np.float32)], "series 0 is empty"),
+    ([_series(50), np.full(30, np.nan, np.float32)], "series 1 has no finite value"),
+    (np.full((2, 40), np.nan), "series 0 has no finite value"),
+    (np.zeros((2, 3, 4)), "1-D \\(one series\\) or 2-D"),
+    (np.float32(3.0), "1-D \\(one series\\) or 2-D"),
+    ([np.zeros((3, 4))], "series 0 must be 1-D"),
+    ([["a", "b"]], "series 0 must be numeric"),
+    (42, "context must be an array"),
+])
+def test_bad_context_raises_a_clear_error(forecaster, context, match):
+    with pytest.raises(ValueError, match=match):
+        forecaster.forecast(context, 12)
+
+
+@pytest.mark.parametrize("pl", [0, -3, 2.5, True, "24"])
+def test_bad_prediction_length(forecaster, pl):
+    with pytest.raises(ValueError, match="prediction_length must be a positive integer"):
+        forecaster.forecast(_series(100), pl)
+
+
+def test_infinite_values_are_missing_values(forecaster):
+    s = _series(300)
+    s_inf = s.copy(); s_inf[100:110] = np.inf
+    s_nan = s.copy(); s_nan[100:110] = np.nan
+    np.testing.assert_array_equal(forecaster.forecast(s_inf, 24).quantiles, forecaster.forecast(s_nan, 24).quantiles)
+
+
+def test_device_is_the_users_choice():
+    torch.manual_seed(0)
+    f = NomForecaster(NomModel(NomConfig.from_json(CONFIG)), device="cpu")
+    assert f.device.type == "cpu" and all(p.device.type == "cpu" for p in f.model.parameters())
+
+
+# ---- forecast_df (pandas optional) --------------------------------------------------------------------------------
+def _long_df(pd, lengths=(150, 400), freq="h"):
+    rows = []
+    for k, n in enumerate(lengths):
+        ts = pd.date_range("2024-01-01", periods=n, freq=freq)
+        rows.append(pd.DataFrame({"item_id": f"s{k}", "timestamp": ts, "target": _series(n, k)}))
+    return pd.concat(rows, ignore_index=True)
+
+
+def test_forecast_df_equals_forecast(forecaster):
+    pd = pytest.importorskip("pandas")
+    df = _long_df(pd)
+    out = forecaster.forecast_df(df, 24)
+    ref = forecaster.forecast([_series(150, 0), _series(400, 1)], 24)
+    assert list(out.columns) == ["item_id", "timestamp", "predictions"] + [str(q) for q in ref.quantile_levels]
+    for k in range(2):
+        part = out[out["item_id"] == f"s{k}"]
+        np.testing.assert_array_equal(part[[str(q) for q in ref.quantile_levels]].to_numpy(np.float32), ref.quantiles[k])
+        np.testing.assert_array_equal(part["predictions"].to_numpy(np.float32), ref.median[k])
+    last = df[df["item_id"] == "s0"]["timestamp"].max()
+    assert list(out[out["item_id"] == "s0"]["timestamp"])[:2] == [last + pd.Timedelta(hours=1), last + pd.Timedelta(hours=2)]
+
+
+def test_forecast_df_missing_rows_are_missing_values(forecaster):
+    pd = pytest.importorskip("pandas")
+    df = _long_df(pd, lengths=(200,))
+    gap = df.drop(index=range(50, 60))
+    full = df.copy()
+    full.loc[50:59, "target"] = np.nan
+    np.testing.assert_array_equal(forecaster.forecast_df(gap, 12, freq="h").iloc[:, 2:].to_numpy(),
+                                  forecaster.forecast_df(full, 12).iloc[:, 2:].to_numpy())
+
+
+def test_forecast_df_unsorted_rows(forecaster):
+    pd = pytest.importorskip("pandas")
+    df = _long_df(pd)
+    np.testing.assert_array_equal(forecaster.forecast_df(df.sample(frac=1.0, random_state=0), 12).iloc[:, 2:].to_numpy(),
+                                  forecaster.forecast_df(df, 12).iloc[:, 2:].to_numpy())
+
+
+@pytest.mark.parametrize("make, match", [
+    (lambda df: df.rename(columns={"target": "y"}), "columns not found"),
+    (lambda df: df.iloc[:0], "df is empty"),
+    (lambda df: df.iloc[[0, 1, 1, 2]], "duplicate timestamps"),
+    (lambda df: df.iloc[[0, 1]], "cannot infer the frequency"),
+])
+def test_forecast_df_errors(forecaster, make, match):
+    pd = pytest.importorskip("pandas")
+    with pytest.raises(ValueError, match=match):
+        forecaster.forecast_df(make(_long_df(pd, lengths=(100,))), 12)
+
+
+def test_forecast_df_without_pandas_says_how_to_install(forecaster, monkeypatch):
+    import builtins
+    real = builtins.__import__
+
+    def no_pandas(name, *a, **k):
+        if name == "pandas":
+            raise ImportError("no pandas")
+        return real(name, *a, **k)
+    monkeypatch.setattr(builtins, "__import__", no_pandas)
+    with pytest.raises(ImportError, match='pip install "nom\\[pandas\\]"'):
+        forecaster.forecast_df(None, 12)
