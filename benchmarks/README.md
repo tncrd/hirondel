@@ -31,3 +31,53 @@ divided by the Seasonal Naive result in `gift-eval/results/seasonal_naive/all_re
 
 gift-eval declares `gluonts~=0.15.1` and `numpy~=1.26`; it is installed here without its dependencies, next to
 gluonts 0.16.3 and numpy 2 (needed for recent Python versions); the numbers in `results/` were computed that way.
+
+## fev-bench
+
+```bash
+git clone https://github.com/autogluon/fev && git -C fev checkout f9e2c7d
+pip install ".[bench]" "fev==0.9.0"
+python -m benchmarks.fev_bench --fev-bench fev/benchmarks/fev_bench --out benchmarks/results/fev --device cuda
+```
+
+All 100 tasks, univariate and covariate-blind (every target column forecast as its own series). Skill score, win rate
+and rank are computed as on the fev-bench site (`fev.analysis.leaderboard` with the models it shows by default, from
+`results/` and `models.yaml` of the fev repository). No task is declared as trained on: our training data contains none
+of the fev-bench datasets (`DATA.md`).
+
+## TIME
+
+`timebench` pins older numpy / datasets / gluonts, so TIME's loader and scorer run in their own environment and the
+model in this package's; they meet through files (`python -m benchmarks.time_bench --help`). The headline is the one of
+TIME's `scripts/compute_local_leaderboard.py` (per task, mean over windows and series divided by Seasonal Naive's;
+geometric mean over the 98 tasks), written unrounded to `results/time/headline.json`, with the per-task values in
+`results/time/tasks.csv`.
+
+## Series with no observed value
+
+Some test contexts have no observed value at all, while their future values are scored:
+
+| benchmark | contexts | datasets |
+|---|---|---|
+| GIFT-Eval | 649 | bitbrains_fast_storage and bitbrains_rnd (5T and H; short, medium, long), electricity/W |
+| fev-bench | 230 of 1 980 | gvar |
+| TIME | 0 | |
+
+`NomForecaster.forecast()` refuses such a series with a clear error: a forecast from nothing is not something a user
+should get silently. A benchmark still has to score it, so `nom_forecast_fn` runs the model on the empty context
+through the same internal path as the reference implementation (its output is finite but carries no information).
+Among the competitors, only TimesFM-2.5's package refuses an empty context; it then receives a single observed 0
+(`benchmarks.competitors.no_empty`). The other packages receive the empty context as it is.
+
+## Competitors
+
+`competitors.yaml` lists the models we run ourselves, in forced univariate mode, with the inference settings of their
+official GIFT-Eval notebooks or model cards. The list, sizes and revisions were committed before any of them was scored.
+Each model runs in its own environment with its public package:
+
+```bash
+python -m benchmarks.competitors gift --name Chronos-2 --gift-eval gift-eval --device cuda
+```
+
+Results: `results/gift_competitors/<model>/` (`all_results.csv`, and `headline.json` with the package version and the
+date). These are "same protocol, computed by us" numbers, not the leaderboards' official ones.
