@@ -86,3 +86,7 @@ gift_eval_overrides:
 # leaderboard entry. It is added as a second line next to the card's default setting, which is not replaced.
 gift_eval_variants:
   TiRex: [resample]
+
+# Amendment, 2026-10-22 (user decision): the "TiRex (resampling)" run is cancelled because it is too long (about
+# 2.5 hours on our GPU). The variant stays in the code; the only TiRex line computed by us is the card's default setting.
+# TiRex's leaderboard number (with resampling) can be shown as an official number.
