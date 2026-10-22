@@ -41,3 +41,9 @@ def test_level_indices():
     assert [levels[i] for i in idx] == [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
     with pytest.raises(ValueError, match="0.1"):
         competitors.level_indices([0.2, 0.5, 0.8])
+
+
+def test_empty_contexts_become_a_single_zero_for_packages_that_refuse_them():
+    a, b = np.array([1.0, np.nan], np.float32), np.full(5, np.nan, np.float32)
+    out = competitors.no_empty([a, b])
+    assert out[0] is a and out[1].tolist() == [0.0]

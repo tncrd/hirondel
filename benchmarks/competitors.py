@@ -52,6 +52,12 @@ def level_indices(levels) -> list[int]:
     return out
 
 
+def no_empty(contexts: list) -> list:
+    """A context with no observed value (649 in GIFT-Eval: bitbrains, electricity/W) becomes a single observed 0, for the
+    packages that refuse such a context (TimesFM-2.5). The other packages receive it as it is."""
+    return [c if np.isfinite(c).any() else np.zeros(1, np.float32) for c in contexts]
+
+
 def _by_length(contexts: list, batch: int):
     """Batches of similar lengths (less padding); yields (indices, contexts)."""
     order = np.argsort([len(c) for c in contexts], kind="stable")
@@ -110,12 +116,12 @@ def timesfm25(m: dict, device: str):
     p = tf.model.p
 
     def fn(contexts, H):
-        mc = min(15360, (max(len(c) for c in contexts) + p - 1) // p * p)
+        mc = min(15360, (max(len(c) for c in no_empty(contexts)) + p - 1) // p * p)
         tf.compile(forecast_config=timesfm.ForecastConfig(
             max_context=mc, max_horizon=max(1024, H), infer_is_positive=True, use_continuous_quantile_head=True,
             fix_quantile_crossing=True, force_flip_invariance=True, return_backcast=False, normalize_inputs=True,
             per_core_batch_size=128))
-        _, q = tf.forecast(horizon=H, inputs=[np.asarray(c, np.float64) for c in contexts])
+        _, q = tf.forecast(horizon=H, inputs=[np.asarray(c, np.float64) for c in no_empty(contexts)])
         return np.asarray(q)[:, :H, 1:]                                  # [mean, 0.1 ... 0.9] -> 0.1 ... 0.9
     return fn
 
