@@ -125,6 +125,11 @@ def timesfm25(m: dict, device: str):
     p = tf.model.p
 
     def fn(contexts, H):
+        # 32 series per call (less GPU memory at once). Every series is forecast on its own, so the split does not
+        # change the results. On ROCm, TimesFM-2.5 must also run alone on the GPU: next to other jobs it crashed the
+        # runtime (segmentation fault in its running statistics on LOOP_SEATTLE/5T; the same series pass on CPU).
+        if len(contexts) > 32:
+            return np.concatenate([fn(contexts[i:i + 32], H) for i in range(0, len(contexts), 32)])
         mc = min(15360, (max(len(c) for c in no_empty(contexts)) + p - 1) // p * p)
         tf.compile(forecast_config=timesfm.ForecastConfig(
             max_context=mc, max_horizon=max(1024, H), infer_is_positive=True, use_continuous_quantile_head=True,
