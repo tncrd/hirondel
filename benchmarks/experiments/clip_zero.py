@@ -39,3 +39,52 @@ def per_pass(forecaster, clip: bool = True):
             up = np.where(non_negative(contexts)[:, None, None], np.maximum(up, 0), up)
         return (0.5 * (up - down[..., ::-1])).astype(np.float32)
     return fn
+
+
+def main():
+    """python -m benchmarks.experiments.clip_zero {gift,fev,time} --variant {after_flip,per_pass} [paths]"""
+    import argparse
+    import json
+    import os
+    ap = argparse.ArgumentParser()
+    ap.add_argument("bench", choices=["gift", "fev", "time"])
+    ap.add_argument("--variant", required=True, choices=["after_flip", "per_pass"])
+    ap.add_argument("--gift-eval")
+    ap.add_argument("--fev-bench")
+    ap.add_argument("--work", help="TIME work folder (contexts from `benchmarks.time_bench dump`)")
+    ap.add_argument("--model", default="weights")
+    ap.add_argument("--device", default="cpu")
+    a = ap.parse_args()
+    from nom import NomForecaster
+    f = NomForecaster.from_pretrained(a.model, device=a.device)
+    fn = after_flip(f) if a.variant == "after_flip" else per_pass(f)
+    out = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "results", "experiments",
+                       "clip_zero", a.variant, a.bench)
+    os.makedirs(out, exist_ok=True)
+    name = f"nom_clip_{a.variant}"
+    if a.bench == "gift":
+        from benchmarks import gift
+        from benchmarks.adapter import GluonTSAdapter
+        with open(os.path.join(a.gift_eval, "notebooks", "dataset_properties.json")) as fp:
+            props = json.load(fp)
+        csv_path = os.path.join(out, "all_results.csv")
+        gift.evaluate(lambda pl: GluonTSAdapter(fn, pl), name, props, csv_path)
+        h = gift.headline(csv_path, os.path.join(a.gift_eval, "results", "seasonal_naive", "all_results.csv"))
+        print(f"GIFT-Eval {a.variant}: MASE {h['MASE']:.4f}  CRPS {h['CRPS']:.4f}")
+    elif a.bench == "fev":
+        from benchmarks import fev_bench
+        s = fev_bench.evaluate(fn, name, a.fev_bench)
+        with open(os.path.join(out, "summaries.json"), "w") as fp:
+            json.dump(s, fp, indent=1, default=str)
+        h = fev_bench.headline(s, name, a.fev_bench, out)
+        with open(os.path.join(out, "headline.json"), "w") as fp:
+            json.dump(h, fp, indent=1)
+        print(f"fev-bench {a.variant}: " + ", ".join(f"{m} skill {v['skill_score']:.2f}" for m, v in h.items()))
+    else:
+        from benchmarks import time_bench
+        time_bench.forecast(a.work, fn, name)
+        print(f"TIME {a.variant}: quantiles written; score with `benchmarks.time_bench score --name {name}`")
+
+
+if __name__ == "__main__":
+    main()
