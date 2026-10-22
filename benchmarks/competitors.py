@@ -175,6 +175,7 @@ def main():
     ap.add_argument("--gift-eval", required=True, help="clone of github.com/SalesforceAIResearch/gift-eval")
     ap.add_argument("--out", default=None)
     ap.add_argument("--device", default="cpu")
+    ap.add_argument("--resume", action="store_true", help="skip the tasks already in all_results.csv")
     ap.add_argument("--variant", default=None, help="inference variant from the model's own notebook (TiRex: resample)")
     a = ap.parse_args()
 
@@ -189,7 +190,7 @@ def main():
     with open(os.path.join(a.gift_eval, "notebooks", "dataset_properties.json")) as f:
         properties = json.load(f)
     out_csv = os.path.join(out, "all_results.csv")
-    gift.evaluate(lambda pl: GluonTSAdapter(fn, pl, batch_size=256), line, properties, out_csv)
+    gift.evaluate(lambda pl: GluonTSAdapter(fn, pl, batch_size=256), line, properties, out_csv, resume=a.resume)
     h = gift.headline(out_csv, os.path.join(a.gift_eval, "results", "seasonal_naive", "all_results.csv"))
     package = m["package"].split()[0].split(">")[0].split("=")[0]
     import datetime

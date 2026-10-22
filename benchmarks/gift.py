@@ -61,21 +61,35 @@ def official_metrics():
             ND(), MeanWeightedSumQuantileLoss(quantile_levels=[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9])]
 
 
-def evaluate(make_predictor, model_name: str, properties: dict, out_csv: str, only=None) -> list[dict]:
+def done_tasks(out_csv: str) -> set:
+    """Tasks already scored in `out_csv` (empty if the file does not exist)."""
+    if not os.path.exists(out_csv):
+        return set()
+    with open(out_csv) as f:
+        return {r["dataset"] for r in csv.DictReader(f)}
+
+
+def evaluate(make_predictor, model_name: str, properties: dict, out_csv: str, only=None,
+             resume: bool = False) -> list[dict]:
     """Run every task. `make_predictor(prediction_length)` returns a GluonTS predictor (e.g. a `GluonTSAdapter`).
-    Rows are appended to `out_csv` as they come, so an interrupted run keeps what it scored."""
+    Rows are appended to `out_csv` as they come, so an interrupted run keeps what it scored; with `resume`, the tasks
+    already in `out_csv` are skipped and new rows are appended."""
     from gift_eval.data import Dataset
     from gluonts.model import evaluate_model
     from gluonts.time_feature import get_seasonality
     metrics = official_metrics()
     rows = []
-    with open(out_csv, "w", newline="") as f:
+    skip = done_tasks(out_csv) if resume else set()
+    with open(out_csv, "a" if skip else "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=COLUMNS)
-        writer.writeheader()
+        if not skip:
+            writer.writeheader()
         for name, term in tasks():
             if only is not None and name not in only:
                 continue
             key = task_key(name, term, properties)
+            if key in skip:
+                continue
             to_univariate = Dataset(name=name, term=term, to_univariate=False).target_dim != 1
             dataset = Dataset(name=name, term=term, to_univariate=to_univariate)
             t0 = time.time()

@@ -130,3 +130,10 @@ def test_nom_adapter_forecasts_series_with_no_observed_value():
     np.testing.assert_array_equal(q[1], f._forecast_batch([empty], 16, True)[0])
     with pytest.raises(ValueError, match="no finite value"):
         f.forecast([empty], 16)
+
+
+def test_done_tasks_are_read_back_for_resuming(tmp_path):
+    path = tmp_path / "all_results.csv"
+    _write(path, _rows(["a/H/short", "b/D/long"], [1.0, 2.0], [0.1, 0.2]))
+    assert gift.done_tasks(str(path)) == {"a/H/short", "b/D/long"}
+    assert gift.done_tasks(str(tmp_path / "missing.csv")) == set()
