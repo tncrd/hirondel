@@ -152,7 +152,7 @@ Code and weights: Apache-2.0 (`LICENSE`). The training data and the attribution 
 ```bibtex
 @misc{hirondel2026,
   title        = {Hirondel-7M: zero-shot probabilistic time-series forecasting},
-  author       = {{The Hirondel Authors}},
+  author       = {{The Hirondel Author}},
   year         = {2026},
   howpublished = {\url{https://huggingface.co/Tncrd/Hirondel-7M}}
 }

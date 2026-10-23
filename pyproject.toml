@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "hirondel"
 version = "1.0.0"
 description = "Zero-shot time-series forecasting model (7M parameters)"
-authors = [{ name = "The Hirondel Authors" }]
+authors = [{ name = "The Hirondel Author" }]
 keywords = ["forecasting", "time-series", "foundation-model"]
 readme = "README.md"
 requires-python = ">=3.10"

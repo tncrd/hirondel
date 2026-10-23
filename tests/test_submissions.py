@@ -9,7 +9,7 @@ from submissions import build
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 ARGS = dict(display="Hirondel", hf_url="https://huggingface.co/Tncrd/Hirondel-7M", code_url="https://github.com/tncrd/hirondel",
-            org="The Hirondel Authors", git_ref="v1.0.0")
+            org="The Hirondel Author", git_ref="v1.0.0")
 
 
 def test_gift_bundle(tmp_path):
