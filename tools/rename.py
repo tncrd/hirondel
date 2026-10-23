@@ -3,7 +3,7 @@
     python -m tools.rename --package pinfall --display Pinfall --hf-id org/Pinfall-7M [--dry-run]
 
 Rules, in order: the Hugging Face id `account/Nom-7M`; class prefixes `NomForecaster`, `NomModel`, `NomConfig`; the display
-name `Nom`; identifiers `nom_...`; the package `nom`. Then `src/nom/` moves to `src/<package>/`. Text files only
+name `Nom`; identifiers `nom_...`; the package `nom`; environment variables `NOM_...`. Then `src/nom/` moves to `src/<package>/`. Text files only
 (code, Markdown, YAML, TOML, CFF, CSV, JSON, NOTICE); figures are regenerated afterwards with `python -m showcase.build`.
 """
 from __future__ import annotations
@@ -17,6 +17,7 @@ TEXT = (".py", ".md", ".toml", ".cff", ".yaml", ".yml", ".csv", ".json", ".txt",
 NAMED = ("NOTICE",)
 SKIP_DIRS = {".git", "weights", "__pycache__", ".pytest_cache", "dist", "build"}
 OLD_HF = "account/Nom-7M"
+LEFTOVER = re.compile(r"\bnom\b|\bNom\b|\bnom_|\bNOM_|account/Nom")
 SELF = {os.path.join("tools", "rename.py"), os.path.join("tests", "test_rename.py")}   # hold the old name on purpose
 
 
@@ -26,6 +27,7 @@ def apply(text: str, package: str, display: str, hf_id: str) -> str:
     text = re.sub(r"\bNom\b", display, text)
     text = re.sub(r"\bnom_", f"{package}_", text)
     text = re.sub(r"\bnom\b", package, text)
+    text = re.sub(r"\bNOM_", f"{package.upper()}_", text)
     return text
 
 
@@ -59,7 +61,7 @@ def run(root: str, package: str, display: str, hf_id: str, dry_run: bool = False
 
 def leftovers(root: str) -> list[str]:
     """Lines still holding the provisional name."""
-    pat = re.compile(r"\bnom\b|\bNom\b|\bnom_|account/Nom")
+    pat = LEFTOVER
     out = []
     for path in _files(root):
         with open(path, encoding="utf-8") as f:

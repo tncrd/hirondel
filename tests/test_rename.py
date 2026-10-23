@@ -32,3 +32,10 @@ def test_rename_a_copy_of_the_repository(tmp_path):
     assert "account/Nom-7M" in (dst / "tools" / "rename.py").read_text()          # the tool itself is left alone
     code = "import sys; sys.path.insert(0, 'src'); import pinfall; assert hasattr(pinfall, 'PinfallForecaster')"
     subprocess.run([sys.executable, "-c", code], cwd=dst, check=True)
+
+
+def test_upper_case_environment_variables():
+    out = rename.apply('os.environ["NOM_WEIGHTS"]  # NOMINAL\n', package="pinfall", display="Pinfall",
+                       hf_id="org/Pinfall-7M")
+    assert out == 'os.environ["PINFALL_WEIGHTS"]  # NOMINAL\n'
+    assert rename.LEFTOVER.search("NOM_WEIGHTS") and not rename.LEFTOVER.search("NOMINAL")
