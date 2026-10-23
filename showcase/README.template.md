@@ -67,10 +67,11 @@ jointly. Official results of well-known models, read on 2026-10-23, against thei
 Python 3.10 or newer, PyTorch 2.4 or newer:
 
 ```bash
-pip install hirondel             # core: torch, numpy, safetensors, huggingface_hub
-pip install "hirondel[pandas]"   # adds forecast_df for pandas DataFrames
+pip install "hirondel @ git+https://github.com/tncrd/hirondel@v1.0.0"           # core: torch, numpy, safetensors, huggingface_hub
+pip install "hirondel[pandas] @ git+https://github.com/tncrd/hirondel@v1.0.0"   # adds forecast_df for pandas DataFrames
 ```
 
+\* `pip install hirondel`: the PyPI release is in preparation; until then, install from GitHub as above.
 From a clone of this repository: `pip install .` (or `pip install ".[pandas]"`).
 
 ## Quick start

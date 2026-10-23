@@ -247,11 +247,11 @@ class HirondelForecaster:
         missing values. `freq` (a pandas offset alias) fixes the grid and the future timestamps; when None it is
         inferred per series. Returns columns [id_column, timestamp_column, "predictions" (the median), "0.1", ...];
         tail_quantiles=True adds the extrapolated levels "0.01", "0.05", "0.95", "0.99" (see `Forecast.quantile`).
-        Requires pandas (`pip install "hirondel[pandas]"`)."""
+        Requires pandas (`pip install pandas`)."""
         try:
             import pandas as pd
         except ImportError:
-            raise ImportError('forecast_df needs pandas: pip install "hirondel[pandas]"') from None
+            raise ImportError("forecast_df needs pandas: pip install pandas") from None
         missing = [c for c in (id_column, timestamp_column, target) if c not in df.columns]
         if missing:
             raise ValueError(f"columns not found in df: {missing}")

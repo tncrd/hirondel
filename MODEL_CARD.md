@@ -109,7 +109,8 @@ forecast = forecaster.forecast(context, prediction_length=48)
 print(forecast.quantiles.shape)   # (1, 48, 9)
 ```
 
-Install with `pip install hirondel`. Inference details, tail levels, hardware and numerical parity: see the code
+Install with `pip install "hirondel @ git+https://github.com/tncrd/hirondel@v1.0.0"` (\* `pip install hirondel`:
+PyPI release in preparation). Inference details, tail levels, hardware and numerical parity: see the code
 repository's README (https://github.com/tncrd/hirondel).
 
 ## Training data

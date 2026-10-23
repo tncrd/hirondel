@@ -292,7 +292,7 @@ def test_forecast_df_without_pandas_says_how_to_install(forecaster, monkeypatch)
             raise ImportError("no pandas")
         return real(name, *a, **k)
     monkeypatch.setattr(builtins, "__import__", no_pandas)
-    with pytest.raises(ImportError, match='pip install "hirondel\\[pandas\\]"'):
+    with pytest.raises(ImportError, match='forecast_df needs pandas: pip install pandas'):
         forecaster.forecast_df(None, 12)
 
 
