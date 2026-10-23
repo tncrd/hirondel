@@ -1,4 +1,4 @@
-<p align="center"><img src="showcase/figures/banner.png" alt="Hirondel" width="100%"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/tncrd/hirondel/v1.0.0/showcase/figures/banner.png" alt="Hirondel" width="100%"></p>
 
 # Hirondel
 
@@ -25,7 +25,7 @@ did not run them). The first list and its settings were written before any score
 official figure, are dated amendments with the source of each decision (`benchmarks/competitors.yaml`). t0-gamma and
 TimesFM-3 use covariates and were not run in this setting; they appear in the official figure below.
 
-<p align="center"><img src="showcase/figures/univariate.png" alt="Accuracy against size, univariate setting" width="100%"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/tncrd/hirondel/v1.0.0/showcase/figures/univariate.png" alt="Accuracy against size, univariate setting" width="100%"></p>
 
 <!-- gen:univariate -->
 
@@ -38,7 +38,7 @@ The official leaderboards mix settings: some models use covariates (fev-bench) o
 jointly. Official results of well-known models, read on 2026-10-23, against their size (sources:
 `showcase/data/official.csv`):
 
-<p align="center"><img src="showcase/figures/pareto.png" alt="Accuracy against size on the official leaderboards" width="100%"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/tncrd/hirondel/v1.0.0/showcase/figures/pareto.png" alt="Accuracy against size on the official leaderboards" width="100%"></p>
 
 ## Install
 
