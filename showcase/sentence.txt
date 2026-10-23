@@ -1,1 +1,1 @@
-**The most accurate forecasting model under 10M parameters with public weights and a permissive license, on GIFT-Eval, fev-bench and TIME** (official leaderboards, read on 2026-10-23; how this was checked: `showcase/README.md`).
+**One of the most accurate small time-series foundation models.** At release (October 2026), it was the most accurate on GIFT-Eval, fev-bench and TIME among models under 10M parameters with public weights and a permissive license (official leaderboards, read on 2026-10-23; how this was checked: `showcase/README.md`).

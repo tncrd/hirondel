@@ -1,14 +1,14 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "hatch-fancy-pypi-readme"]
 build-backend = "hatchling.build"
 
 [project]
 name = "hirondel"
 version = "1.0.0"
+dynamic = ["readme"]
 description = "Zero-shot time-series forecasting model (7M parameters)"
 authors = [{ name = "The Hirondel Author" }]
 keywords = ["forecasting", "time-series", "foundation-model"]
-readme = "README.md"
 requires-python = ">=3.10"
 license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE", "DATA.md"]
@@ -35,3 +35,14 @@ packages = ["src/hirondel"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+
+# PyPI does not host the figures: on the PyPI page only, the README's relative image paths point to the release tag on GitHub.
+[tool.hatch.metadata.hooks.fancy-pypi-readme]
+content-type = "text/markdown"
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
+path = "README.md"
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
+pattern = 'src="showcase/'
+replacement = 'src="https://raw.githubusercontent.com/tncrd/hirondel/v1.0.0/showcase/'

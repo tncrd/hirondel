@@ -1,4 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/tncrd/hirondel/v1.0.0/showcase/figures/banner.png" alt="Hirondel" width="100%"></p>
+<p align="center"><img src="showcase/figures/banner.png" alt="Hirondel" width="100%"></p>
 
 # Hirondel
 
@@ -7,7 +7,7 @@
 Hirondel is a 7M-parameter time-series forecasting model for zero-shot probabilistic forecasting: 9 quantiles from 0.1
 to 0.9 (tails to 0.01 and 0.99 by extrapolation), any horizon, CPU-friendly, **Apache-2.0** code and weights.
 
-**The most accurate forecasting model under 10M parameters with public weights and a permissive license, on GIFT-Eval, fev-bench and TIME** (official leaderboards, read on 2026-10-23; how this was checked: `showcase/README.md`).
+**One of the most accurate small time-series foundation models.** At release (October 2026), it was the most accurate on GIFT-Eval, fev-bench and TIME among models under 10M parameters with public weights and a permissive license (official leaderboards, read on 2026-10-23; how this was checked: `showcase/README.md`).
 
 ## Results
 
@@ -33,7 +33,7 @@ did not run them). The first list and its settings were written before any score
 official figure, are dated amendments with the source of each decision (`benchmarks/competitors.yaml`). t0-gamma and
 TimesFM-3 use covariates and were not run in this setting; they appear in the official figure below.
 
-<p align="center"><img src="https://raw.githubusercontent.com/tncrd/hirondel/v1.0.0/showcase/figures/univariate.png" alt="Accuracy against size, univariate setting" width="100%"></p>
+<p align="center"><img src="showcase/figures/univariate.png" alt="Accuracy against size, univariate setting" width="100%"></p>
 
 | Model | Parameters | License | GIFT-Eval MASE | GIFT-Eval CRPS | TIME MASE | TIME CRPS | fev-bench SQL skill |
 |---|---|---|---|---|---|---|---|
@@ -57,7 +57,7 @@ The official leaderboards mix settings: some models use covariates (fev-bench) o
 jointly. Official results of well-known models, read on 2026-10-23, against their size (sources:
 `showcase/data/official.csv`):
 
-<p align="center"><img src="https://raw.githubusercontent.com/tncrd/hirondel/v1.0.0/showcase/figures/pareto.png" alt="Accuracy against size on the official leaderboards" width="100%"></p>
+<p align="center"><img src="showcase/figures/pareto.png" alt="Accuracy against size on the official leaderboards" width="100%"></p>
 
 ## Install
 
@@ -152,7 +152,7 @@ Code and weights: Apache-2.0 (`LICENSE`). The training data and the attribution 
 ```bibtex
 @misc{hirondel2026,
   title        = {Hirondel-7M: zero-shot probabilistic time-series forecasting},
-  author       = {{The Hirondel Author}},
+  author       = {{The Hirondel Author (Tncrd)}},
   year         = {2026},
   howpublished = {\url{https://huggingface.co/Tncrd/Hirondel-7M}}
 }

@@ -4,7 +4,7 @@ title: "Hirondel-7M: zero-shot probabilistic time-series forecasting"
 type: software
 authors:
   - name: "The Hirondel Author"
-    alias: "tncrd"
+    alias: "Tncrd"
 version: 1.0.0
 license: Apache-2.0
 repository-code: "https://github.com/tncrd/hirondel"

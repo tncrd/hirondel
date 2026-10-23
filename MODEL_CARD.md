@@ -37,7 +37,7 @@ model-index:
 Hirondel is a 7M-parameter time-series forecasting model for zero-shot probabilistic forecasting: 9 quantiles from 0.1
 to 0.9, any horizon, CPU-friendly. Code and weights under Apache-2.0: https://github.com/tncrd/hirondel.
 
-**The most accurate forecasting model under 10M parameters with public weights and a permissive license, on GIFT-Eval, fev-bench and TIME** (official leaderboards, read on 2026-10-23; how this was checked: `showcase/README.md`).
+**One of the most accurate small time-series foundation models.** At release (October 2026), it was the most accurate on GIFT-Eval, fev-bench and TIME among models under 10M parameters with public weights and a permissive license (official leaderboards, read on 2026-10-23; how this was checked: `showcase/README.md`).
 
 ## Results
 
@@ -112,7 +112,7 @@ Apache-2.0 for code and weights. `NOTICE` must be kept when redistributing.
 ```bibtex
 @misc{hirondel2026,
   title        = {Hirondel-7M: zero-shot probabilistic time-series forecasting},
-  author       = {{The Hirondel Author}},
+  author       = {{The Hirondel Author (Tncrd)}},
   year         = {2026},
   howpublished = {\url{https://huggingface.co/Tncrd/Hirondel-7M}}
 }

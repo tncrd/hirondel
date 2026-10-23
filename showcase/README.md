@@ -22,8 +22,8 @@ figures. Sizes come from the official model cards (the Hub's exact count when it
 
 ## How the head sentence was checked
 
-The head sentence ("the most accurate forecasting model under 10M parameters with public weights and a permissive
-license, on GIFT-Eval, fev-bench and TIME") was checked on 2026-10-22 against **every** entry of the three leaderboards,
+The dated claim of the head sentence ("at release, the most accurate on GIFT-Eval, fev-bench and TIME among models under
+10M parameters with public weights and a permissive license") was checked on 2026-10-22 against **every** entry of the three leaderboards,
 not only the models in the figures. A model ranked above ours on a benchmark is set aside only for one of these reasons:
 
 | reason | examples |

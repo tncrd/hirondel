@@ -93,7 +93,7 @@ Apache-2.0 for code and weights. `NOTICE` must be kept when redistributing.
 ```bibtex
 @misc{hirondel2026,
   title        = {Hirondel-7M: zero-shot probabilistic time-series forecasting},
-  author       = {{The Hirondel Author}},
+  author       = {{The Hirondel Author (Tncrd)}},
   year         = {2026},
   howpublished = {\url{https://huggingface.co/Tncrd/Hirondel-7M}}
 }
