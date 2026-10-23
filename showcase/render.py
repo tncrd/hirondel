@@ -265,8 +265,9 @@ def readme_values(rows, sp, ours, models, sentence):
         f"| TIME (98 tasks, normalised by Seasonal Naive; lower is better) | {_f(tm['MASE'])} | {_f(tm['CRPS'])} |",
         "<!-- results:end -->",
         "",
-        f"On the fev-bench leaderboard this ranks {fv['rank_SQL']} of {fv['n_models']} (SQL) and {fv['rank_MASE']} of "
-        f"{fv['n_models']} (MASE) among the models the site shows by default (2026-10-22).",
+        f"These numbers are computed by us and not yet listed on the leaderboards. Added to the fev-bench leaderboard, "
+        f"they would rank {fv['rank_SQL']} of {fv['n_models']} (SQL) and {fv['rank_MASE']} of {fv['n_models']} (MASE) "
+        f"among the models the site shows by default (2026-10-23).",
     ])
     sizes = {m["name"]: m["params"] for m in models["models"]}
     sizes[name] = models["ours"]["params"]

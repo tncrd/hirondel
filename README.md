@@ -5,7 +5,7 @@
 A small foundation model for zero-shot probabilistic time-series forecasting: **7.5M parameters**, 9 quantiles from 0.1
 to 0.9 (tails to 0.01 and 0.99 by extrapolation), any horizon, CPU-friendly, **Apache-2.0** code and weights.
 
-**The most accurate forecasting model under 10M parameters with public weights and a permissive license, on GIFT-Eval, fev-bench and TIME** (official leaderboards, read on 2026-10-22; how this was checked: `showcase/README.md`).
+**The most accurate forecasting model under 10M parameters with public weights and a permissive license, on GIFT-Eval, fev-bench and TIME** (official leaderboards, read on 2026-10-23; how this was checked: `showcase/README.md`).
 
 ## Results
 
@@ -20,7 +20,7 @@ Headline numbers of this package (float32), computed with each benchmark's offic
 | TIME (98 tasks, normalised by Seasonal Naive; lower is better) | 0.6551 | 0.5520 |
 <!-- results:end -->
 
-On the fev-bench leaderboard this ranks 7 of 33 (SQL) and 6 of 33 (MASE) among the models the site shows by default (2026-10-22).
+These numbers are computed by us and not yet listed on the leaderboards. Added to the fev-bench leaderboard, they would rank 7 of 33 (SQL) and 6 of 33 (MASE) among the models the site shows by default (2026-10-23).
 
 ### Univariate setting: every model forecasts each series alone
 
