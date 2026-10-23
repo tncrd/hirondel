@@ -6,8 +6,8 @@ import numpy as np
 import pytest
 import torch
 
-from nom import NomConfig, NomForecaster, NomModel
-from nom.forecaster import Forecast
+from hirondel import HirondelConfig, HirondelForecaster, HirondelModel
+from hirondel.forecaster import Forecast
 
 CONFIG = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "config.json")
 
@@ -15,7 +15,7 @@ CONFIG = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "confi
 @pytest.fixture(scope="module")
 def forecaster():
     torch.manual_seed(0)
-    return NomForecaster(NomModel(NomConfig.from_json(CONFIG)))
+    return HirondelForecaster(HirondelModel(HirondelConfig.from_json(CONFIG)))
 
 
 def _series(n, seed=0):
@@ -47,7 +47,7 @@ def test_input_kinds_agree(forecaster):
 def test_batching_does_not_change_a_series(forecaster):
     series = [_series(64 * (i + 1), i) for i in range(5)]
     whole = forecaster.forecast(series, 32, flip=False).quantiles
-    small = NomForecaster(forecaster.model, batch_size=2).forecast(series, 32, flip=False).quantiles
+    small = HirondelForecaster(forecaster.model, batch_size=2).forecast(series, 32, flip=False).quantiles
     np.testing.assert_allclose(small, whole, rtol=1e-5, atol=1e-5)
 
 
@@ -214,7 +214,7 @@ def test_infinite_values_are_missing_values(forecaster):
 
 def test_device_is_the_users_choice():
     torch.manual_seed(0)
-    f = NomForecaster(NomModel(NomConfig.from_json(CONFIG)), device="cpu")
+    f = HirondelForecaster(HirondelModel(HirondelConfig.from_json(CONFIG)), device="cpu")
     assert f.device.type == "cpu" and all(p.device.type == "cpu" for p in f.model.parameters())
 
 
@@ -292,7 +292,7 @@ def test_forecast_df_without_pandas_says_how_to_install(forecaster, monkeypatch)
             raise ImportError("no pandas")
         return real(name, *a, **k)
     monkeypatch.setattr(builtins, "__import__", no_pandas)
-    with pytest.raises(ImportError, match='pip install "nom\\[pandas\\]"'):
+    with pytest.raises(ImportError, match='pip install "hirondel\\[pandas\\]"'):
         forecaster.forecast_df(None, 12)
 
 
@@ -311,7 +311,7 @@ def test_clip_nonnegative_is_the_default_and_a_config_flag(forecaster):
     ctx = _clip_contexts()
     np.testing.assert_array_equal(forecaster.forecast(ctx, 24).quantiles,
                                   forecaster.forecast(ctx, 24, clip_nonnegative=True).quantiles)
-    off = NomForecaster(NomModel(NomConfig.from_dict({**json.load(open(CONFIG)), "clip_nonnegative": False})))
+    off = HirondelForecaster(HirondelModel(HirondelConfig.from_dict({**json.load(open(CONFIG)), "clip_nonnegative": False})))
     off.model.load_state_dict(forecaster.model.state_dict())
     np.testing.assert_array_equal(off.forecast(ctx, 24).quantiles,
                                   forecaster.forecast(ctx, 24, clip_nonnegative=False).quantiles)

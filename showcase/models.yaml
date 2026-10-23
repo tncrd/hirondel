@@ -9,7 +9,7 @@
 # Real-TSF/TIME-Output). null = not on that leaderboard.
 
 ours:
-  name: Nom
+  name: Hirondel
   params: 7462049
   license: Apache-2.0
 

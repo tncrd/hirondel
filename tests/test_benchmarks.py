@@ -9,8 +9,8 @@ import pytest
 import torch
 
 from benchmarks import gift
-from benchmarks.adapter import LEVELS, GluonTSAdapter, nom_forecast_fn
-from nom import NomConfig, NomForecaster, NomModel
+from benchmarks.adapter import LEVELS, GluonTSAdapter, hirondel_forecast_fn
+from hirondel import HirondelConfig, HirondelForecaster, HirondelModel
 
 CONFIG = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "config.json")
 
@@ -53,12 +53,12 @@ def test_adapter_refuses_bad_outputs(bad, match):
         list(GluonTSAdapter(bad, prediction_length=5).predict(_entries([20])))
 
 
-def test_nom_adapter_equals_forecast():
+def test_package_adapter_equals_forecast():
     pytest.importorskip("gluonts")
     torch.manual_seed(0)
-    f = NomForecaster(NomModel(NomConfig.from_json(CONFIG)))
+    f = HirondelForecaster(HirondelModel(HirondelConfig.from_json(CONFIG)))
     entries = _entries([40, 3000])
-    out = list(GluonTSAdapter(nom_forecast_fn(f), prediction_length=24).predict(entries))
+    out = list(GluonTSAdapter(hirondel_forecast_fn(f), prediction_length=24).predict(entries))
     ref = f.forecast([e["target"] for e in entries], 24)
     for k, fc in enumerate(out):
         np.testing.assert_array_equal(fc.forecast_array, ref.quantiles[k].T)
@@ -117,14 +117,14 @@ def test_headline_refuses_a_missing_task(tmp_path):
         gift.headline(str(tmp_path / "model.csv"), str(tmp_path / "naive.csv"))
 
 
-def test_nom_adapter_forecasts_series_with_no_observed_value():
+def test_package_adapter_forecasts_series_with_no_observed_value():
     """Benchmarks contain contexts with no observed value (GIFT-Eval: bitbrains, electricity/W) whose labels are
     scored. `forecast()` refuses them; the benchmark function runs the model on the empty context, as the reference
     implementation does, and leaves the other series unchanged."""
     torch.manual_seed(0)
-    f = NomForecaster(NomModel(NomConfig.from_json(CONFIG)))
+    f = HirondelForecaster(HirondelModel(HirondelConfig.from_json(CONFIG)))
     full, empty = np.sin(np.arange(300, dtype=np.float32)), np.full(120, np.nan, np.float32)
-    q = nom_forecast_fn(f)([full, empty, full], 16)
+    q = hirondel_forecast_fn(f)([full, empty, full], 16)
     assert q.shape == (3, 16, 9) and np.isfinite(q).all()
     np.testing.assert_array_equal(q[[0, 2]], f.forecast([full, full], 16).quantiles)
     np.testing.assert_array_equal(q[1], f._forecast_batch([empty], 16, True)[0])

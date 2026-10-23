@@ -6,7 +6,7 @@ import pytest
 import torch
 
 from benchmarks.experiments import clip_zero
-from nom import NomConfig, NomForecaster, NomModel
+from hirondel import HirondelConfig, HirondelForecaster, HirondelModel
 
 CONFIG = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "config.json")
 
@@ -14,7 +14,7 @@ CONFIG = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "confi
 @pytest.fixture(scope="module")
 def f():
     torch.manual_seed(0)
-    return NomForecaster(NomModel(NomConfig.from_json(CONFIG)))
+    return HirondelForecaster(HirondelModel(HirondelConfig.from_json(CONFIG)))
 
 
 def _ctx():
@@ -64,5 +64,5 @@ def test_variants_accept_contexts_with_no_observed_value(f):
 def test_package_default_reproduces_the_after_flip_measurement(f):
     """The released default (clip_nonnegative) gives exactly the outputs that were measured as `after_flip`."""
     ctx = _ctx() + [np.full(80, np.nan, np.float32)]
-    from benchmarks.adapter import nom_forecast_fn
-    np.testing.assert_array_equal(nom_forecast_fn(f)(ctx, 24), clip_zero.after_flip(f)(ctx, 24))
+    from benchmarks.adapter import hirondel_forecast_fn
+    np.testing.assert_array_equal(hirondel_forecast_fn(f)(ctx, 24), clip_zero.after_flip(f)(ctx, 24))

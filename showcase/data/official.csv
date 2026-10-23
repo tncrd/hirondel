@@ -1,10 +1,10 @@
 model,params,license,permissive,benchmark,metric,value,source,date
-Nom,7462049,Apache-2.0,True,GIFT-Eval,MASE,0.700292,"this repository, benchmarks/results/gift/all_results.csv",2026-10-22
-Nom,7462049,Apache-2.0,True,GIFT-Eval,CRPS,0.481559,"this repository, benchmarks/results/gift/all_results.csv",2026-10-22
-Nom,7462049,Apache-2.0,True,fev-bench,MASE,32.906088,"this repository, benchmarks/results/fev/summaries.json",2026-10-22
-Nom,7462049,Apache-2.0,True,fev-bench,SQL,44.895644,"this repository, benchmarks/results/fev/summaries.json",2026-10-22
-Nom,7462049,Apache-2.0,True,TIME,MASE,0.655142,"this repository, benchmarks/results/time/tasks.csv",2026-10-22
-Nom,7462049,Apache-2.0,True,TIME,CRPS,0.551982,"this repository, benchmarks/results/time/tasks.csv",2026-10-22
+Hirondel,7462049,Apache-2.0,True,GIFT-Eval,MASE,0.700292,"this repository, benchmarks/results/gift/all_results.csv",2026-10-22
+Hirondel,7462049,Apache-2.0,True,GIFT-Eval,CRPS,0.481559,"this repository, benchmarks/results/gift/all_results.csv",2026-10-22
+Hirondel,7462049,Apache-2.0,True,fev-bench,MASE,32.906088,"this repository, benchmarks/results/fev/summaries.json",2026-10-22
+Hirondel,7462049,Apache-2.0,True,fev-bench,SQL,44.895644,"this repository, benchmarks/results/fev/summaries.json",2026-10-22
+Hirondel,7462049,Apache-2.0,True,TIME,MASE,0.655142,"this repository, benchmarks/results/time/tasks.csv",2026-10-22
+Hirondel,7462049,Apache-2.0,True,TIME,CRPS,0.551982,"this repository, benchmarks/results/time/tasks.csv",2026-10-22
 Chronos-2,119477664,Apache-2.0,True,GIFT-Eval,MASE,0.697793,"github.com/SalesforceAIResearch/gift-eval @ cfaefe0, results/Chronos-2/all_results.csv",2026-10-22
 Chronos-2,119477664,Apache-2.0,True,GIFT-Eval,CRPS,0.485416,"github.com/SalesforceAIResearch/gift-eval @ cfaefe0, results/Chronos-2/all_results.csv",2026-10-22
 Chronos-2,119477664,Apache-2.0,True,fev-bench,MASE,35.496048,"github.com/autogluon/fev @ ceb25ae, benchmarks/fev_bench/results",2026-10-22

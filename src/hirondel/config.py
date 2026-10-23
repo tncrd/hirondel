@@ -17,7 +17,7 @@ class FusionConfig:
 
 
 @dataclass(frozen=True)
-class NomConfig:
+class HirondelConfig:
     d_model: int = 360
     n_heads: int = 4
     n_layers: int = 6
@@ -47,7 +47,7 @@ class NomConfig:
     format_version: int = FORMAT_VERSION
 
     @classmethod
-    def from_dict(cls, d: dict) -> "NomConfig":
+    def from_dict(cls, d: dict) -> "HirondelConfig":
         if d.get("format_version") != FORMAT_VERSION:
             raise ValueError(f"unsupported config format_version {d.get('format_version')!r} "
                              f"(this package reads version {FORMAT_VERSION})")
@@ -69,7 +69,7 @@ class NomConfig:
         return cfg
 
     @classmethod
-    def from_json(cls, path: str) -> "NomConfig":
+    def from_json(cls, path: str) -> "HirondelConfig":
         with open(path) as f:
             return cls.from_dict(json.load(f))
 

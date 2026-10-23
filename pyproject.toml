@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "nom"
+name = "hirondel"
 version = "1.0.0"
 description = "A small univariate time-series foundation model for zero-shot probabilistic forecasting."
 readme = "README.md"
@@ -23,7 +23,7 @@ test = ["pytest"]
 bench = ["gluonts==0.16.3", "pandas"]   # plus gift-eval from its repository, see benchmarks/gift.py
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/nom"]
+packages = ["src/hirondel"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

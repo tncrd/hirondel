@@ -1,6 +1,6 @@
-<p align="center"><img src="showcase/figures/banner.png" alt="Nom" width="100%"></p>
+<p align="center"><img src="showcase/figures/banner.png" alt="Hirondel" width="100%"></p>
 
-# Nom
+# Hirondel
 
 A small foundation model for zero-shot probabilistic time-series forecasting: **7.5M parameters**, 9 quantiles from 0.1
 to 0.9 (tails to 0.01 and 0.99 by extrapolation), any horizon, CPU-friendly, **Apache-2.0** code and weights.
@@ -51,9 +51,9 @@ pip install ".[pandas]"  # adds forecast_df for pandas DataFrames
 
 ```python
 import numpy as np
-from nom import NomForecaster
+from hirondel import HirondelForecaster
 
-forecaster = NomForecaster.from_pretrained("account/Nom-7M")  # or a local folder holding config.json and model.safetensors
+forecaster = HirondelForecaster.from_pretrained("Tncrd/Hirondel-7M")  # or a local folder holding config.json and model.safetensors
 
 t = np.arange(1000)
 context = np.sin(2 * np.pi * t / 24) + 0.1 * np.random.default_rng(0).normal(size=t.size)

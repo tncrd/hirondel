@@ -6,7 +6,7 @@ A model enters a benchmark through a single function
 
 returning the quantiles 0.1, ..., 0.9 on the raw scale, one row per context (1-D float arrays, NaN = missing). The adapter
 batches the series, checks the output, and wraps each row into a `gluonts` `QuantileForecast`. Other models plug in the
-same way (see `nom_forecast_fn`).
+same way (see `hirondel_forecast_fn`).
 """
 from __future__ import annotations
 
@@ -44,8 +44,8 @@ class GluonTSAdapter:
                                        start_date=e["start"] + len(e["target"]), item_id=e.get("item_id"))
 
 
-def nom_forecast_fn(forecaster, flip: bool | None = None, clip_nonnegative: bool | None = None) -> ForecastFn:
-    """The released model: `NomForecaster.forecast` with its default inference procedure (flip and zero clipping on
+def hirondel_forecast_fn(forecaster, flip: bool | None = None, clip_nonnegative: bool | None = None) -> ForecastFn:
+    """The released model: `HirondelForecaster.forecast` with its default inference procedure (flip and zero clipping on
     unless disabled).
 
     Benchmarks contain contexts with no observed value whose labels are still scored (GIFT-Eval: bitbrains,

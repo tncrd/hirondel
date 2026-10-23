@@ -4,7 +4,7 @@ The stack is [first block] -> [middle blocks] x loop_passes -> [last block]. The
 shared between passes. Every pass after the first re-reads an anchored copy of the input embedding
 and adds only the update the middle blocks made, scaled by a learned gate.
 
-All inputs and outputs of `NomModel.forward` are in normalized units; scaling to and from the raw
+All inputs and outputs of `HirondelModel.forward` are in normalized units; scaling to and from the raw
 series is done by the forecaster.
 """
 from __future__ import annotations
@@ -13,13 +13,13 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from .config import NomConfig
+from .config import HirondelConfig
 from .fusion import CoarseReadings, FusionGate, spectral_bands, to_fine_space, upsample
 from .layers import AttentionBlock, DeltaBlock, PatchEmbedding, QuantileHead
 
 
 class LoopState(nn.Module):
-    def __init__(self, cfg: NomConfig):
+    def __init__(self, cfg: HirondelConfig):
         super().__init__()
         d = cfg.d_model
         self.pass_embedding = nn.Parameter(torch.zeros(cfg.loop_passes, d))
@@ -29,8 +29,8 @@ class LoopState(nn.Module):
         self.anchor_up = nn.Linear(cfg.anchor_rank, d)
 
 
-class NomModel(nn.Module):
-    def __init__(self, cfg: NomConfig):
+class HirondelModel(nn.Module):
+    def __init__(self, cfg: HirondelConfig):
         super().__init__()
         self.cfg = cfg
         kinds = {"delta": DeltaBlock, "attention": AttentionBlock}

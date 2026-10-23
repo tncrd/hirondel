@@ -55,7 +55,7 @@ def test_fev_prediction_columns():
 # ---- TIME ------------------------------------------------------------------------------------------------------------
 def test_time_bridge_does_not_import_torch():
     """The dump and score stages run in TIME's own environment, which has no torch."""
-    code = "import sys; import benchmarks.time_bench; assert 'torch' not in sys.modules and 'nom' not in sys.modules"
+    code = "import sys; import benchmarks.time_bench; assert 'torch' not in sys.modules and 'hirondel' not in sys.modules"
     subprocess.run([sys.executable, "-c", code], cwd=ROOT, check=True)
 
 

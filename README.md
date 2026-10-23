@@ -1,6 +1,6 @@
-<p align="center"><img src="showcase/figures/banner.png" alt="Nom" width="100%"></p>
+<p align="center"><img src="showcase/figures/banner.png" alt="Hirondel" width="100%"></p>
 
-# Nom
+# Hirondel
 
 A small foundation model for zero-shot probabilistic time-series forecasting: **7.5M parameters**, 9 quantiles from 0.1
 to 0.9 (tails to 0.01 and 0.99 by extrapolation), any horizon, CPU-friendly, **Apache-2.0** code and weights.
@@ -37,7 +37,7 @@ TimesFM-3 use covariates and were not run in this setting; they appear in the of
 |---|---|---|---|---|---|---|---|
 | Toto-2.0-4m | 4.1M | Apache-2.0 | 0.7591 | 0.5269 | 0.6940 | 0.5850 | 40.04 |
 | Timestral-5M | 5.2M | Modified MIT (revenue cap) | 0.7102 | 0.4836 | 0.6571 | 0.5490 | 44.36 |
-| **Nom (ours)** | 7.5M | Apache-2.0 | 0.7003 | 0.4816 | 0.6551 | 0.5520 | 44.90 |
+| **Hirondel (ours)** | 7.5M | Apache-2.0 | 0.7003 | 0.4816 | 0.6551 | 0.5520 | 44.90 |
 | Moirai-2.0-small | 11.4M | CC-BY-NC-4.0 | 0.7281 | 0.5164 | 0.7030 | 0.5885 | 39.31 |
 | FlowState-r1.1 | 18.5M | Apache-2.0 | 0.7014 | 0.4901 |  |  |  |
 | Toto-2.0-22m | 21.9M | Apache-2.0 | 0.7226 | 0.5009 | 0.6751 | 0.5654 | 42.37 |
@@ -70,9 +70,9 @@ pip install ".[pandas]"  # adds forecast_df for pandas DataFrames
 
 ```python
 import numpy as np
-from nom import NomForecaster
+from hirondel import HirondelForecaster
 
-forecaster = NomForecaster.from_pretrained("account/Nom-7M")  # or a local folder holding config.json and model.safetensors
+forecaster = HirondelForecaster.from_pretrained("Tncrd/Hirondel-7M")  # or a local folder holding config.json and model.safetensors
 
 t = np.arange(1000)
 context = np.sin(2 * np.pi * t / 24) + 0.1 * np.random.default_rng(0).normal(size=t.size)

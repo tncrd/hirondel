@@ -24,7 +24,7 @@ jobs:
           pip install -e ".[test,pandas]"
       - name: Test
         env:
-          NOM_WEIGHTS: ${{ vars.NOM_WEIGHTS }}
+          HIRONDEL_WEIGHTS: ${{ vars.HIRONDEL_WEIGHTS }}
         run: pytest -v
       - name: Build sdist and wheel
         if: matrix.python-version == '3.12'
@@ -52,5 +52,5 @@ jobs:
       - name: Parity gap (reported)
         continue-on-error: true
         env:
-          NOM_WEIGHTS: ${{ vars.NOM_WEIGHTS }}
+          HIRONDEL_WEIGHTS: ${{ vars.HIRONDEL_WEIGHTS }}
         run: pytest -v tests/test_parity.py

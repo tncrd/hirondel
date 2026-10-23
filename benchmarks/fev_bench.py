@@ -121,12 +121,12 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--model", default="weights", help="local folder or Hugging Face repo id")
     ap.add_argument("--device", default="cpu")
-    ap.add_argument("--name", default="nom")
+    ap.add_argument("--name", default="hirondel")
     a = ap.parse_args()
 
-    from benchmarks.adapter import nom_forecast_fn
-    from nom import NomForecaster
-    fn = nom_forecast_fn(NomForecaster.from_pretrained(a.model, device=a.device))
+    from benchmarks.adapter import hirondel_forecast_fn
+    from hirondel import HirondelForecaster
+    fn = hirondel_forecast_fn(HirondelForecaster.from_pretrained(a.model, device=a.device))
     summaries = evaluate(fn, a.name, a.fev_bench)
     os.makedirs(a.out, exist_ok=True)
     with open(os.path.join(a.out, "summaries.json"), "w") as f:

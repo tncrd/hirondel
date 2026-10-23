@@ -5,7 +5,7 @@ mean_weighted_sum_quantile_loss (CRPS), each divided by Seasonal Naive's value o
 
     git clone https://github.com/SalesforceAIResearch/gift-eval && pip install -e gift-eval ".[bench]"
     export GIFT_EVAL=<folder of the Salesforce/GiftEval dataset>
-    python -m benchmarks.gift --gift-eval gift-eval --out results/gift [--model Org/Nom-7M] [--device cuda]
+    python -m benchmarks.gift --gift-eval gift-eval --out results/gift [--model Org/Hirondel-7M] [--device cuda]
 
 Writes `<out>/all_results.csv` (leaderboard format, one row per task) and prints the headline.
 """
@@ -142,15 +142,15 @@ def main():
     ap.add_argument("--no-flip", action="store_true")
     a = ap.parse_args()
 
-    from benchmarks.adapter import GluonTSAdapter, nom_forecast_fn
-    from nom import NomForecaster
+    from benchmarks.adapter import GluonTSAdapter, hirondel_forecast_fn
+    from hirondel import HirondelForecaster
     with open(os.path.join(a.gift_eval, "notebooks", "dataset_properties.json")) as f:
         properties = json.load(f)
-    forecaster = NomForecaster.from_pretrained(a.model, device=a.device, batch_size=a.batch_size)
-    fn = nom_forecast_fn(forecaster, flip=False if a.no_flip else None)
+    forecaster = HirondelForecaster.from_pretrained(a.model, device=a.device, batch_size=a.batch_size)
+    fn = hirondel_forecast_fn(forecaster, flip=False if a.no_flip else None)
     os.makedirs(a.out, exist_ok=True)
     out_csv = os.path.join(a.out, "all_results.csv")
-    evaluate(lambda pl: GluonTSAdapter(fn, pl, batch_size=a.batch_size), "nom", properties, out_csv)
+    evaluate(lambda pl: GluonTSAdapter(fn, pl, batch_size=a.batch_size), "hirondel", properties, out_csv)
     h = headline(out_csv, naive_csv(a.gift_eval))
     print(f"\nGIFT-Eval ({h['n_tasks']} tasks): MASE {h['MASE']:.4f}  CRPS {h['CRPS']:.4f}")
 

@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from benchmarks.adapter import nom_forecast_fn
+from benchmarks.adapter import hirondel_forecast_fn
 
 
 def non_negative(contexts) -> np.ndarray:
@@ -25,7 +25,7 @@ def non_negative(contexts) -> np.ndarray:
 
 def after_flip(forecaster):
     def fn(contexts, prediction_length):
-        q = nom_forecast_fn(forecaster, clip_nonnegative=False)(contexts, prediction_length)
+        q = hirondel_forecast_fn(forecaster, clip_nonnegative=False)(contexts, prediction_length)
         keep = non_negative(contexts)[:, None, None]
         return np.where(keep, np.maximum(q, 0), q).astype(np.float32)
     return fn
@@ -33,7 +33,7 @@ def after_flip(forecaster):
 
 def per_pass(forecaster, clip: bool = True):
     def fn(contexts, prediction_length):
-        one_pass = nom_forecast_fn(forecaster, flip=False, clip_nonnegative=False)             # handles contexts with no observed value
+        one_pass = hirondel_forecast_fn(forecaster, flip=False, clip_nonnegative=False)             # handles contexts with no observed value
         up = one_pass(contexts, prediction_length)
         down = one_pass([-np.asarray(c) for c in contexts], prediction_length)
         if clip:
@@ -56,13 +56,13 @@ def main():
     ap.add_argument("--model", default="weights")
     ap.add_argument("--device", default="cpu")
     a = ap.parse_args()
-    from nom import NomForecaster
-    f = NomForecaster.from_pretrained(a.model, device=a.device)
+    from hirondel import HirondelForecaster
+    f = HirondelForecaster.from_pretrained(a.model, device=a.device)
     fn = after_flip(f) if a.variant == "after_flip" else per_pass(f)
     out = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "results", "experiments",
                        "clip_zero", a.variant, a.bench)
     os.makedirs(out, exist_ok=True)
-    name = f"nom_clip_{a.variant}"
+    name = f"hirondel_clip_{a.variant}"
     if a.bench == "gift":
         from benchmarks import gift
         from benchmarks.adapter import GluonTSAdapter

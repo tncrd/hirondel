@@ -13,7 +13,7 @@ forecast_fn(contexts: list[np.ndarray], prediction_length: int) -> np.ndarray  #
 
 returning the quantiles 0.1, ..., 0.9 on the raw scale (contexts are 1-D float arrays, NaN = missing).
 `benchmarks.adapter.GluonTSAdapter(forecast_fn, prediction_length)` turns it into a GluonTS predictor, checks shapes and
-finiteness, and emits `QuantileForecast` objects. `nom_forecast_fn(forecaster)` is the released model with its default
+finiteness, and emits `QuantileForecast` objects. `hirondel_forecast_fn(forecaster)` is the released model with its default
 inference procedure (flip on, zero clipping of non-negative series on).
 
 ## GIFT-Eval
@@ -63,8 +63,8 @@ Some test contexts have no observed value at all, while their future values are 
 | fev-bench | 230 of 1 980 | gvar |
 | TIME | 0 | |
 
-`NomForecaster.forecast()` refuses such a series with a clear error: a forecast from nothing is not something a user
-should get silently. A benchmark still has to score it, so `nom_forecast_fn` runs the model on the empty context
+`HirondelForecaster.forecast()` refuses such a series with a clear error: a forecast from nothing is not something a user
+should get silently. A benchmark still has to score it, so `hirondel_forecast_fn` runs the model on the empty context
 through the same internal path as the reference implementation (its output is finite but carries no information).
 Among the competitors, only TimesFM-2.5's package refuses an empty context; it then receives a single observed 0
 (`benchmarks.competitors.no_empty`). The other packages receive the empty context as it is.

@@ -1,6 +1,6 @@
 ---
 license: apache-2.0
-library_name: nom
+library_name: hirondel
 pipeline_tag: time-series-forecasting
 tags:
   - time-series
@@ -9,7 +9,7 @@ tags:
   - zero-shot
   - probabilistic-forecasting
 model-index:
-  - name: Nom
+  - name: Hirondel
     results:
       - task: {type: time-series-forecasting, name: Probabilistic forecasting}
         dataset: {type: Salesforce/GiftEval, name: GIFT-Eval (97 tasks)}
@@ -28,9 +28,9 @@ model-index:
           - {type: crps, name: CRPS (normalised by Seasonal Naive), value: <!-- gen:time_crps -->}
 ---
 
-![Nom](showcase/figures/banner.png)
+![Hirondel](showcase/figures/banner.png)
 
-# Nom
+# Hirondel
 
 A small foundation model for zero-shot probabilistic time-series forecasting: 7.5M parameters, 9 quantiles from 0.1 to
 0.9, any horizon, CPU-friendly. Code and weights under Apache-2.0.
@@ -58,9 +58,9 @@ Sources: `showcase/data/` in the code repository.
 
 ```python
 import numpy as np
-from nom import NomForecaster
+from hirondel import HirondelForecaster
 
-forecaster = NomForecaster.from_pretrained("account/Nom-7M")
+forecaster = HirondelForecaster.from_pretrained("Tncrd/Hirondel-7M")
 t = np.arange(1000)
 context = np.sin(2 * np.pi * t / 24) + 0.1 * np.random.default_rng(0).normal(size=t.size)
 forecast = forecaster.forecast(context, prediction_length=48)

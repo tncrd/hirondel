@@ -165,16 +165,16 @@ def main():
     ap.add_argument("--time-repo", help="clone of github.com/zqiao11/TIME (dump, score)")
     ap.add_argument("--model", default="weights", help="forecast: local folder or Hugging Face repo id")
     ap.add_argument("--device", default="cpu")
-    ap.add_argument("--name", default="nom")
+    ap.add_argument("--name", default="hirondel")
     ap.add_argument("--naive", help="score: folder holding seasonal_naive/ (TIME-Output results); default: download")
     ap.add_argument("--out", default=os.path.join(os.path.dirname(os.path.abspath(__file__)), "results", "time"))
     a = ap.parse_args()
     if a.stage == "dump":
         dump(a.time_repo, a.work)
     elif a.stage == "forecast":
-        from benchmarks.adapter import nom_forecast_fn
-        from nom import NomForecaster
-        forecast(a.work, nom_forecast_fn(NomForecaster.from_pretrained(a.model, device=a.device)), a.name)
+        from benchmarks.adapter import hirondel_forecast_fn
+        from hirondel import HirondelForecaster
+        forecast(a.work, hirondel_forecast_fn(HirondelForecaster.from_pretrained(a.model, device=a.device)), a.name)
     else:
         score(a.time_repo, a.work, a.name)
         naive = a.naive

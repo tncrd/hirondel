@@ -15,7 +15,7 @@ from dataclasses import dataclass
 import torch
 import torch.nn as nn
 
-from .config import NomConfig
+from .config import HirondelConfig
 
 
 def block_mean_view(raw: torch.Tensor, k: int, length: int) -> torch.Tensor:
@@ -79,7 +79,7 @@ class FusionGate(nn.Module):
     weight exactly zero.
     """
 
-    def __init__(self, cfg: NomConfig):
+    def __init__(self, cfg: HirondelConfig):
         super().__init__()
         f = cfg.fusion
         self.n_readings = 1 + len(cfg.coarse_factors)

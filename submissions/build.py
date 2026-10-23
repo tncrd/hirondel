@@ -1,7 +1,7 @@
 """Leaderboard submission bundles from this repository's results. Nothing is sent: each bundle holds the files and the
 steps of one leaderboard's official procedure (read on 2026-10-22).
 
-    python -m submissions.build --display Nom --hf-url https://huggingface.co/<user>/<repo> \
+    python -m submissions.build --display Hirondel --hf-url https://huggingface.co/<user>/<repo> \
         --code-url https://github.com/<user>/<repo> --org "<name>" --git-ref v1.0 [--time-results <folder>]
 
 - GIFT-Eval: pull request to github.com/SalesforceAIResearch/gift-eval adding results/<model>/{all_results.csv,
@@ -25,7 +25,7 @@ RESULTS = os.path.join(os.path.dirname(HERE), "benchmarks", "results")
 
 
 def _package() -> str:
-    import nom as pkg                                       # the installed package (renamed with tools/rename.py)
+    import hirondel as pkg                                       # the installed package (renamed with tools/rename.py)
     return pkg.__name__
 
 

@@ -9,9 +9,9 @@ from typing import Sequence, Union
 import numpy as np
 import torch
 
-from .config import NomConfig
+from .config import HirondelConfig
 from .fusion import CoarseReadings, block_mean_view
-from .model import NomModel
+from .model import HirondelModel
 
 ArrayLike = Union[np.ndarray, torch.Tensor, Sequence[float]]
 
@@ -72,8 +72,8 @@ class Forecast:
         return tail
 
 
-class NomForecaster:
-    def __init__(self, model: NomModel, device: Union[str, torch.device] = "cpu", batch_size: int = 256):
+class HirondelForecaster:
+    def __init__(self, model: HirondelModel, device: Union[str, torch.device] = "cpu", batch_size: int = 256):
         self.model = model.to(device).eval()
         self.cfg = model.cfg
         self.device = torch.device(device)
@@ -81,7 +81,7 @@ class NomForecaster:
 
     @classmethod
     def from_pretrained(cls, path_or_repo_id: str, device: Union[str, torch.device] = "cpu",
-                        revision: str | None = None, **kwargs) -> "NomForecaster":
+                        revision: str | None = None, **kwargs) -> "HirondelForecaster":
         """Load from a local folder holding `config.json` and `model.safetensors`, or from a Hugging Face repo."""
         from safetensors.torch import load_file
         if os.path.isdir(path_or_repo_id):
@@ -91,7 +91,7 @@ class NomForecaster:
             from huggingface_hub import hf_hub_download
             cfg_path = hf_hub_download(path_or_repo_id, "config.json", revision=revision)
             weights_path = hf_hub_download(path_or_repo_id, "model.safetensors", revision=revision)
-        model = NomModel(NomConfig.from_json(cfg_path))
+        model = HirondelModel(HirondelConfig.from_json(cfg_path))
         model.load_state_dict(load_file(weights_path), strict=True)
         return cls(model, device=device, **kwargs)
 
@@ -247,11 +247,11 @@ class NomForecaster:
         missing values. `freq` (a pandas offset alias) fixes the grid and the future timestamps; when None it is
         inferred per series. Returns columns [id_column, timestamp_column, "predictions" (the median), "0.1", ...];
         tail_quantiles=True adds the extrapolated levels "0.01", "0.05", "0.95", "0.99" (see `Forecast.quantile`).
-        Requires pandas (`pip install "nom[pandas]"`)."""
+        Requires pandas (`pip install "hirondel[pandas]"`)."""
         try:
             import pandas as pd
         except ImportError:
-            raise ImportError('forecast_df needs pandas: pip install "nom[pandas]"') from None
+            raise ImportError('forecast_df needs pandas: pip install "hirondel[pandas]"') from None
         missing = [c for c in (id_column, timestamp_column, target) if c not in df.columns]
         if missing:
             raise ValueError(f"columns not found in df: {missing}")

@@ -207,7 +207,7 @@ def banner(model_path, title, tagline, path):
     import matplotlib.pyplot as plt
     import numpy as np
     import torch
-    from nom import NomForecaster
+    from hirondel import HirondelForecaster
     _style(plt)
     torch.set_num_threads(1)
     rng = np.random.default_rng(7)
@@ -215,7 +215,7 @@ def banner(model_path, title, tagline, path):
     y = (10 + 3 * np.sin(2 * np.pi * t / 48) + 1.2 * np.sin(2 * np.pi * t / 168) + 0.004 * t
          + 0.5 * rng.normal(size=t.size)).astype(np.float32)
     ctx, H = y[:504], 96
-    f = NomForecaster.from_pretrained(model_path).forecast(ctx, H)
+    f = HirondelForecaster.from_pretrained(model_path).forecast(ctx, H)
     q = f.quantiles[0]
     fig = plt.figure(figsize=(12, 3.2))
     ax = fig.add_axes([0.50, 0.08, 0.48, 0.84])

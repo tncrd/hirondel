@@ -5,7 +5,7 @@ import re
 
 import pytest
 
-import nom
+import hirondel
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 APACHE_2_SHA256 = "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"   # apache.org/licenses/LICENSE-2.0.txt
@@ -22,7 +22,7 @@ def test_license_is_the_apache_2_text():
 
 
 def test_version_is_consistent():
-    assert nom.__version__ == "1.0.0"
+    assert hirondel.__version__ == "1.0.0"
     assert re.search(r'^version = "1\.0\.0"$', _read("pyproject.toml"), re.M)
     assert re.search(r"^version: 1\.0\.0$", _read("CITATION.cff"), re.M)
 
@@ -59,14 +59,14 @@ def _readme_example() -> str:
 
 
 def test_readme_example_runs_as_written(monkeypatch):
-    """Runs the README's first python block verbatim. Weights: the published repo id, or NOM_WEIGHTS (local folder or
+    """Runs the README's first python block verbatim. Weights: the published repo id, or HIRONDEL_WEIGHTS (local folder or
     repo id) while the weights are not published yet."""
-    src = os.environ.get("NOM_WEIGHTS") or (os.path.join(ROOT, "weights")
+    src = os.environ.get("HIRONDEL_WEIGHTS") or (os.path.join(ROOT, "weights")
                                              if os.path.isfile(os.path.join(ROOT, "weights", "model.safetensors")) else None)
     if src is None:
-        pytest.skip("no weights: set NOM_WEIGHTS")
-    real = nom.NomForecaster.from_pretrained.__func__
-    monkeypatch.setattr(nom.NomForecaster, "from_pretrained",
+        pytest.skip("no weights: set HIRONDEL_WEIGHTS")
+    real = hirondel.HirondelForecaster.from_pretrained.__func__
+    monkeypatch.setattr(hirondel.HirondelForecaster, "from_pretrained",
                         classmethod(lambda cls, _repo_id, **kw: real(cls, src, **kw)))
     scope = {}
     exec(compile(_readme_example(), "README.md", "exec"), scope)

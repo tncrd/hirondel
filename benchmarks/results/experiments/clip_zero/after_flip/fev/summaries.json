@@ -1,6 +1,6 @@
 [
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "proenfo_gfc12",
   "horizon": 168,
@@ -56,7 +56,7 @@
   "WQL": 0.068110653886716
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "proenfo_gfc14",
   "horizon": 168,
@@ -112,7 +112,7 @@
   "WQL": 0.033466658833397764
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "proenfo_gfc17",
   "horizon": 168,
@@ -168,7 +168,7 @@
   "WQL": 0.05529008742969943
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "rohlik_sales_1D",
   "horizon": 14,
@@ -246,7 +246,7 @@
   "WQL": 0.30909407325908955
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "rohlik_orders_1D",
   "horizon": 61,
@@ -315,7 +315,7 @@
   "WQL": 0.04292300971456532
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "rohlik_sales_1W",
   "horizon": 8,
@@ -393,7 +393,7 @@
   "WQL": 0.222505376646599
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "rohlik_orders_1W",
   "horizon": 8,
@@ -462,7 +462,7 @@
   "WQL": 0.04284666483091285
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "entsoe_15T",
   "horizon": 96,
@@ -520,7 +520,7 @@
   "WQL": 0.03200330861430997
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "entsoe_30T",
   "horizon": 96,
@@ -578,7 +578,7 @@
   "WQL": 0.031118313630959855
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "entsoe_1H",
   "horizon": 168,
@@ -636,7 +636,7 @@
   "WQL": 0.025989381400042755
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "epf_be",
   "horizon": 24,
@@ -693,7 +693,7 @@
   "WQL": 0.10323392010422346
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "epf_de",
   "horizon": 24,
@@ -750,7 +750,7 @@
   "WQL": 0.4466656818205085
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "epf_fr",
   "horizon": 24,
@@ -807,7 +807,7 @@
   "WQL": 0.06624056651153502
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "epf_np",
   "horizon": 24,
@@ -864,7 +864,7 @@
   "WQL": 0.04497208079995911
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "epf_pjm",
   "horizon": 24,
@@ -921,7 +921,7 @@
   "WQL": 0.07333453994520558
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "rossmann_1D",
   "horizon": 48,
@@ -994,7 +994,7 @@
   "WQL": 0.17752763531973176
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "rossmann_1W",
   "horizon": 13,
@@ -1066,7 +1066,7 @@
   "WQL": 0.1371336075413439
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "restaurant",
   "horizon": 28,
@@ -1125,7 +1125,7 @@
   "WQL": 0.28381662215703873
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "hermes",
   "horizon": 52,
@@ -1184,7 +1184,7 @@
   "WQL": 0.0022766246507404937
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "walmart",
   "horizon": 39,
@@ -1254,7 +1254,7 @@
   "WQL": 0.08019012977385696
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "m5_1D",
   "horizon": 28,
@@ -1323,7 +1323,7 @@
   "WQL": 0.5513443571974883
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "m5_1W",
   "horizon": 13,
@@ -1392,7 +1392,7 @@
   "WQL": 0.33072930498123737
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "m5_1M",
   "horizon": 12,
@@ -1461,7 +1461,7 @@
   "WQL": 0.34805772121852896
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "hierarchical_sales_1D",
   "horizon": 28,
@@ -1515,7 +1515,7 @@
   "WQL": 0.5645330309939777
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "hierarchical_sales_1W",
   "horizon": 13,
@@ -1569,7 +1569,7 @@
   "WQL": 0.36437314587451364
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "favorita_stores_1D",
   "horizon": 28,
@@ -1635,7 +1635,7 @@
   "WQL": 0.12045041272082113
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "favorita_stores_1W",
   "horizon": 13,
@@ -1700,7 +1700,7 @@
   "WQL": 0.10945999692079045
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "favorita_stores_1M",
   "horizon": 12,
@@ -1765,7 +1765,7 @@
   "WQL": 0.11969369041953246
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "favorita_transactions_1D",
   "horizon": 28,
@@ -1829,7 +1829,7 @@
   "WQL": 0.05962847718067993
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "favorita_transactions_1W",
   "horizon": 13,
@@ -1891,7 +1891,7 @@
   "WQL": 0.045819509682116163
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "favorita_transactions_1M",
   "horizon": 12,
@@ -1953,7 +1953,7 @@
   "WQL": 0.05937188617653493
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "solar_with_weather_15T",
   "horizon": 96,
@@ -2018,7 +2018,7 @@
   "WQL": 1.0790778342030225
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "solar_with_weather_1H",
   "horizon": 24,
@@ -2083,7 +2083,7 @@
   "WQL": 1.0100552640936633
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "solar_1D",
   "horizon": 28,
@@ -2137,7 +2137,7 @@
   "WQL": 0.1915893157521082
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "solar_1W",
   "horizon": 13,
@@ -2191,7 +2191,7 @@
   "WQL": 0.17645661575486546
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "kdd_cup_2022_10T",
   "horizon": 288,
@@ -2255,7 +2255,7 @@
   "WQL": 1.5744586807930085
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "kdd_cup_2022_30T",
   "horizon": 96,
@@ -2319,7 +2319,7 @@
   "WQL": 1.636037641645844
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "kdd_cup_2022_1D",
   "horizon": 14,
@@ -2383,7 +2383,7 @@
   "WQL": 0.5493812870750969
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "uci_air_quality_1H",
   "horizon": 168,
@@ -2446,7 +2446,7 @@
   "WQL": 0.28011649770448993
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "uci_air_quality_1D",
   "horizon": 28,
@@ -2509,7 +2509,7 @@
   "WQL": 0.22889356186487275
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "LOOP_SEATTLE_5T",
   "horizon": 288,
@@ -2563,7 +2563,7 @@
   "WQL": 0.06192153027086814
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "LOOP_SEATTLE_1D",
   "horizon": 28,
@@ -2617,7 +2617,7 @@
   "WQL": 0.028320854213046864
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "LOOP_SEATTLE_1H",
   "horizon": 168,
@@ -2671,7 +2671,7 @@
   "WQL": 0.05387741363903801
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "M_DENSE_1D",
   "horizon": 28,
@@ -2725,7 +2725,7 @@
   "WQL": 0.07237648359113692
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "M_DENSE_1H",
   "horizon": 168,
@@ -2779,7 +2779,7 @@
   "WQL": 0.1154750642054055
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "SZ_TAXI_15T",
   "horizon": 96,
@@ -2833,7 +2833,7 @@
   "WQL": 0.1892149797001293
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "SZ_TAXI_1H",
   "horizon": 168,
@@ -2887,7 +2887,7 @@
   "WQL": 0.1365102978648468
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "redset_5T",
   "horizon": 288,
@@ -2943,7 +2943,7 @@
   "WQL": 0.27611512912443203
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "redset_15T",
   "horizon": 96,
@@ -2999,7 +2999,7 @@
   "WQL": 0.23427426999552106
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "redset_1H",
   "horizon": 24,
@@ -3055,7 +3055,7 @@
   "WQL": 0.17843711864146966
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "hospital_admissions_1D",
   "horizon": 28,
@@ -3109,7 +3109,7 @@
   "WQL": 0.41103210312614324
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "hospital_admissions_1W",
   "horizon": 13,
@@ -3163,7 +3163,7 @@
   "WQL": 0.16492066422834878
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "ETT_1W",
   "horizon": 13,
@@ -3225,7 +3225,7 @@
   "WQL": 0.3812174727480055
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "ETT_1D",
   "horizon": 28,
@@ -3287,7 +3287,7 @@
   "WQL": 0.26677052568452375
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "ETT_1H",
   "horizon": 168,
@@ -3349,7 +3349,7 @@
   "WQL": 0.18858948276009785
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "ETT_15T",
   "horizon": 96,
@@ -3411,7 +3411,7 @@
   "WQL": 0.08886199288453508
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "hospital",
   "horizon": 12,
@@ -3465,7 +3465,7 @@
   "WQL": 0.07166042296059218
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "jena_weather_10T",
   "horizon": 144,
@@ -3541,7 +3541,7 @@
   "WQL": 0.21728666894904958
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "jena_weather_1D",
   "horizon": 28,
@@ -3617,7 +3617,7 @@
   "WQL": 0.2294758435742284
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "jena_weather_1H",
   "horizon": 24,
@@ -3693,7 +3693,7 @@
   "WQL": 0.23041436977188362
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "bizitobs_l2c_1H",
   "horizon": 24,
@@ -3755,7 +3755,7 @@
   "WQL": 0.2727242273055624
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "bizitobs_l2c_5T",
   "horizon": 288,
@@ -3817,7 +3817,7 @@
   "WQL": 0.8931361156720413
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "australian_tourism",
   "horizon": 8,
@@ -3871,7 +3871,7 @@
   "WQL": 0.08396898741733635
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "world_tourism",
   "horizon": 5,
@@ -3925,7 +3925,7 @@
   "WQL": 0.05597949940626515
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "world_co2_emissions",
   "horizon": 5,
@@ -3979,7 +3979,7 @@
   "WQL": 0.06678635052918269
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "world_life_expectancy",
   "horizon": 5,
@@ -4033,7 +4033,7 @@
   "WQL": 0.008839717268761732
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "ercot_1H",
   "horizon": 168,
@@ -4087,7 +4087,7 @@
   "WQL": 0.05114637893647465
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "ercot_1D",
   "horizon": 28,
@@ -4141,7 +4141,7 @@
   "WQL": 0.06050963138491503
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "ercot_1W",
   "horizon": 13,
@@ -4195,7 +4195,7 @@
   "WQL": 0.045599845172388395
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "ercot_1M",
   "horizon": 12,
@@ -4249,7 +4249,7 @@
   "WQL": 0.03771310627133199
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "uk_covid_utla_1D",
   "horizon": 28,
@@ -4303,7 +4303,7 @@
   "WQL": 0.35598595958995205
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "uk_covid_utla_1W",
   "horizon": 13,
@@ -4357,7 +4357,7 @@
   "WQL": 0.1610376386722437
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "uk_covid_nation_1D",
   "horizon": 28,
@@ -4421,7 +4421,7 @@
   "WQL": 0.2945920832405472
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "uk_covid_nation_1D",
   "horizon": 28,
@@ -4485,7 +4485,7 @@
   "WQL": 0.01696141663498479
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "uk_covid_nation_1W",
   "horizon": 8,
@@ -4549,7 +4549,7 @@
   "WQL": 0.5404027752155615
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "uk_covid_nation_1W",
   "horizon": 8,
@@ -4613,7 +4613,7 @@
   "WQL": 0.023245723022930202
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "ecdc_ili",
   "horizon": 13,
@@ -4667,7 +4667,7 @@
   "WQL": 0.33651453043728835
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "boomlet_1062",
   "horizon": 288,
@@ -4743,7 +4743,7 @@
   "WQL": 0.4595557655483282
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "boomlet_1209",
   "horizon": 288,
@@ -4851,7 +4851,7 @@
   "WQL": 0.25480111708429554
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "boomlet_1225",
   "horizon": 60,
@@ -4955,7 +4955,7 @@
   "WQL": 0.09800146790854238
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "boomlet_1230",
   "horizon": 288,
@@ -5033,7 +5033,7 @@
   "WQL": 0.2565008092644278
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "boomlet_1282",
   "horizon": 60,
@@ -5123,7 +5123,7 @@
   "WQL": 0.2827025571245772
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "boomlet_1487",
   "horizon": 288,
@@ -5232,7 +5232,7 @@
   "WQL": 0.17240964997853234
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "boomlet_1631",
   "horizon": 96,
@@ -5327,7 +5327,7 @@
   "WQL": 0.2520435728139683
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "boomlet_1676",
   "horizon": 96,
@@ -5482,7 +5482,7 @@
   "WQL": 0.2501591920865033
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "boomlet_1855",
   "horizon": 24,
@@ -5589,7 +5589,7 @@
   "WQL": 0.1373289689078701
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "boomlet_1975",
   "horizon": 24,
@@ -5719,7 +5719,7 @@
   "WQL": 0.08247815673138978
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "boomlet_2187",
   "horizon": 24,
@@ -5874,7 +5874,7 @@
   "WQL": 0.23784872184256015
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "boomlet_285",
   "horizon": 60,
@@ -6004,7 +6004,7 @@
   "WQL": 0.14402727731519888
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "boomlet_619",
   "horizon": 60,
@@ -6111,7 +6111,7 @@
   "WQL": 0.22612859778751143
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "boomlet_772",
   "horizon": 60,
@@ -6233,7 +6233,7 @@
   "WQL": 0.13381500073419034
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "boomlet_963",
   "horizon": 60,
@@ -6316,7 +6316,7 @@
   "WQL": 0.3174463348360836
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "fred_md_2025",
   "horizon": 12,
@@ -6379,7 +6379,7 @@
   "WQL": 0.06417792508689958
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "fred_qd_2025",
   "horizon": 8,
@@ -6442,7 +6442,7 @@
   "WQL": 0.1183274576754334
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "fred_md_2025",
   "horizon": 12,
@@ -6548,7 +6548,7 @@
   "WQL": 0.06305210685108095
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "fred_qd_2025",
   "horizon": 8,
@@ -6654,7 +6654,7 @@
   "WQL": 0.08314015768420711
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "us_consumption_1M",
   "horizon": 12,
@@ -6708,7 +6708,7 @@
   "WQL": 0.020713041576163296
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "us_consumption_1Q",
   "horizon": 8,
@@ -6762,7 +6762,7 @@
   "WQL": 0.02779206126016902
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "us_consumption_1Y",
   "horizon": 5,
@@ -6816,7 +6816,7 @@
   "WQL": 0.048141009989601045
  },
  {
-  "model_name": "nom_clip_after_flip",
+  "model_name": "hirondel_clip_after_flip",
   "dataset_path": "autogluon/fev_datasets",
   "dataset_config": "gvar",
   "horizon": 8,

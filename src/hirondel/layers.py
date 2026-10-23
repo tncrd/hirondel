@@ -5,7 +5,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from .config import NomConfig
+from .config import HirondelConfig
 from .delta_rule import gated_delta_rule
 
 
@@ -37,7 +37,7 @@ class SwiGLU(nn.Module):
 class PatchEmbedding(nn.Module):
     """One token per patch: values, observed mask and a signed time index relative to the forecast origin."""
 
-    def __init__(self, cfg: NomConfig):
+    def __init__(self, cfg: HirondelConfig):
         super().__init__()
         d, p = cfg.d_model, cfg.patch_size
         self.value_proj = nn.Linear(p, d)
@@ -62,7 +62,7 @@ class DeltaBlock(nn.Module):
     written: their write strength is zero and their decay is one.
     """
 
-    def __init__(self, cfg: NomConfig):
+    def __init__(self, cfg: HirondelConfig):
         super().__init__()
         d, h = cfg.d_model, cfg.n_heads
         self.n_heads, self.head_dim = h, d // h
@@ -127,7 +127,7 @@ class AttentionBlock(nn.Module):
     zero when there is nothing worth retrieving. Positions are measured in samples (token index x patch).
     """
 
-    def __init__(self, cfg: NomConfig):
+    def __init__(self, cfg: HirondelConfig):
         super().__init__()
         d, h = cfg.d_model, cfg.n_heads
         self.n_heads, self.head_dim, self.stride = h, d // h, cfg.patch_size
@@ -173,7 +173,7 @@ class QuantileHead(nn.Module):
     One channel is the median; the others are softplus increments accumulated outward from it.
     """
 
-    def __init__(self, cfg: NomConfig):
+    def __init__(self, cfg: HirondelConfig):
         super().__init__()
         self.patch, self.n_q, self.median = cfg.patch_size, len(cfg.quantile_levels), cfg.median_index
         self.norm = RMSNorm(cfg.d_model, cfg.norm_eps)
