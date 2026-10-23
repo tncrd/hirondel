@@ -96,3 +96,21 @@ without clipping is kept in `results/experiments/clip_zero/off/`.
 
 The gain is small but goes the same way on every benchmark and metric. The variant `per_pass` (clipping the direct pass
 before the average) gains less on GIFT-Eval (0.7008 / 0.4821) and was not kept.
+
+## IND-Eval
+
+Industrial tasks of [IND-Eval](https://arxiv.org/abs/2610.16652), the five sources not already in GIFT-Eval or TIME (NEATS,
+3W, PRONTO, Mesa del Sol, tablet compression), scored as in the paper's appendix; the protocol and our choices are in the
+docstring of `indeval.py`. There is no leaderboard: the other models' numbers in the README are those published in the
+paper (`showcase/indeval.yaml`).
+
+```bash
+python -c "from huggingface_hub import snapshot_download as d; d('cognitedata/IND-Eval', repo_type='dataset', \
+  revision='9b0dce3fd91a97b9428ab1da532f08403f4106e1', local_dir='indeval_data', \
+  allow_patterns=[f'data/{s}/*.parquet' for s in ('neats', '3w', 'pronto', 'mds', 'tablet_compression')])"
+python -m benchmarks.indeval --data indeval_data --out benchmarks/results/indeval --device cuda   # ~9 min on one GPU
+```
+
+Results in `results/indeval/` (`headline.json`, one file per source with per-task scores): nMASE 0.839, nCRPS 0.536 over
+the five sources. Seasonal Naive normalisation: Mesa del Sol's plain naive gives 1.278 / 1.405 here, 1.280 / 1.410 in the
+paper.

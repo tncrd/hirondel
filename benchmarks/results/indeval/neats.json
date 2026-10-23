@@ -1,0 +1,437 @@
+{
+ "source": "neats",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Hirondel": [
+   0.9368143433520967,
+   0.49582878780446255
+  ]
+ },
+ "tasks": {
+  "banambu-deep-1__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.8957324317045171,
+    0.4678586459040648
+   ]
+  },
+  "banambu-deep-1__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.8683150204421366,
+    0.5238302848970053
+   ]
+  },
+  "bassett-deep-1__mwd-lwd-dml_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.9409372347783036,
+    0.5876356705066649
+   ]
+  },
+  "bassett-deep-1__mwd-lwd-dml_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.9322883870437797,
+    0.6079427749717837
+   ]
+  },
+  "bdc-2-01__mwd-lwd-dml-st1_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    1.049788483940731,
+    0.7047438443181006
+   ]
+  },
+  "bdc-2-01__mwd-lwd-dml-st1_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    1.0614843539916827,
+    0.6505421342013353
+   ]
+  },
+  "bdc-2-01__mwd-lwd-dml_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.9652986273331623,
+    0.640219726982601
+   ]
+  },
+  "bdc-2-01__mwd-lwd-dml_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.9909246085572655,
+    0.6713084335584728
+   ]
+  },
+  "bdc-2-04-phase-2__mwd-lwd-dml_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    1.2141470901963185,
+    0.8204344149536118
+   ]
+  },
+  "bdc-2-04-phase-2__mwd-lwd-dml_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    1.2023675194543653,
+    0.8642414951678766
+   ]
+  },
+  "bdc-3-05-p__mwd-lwd-dml_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    1.041535931979459,
+    0.6954508901043533
+   ]
+  },
+  "bdc-3-05-p__mwd-lwd-dml_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    1.0715804965086206,
+    0.7112718852456177
+   ]
+  },
+  "gemtree-1__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.8913365717911979,
+    0.4158262841397386
+   ]
+  },
+  "gemtree-1__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.8941136379509517,
+    0.46734526370136364
+   ]
+  },
+  "holonema-1__mwd-lwd-dml_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    1.1616666367654773,
+    0.4334612334562132
+   ]
+  },
+  "holonema-1__mwd-lwd-dml_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    1.1433899879827003,
+    0.44230873166829127
+   ]
+  },
+  "la-rocca-1__lwd-dds_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.710379777728937,
+    0.26607344259973736
+   ]
+  },
+  "la-rocca-1__lwd-dds_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.6767851546683372,
+    0.350643492306417
+   ]
+  },
+  "la-rocca-1__lwd-pwd_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    1.0058108195171438,
+    0.14155020674770008
+   ]
+  },
+  "la-rocca-1__lwd-pwd_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    1.0155830203369327,
+    0.20183414429842111
+   ]
+  },
+  "lpa-01__mudlogging_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.9891010746217412,
+    0.6538960329322208
+   ]
+  },
+  "lpa-01__mudlogging_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.934170061503469,
+    0.6657941996281249
+   ]
+  },
+  "lpa-01__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.6728903989223246,
+    0.49802510893958934
+   ]
+  },
+  "lpa-01__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.7388013977963599,
+    0.5803976801832471
+   ]
+  },
+  "lpa-01__mwd-lwd_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    1.007637628297558,
+    0.7054236472994522
+   ]
+  },
+  "lpa-01__mwd-lwd_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    1.0121362306952442,
+    0.7262202814376661
+   ]
+  },
+  "lpa-02__mudlogging_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.9593292138795383,
+    0.5991819511802142
+   ]
+  },
+  "lpa-02__mudlogging_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.9449904809483044,
+    0.64285650475171
+   ]
+  },
+  "lpa-02__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    1.065543652993739,
+    0.14673194416665356
+   ]
+  },
+  "lpa-02__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.9511797456501522,
+    0.15708575341620964
+   ]
+  },
+  "lpa-03__mudlogging_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.9998608733035322,
+    0.6852849914704137
+   ]
+  },
+  "lpa-03__mudlogging_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.995246118117729,
+    0.6330114386654755
+   ]
+  },
+  "lpa-03__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.890566511142623,
+    0.6973055185390227
+   ]
+  },
+  "lpa-03__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.8208192673107607,
+    0.6745859028204493
+   ]
+  },
+  "psa-02-phase-1__mudlogging-gravel-pack_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.5797692177762518,
+    0.18064172952852156
+   ]
+  },
+  "psa-02-phase-1__mudlogging-gravel-pack_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.556569342899275,
+    0.21199465978614979
+   ]
+  },
+  "psa-02-phase-1__mudlogging_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.9512275782865391,
+    0.5419458929541245
+   ]
+  },
+  "psa-02-phase-1__mudlogging_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.898230321718117,
+    0.5208440080935212
+   ]
+  },
+  "psa-02-phase-1__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    1.0618788956953111,
+    0.5822751969613267
+   ]
+  },
+  "psa-02-phase-1__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    1.1137276407460743,
+    0.7102624572020209
+   ]
+  },
+  "sca-03__lwd-pwd_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    1.0087952503027393,
+    0.686817071030506
+   ]
+  },
+  "sca-03__lwd-pwd_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    1.016422969663428,
+    0.7421704987452523
+   ]
+  }
+ },
+ "n_pairs": 9934,
+ "n_left_out_of_mase": 138
+}

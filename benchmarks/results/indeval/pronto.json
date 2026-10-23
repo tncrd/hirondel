@@ -1,0 +1,137 @@
+{
+ "source": "pronto",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Hirondel": [
+   0.955892523670328,
+   0.8531490131734684
+  ]
+ },
+ "tasks": {
+  "pronto_D2E1_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    1.001399093050751,
+    0.8705794846117719
+   ]
+  },
+  "pronto_D2E1_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    1.0069814847242142,
+    0.940021795458104
+   ]
+  },
+  "pronto_D2E2_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.696209536572153,
+    0.5931500900954593
+   ]
+  },
+  "pronto_D2E2_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.8895911145869838,
+    0.7394406397959283
+   ]
+  },
+  "pronto_D3E1_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.9699402946138383,
+    1.0076480231756448
+   ]
+  },
+  "pronto_D3E1_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.9876336988043792,
+    0.9967715151724473
+   ]
+  },
+  "pronto_D3E2_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    1.0474085250889218,
+    1.1912953551008032
+   ]
+  },
+  "pronto_D3E2_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.9967781804126041,
+    1.1816404996926062
+   ]
+  },
+  "pronto_D4E1_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.7952001194762556,
+    0.60502239858273
+   ]
+  },
+  "pronto_D4E1_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.9735466825704643,
+    0.702446248133933
+   ]
+  },
+  "pronto_D4E2_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    1.1135031115420921,
+    0.8089725094598428
+   ]
+  },
+  "pronto_D4E2_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    1.08086017048413,
+    0.8522300409400666
+   ]
+  }
+ },
+ "n_pairs": 144,
+ "n_left_out_of_mase": 0
+}

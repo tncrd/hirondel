@@ -303,6 +303,7 @@ def all(rows, sp, ours, models, model_path, uni=None):
         sentence = f.read().strip()
     values = readme_values(rows, sp_all, ours, models, sentence)
     values["univariate"] = univariate_table(uni or [], models, name)
+    values["indeval"] = indeval_section(name, models["ours"]["params"])
     for template, out in (("README.template.md", "README.md"), ("MODEL_CARD.template.md", "MODEL_CARD.md")):
         with open(os.path.join(HERE, template)) as f:
             text = fill(f.read(), {**values, **card_values(ours)})
@@ -314,3 +315,109 @@ def card_values(ours):
     g, tm, fv = ours["GIFT-Eval"], ours["TIME"], ours["fev-bench"]
     return {"gift_mase": _f(g["MASE"]), "gift_crps": _f(g["CRPS"]), "time_mase": _f(tm["MASE"]),
             "time_crps": _f(tm["CRPS"]), "fev_mase": _f(fv["MASE"], 2), "fev_sql": _f(fv["SQL"], 2)}
+
+
+# ---- IND-Eval -------------------------------------------------------------------------------------------------------
+def load_indeval(path: str = os.path.join(HERE, "indeval.yaml")) -> dict:
+    import yaml
+    with open(path) as f:
+        return yaml.safe_load(f)
+
+
+def _gmean(x):
+    import math
+    return math.exp(sum(math.log(v) for v in x) / len(x))
+
+
+def indeval_rows(pub, ours, name):
+    """One row per model: per-source (nMASE, nCRPS) and their geometric mean over the five sources. Ours first."""
+    src = pub["sources"]
+    rows = [{"model": name, "params": ours.get("params"), "permissive": True, "ours": True,
+             "per_source": {s: tuple(ours["per_source"][s]) for s in src}}]
+    for m in pub["models"]:
+        rows.append({"model": m["name"], "params": m["params"], "permissive": m["permissive"], "ours": False,
+                     "per_source": {s: (m["nmase"][s], m["ncrps"][s]) for s in src}})
+    for r in rows:
+        r["mean"] = (_gmean([r["per_source"][s][0] for s in src]), _gmean([r["per_source"][s][1] for s in src]))
+    return rows
+
+
+def _size(p):
+    return f"{p / 1e6:.0f}M" if p >= 1e7 else f"{p / 1e6:.1f}M"
+
+
+def _label(r):
+    size = _size(r["params"]) if r["params"] else ""
+    return f"{r['model']} ({size}{', ' if size and r['ours'] else ''}{'ours' if r['ours'] else ''})"
+
+
+def indeval_table(rows, pub):
+    """Markdown table, nMASE / nCRPS per source and their mean; the best value of each metric in bold."""
+    src = pub["sources"]
+    head = ["Source"] + [_label(r) for r in rows]
+    lines = ["| " + " | ".join(head) + " |", "|" + "---|" * len(head)]
+
+    def cells(get):
+        best = [min(get(r)[k] for r in rows) for k in (0, 1)]
+        return [" / ".join((f"**{get(r)[k]:.3f}**" if abs(get(r)[k] - best[k]) < 1e-12 else f"{get(r)[k]:.3f}")
+                           for k in (0, 1)) for r in rows]
+    for s in src:
+        lines.append(f"| {pub['source_names'][s]} | " + " | ".join(cells(lambda r: r["per_source"][s])) + " |")
+    lines.append("| **Geometric mean, 5 sources** | " + " | ".join(cells(lambda r: r["mean"])) + " |")
+    return "\n".join(lines)
+
+
+INDEVAL_NOTE = ("IND-Eval, five industrial sources (NEATS, 3W, PRONTO, Mesa del Sol, tablet compression); geometric mean of "
+                "the sources. {name}: our run, each channel forecast alone, no covariates. Others: numbers published in "
+                "the IND-Eval paper (arXiv 2610.16652), joint forecasting with PRONTO's covariates. Hollow: non-commercial "
+                "license.")
+
+
+def indeval_figure(rows, path):
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    import textwrap
+    _style(plt)
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.2))
+    for ax, k, metric in zip(axes, (0, 1), ("nMASE", "nCRPS")):
+        for r in rows:
+            x, y = r["params"], r["mean"][k]
+            if r["ours"]:
+                ax.scatter([x], [y], s=120, color=ACCENT, zorder=4, edgecolors="white", linewidths=1.4)
+            elif r["permissive"]:
+                ax.scatter([x], [y], s=28, color=DARK, zorder=4, edgecolors="none")
+            else:
+                ax.scatter([x], [y], s=26, facecolors=BG, edgecolors=DARK, linewidths=1.1, zorder=4)
+            ax.annotate(f"{r['model']} (ours)" if r["ours"] else r["model"], (x, y),
+                        xytext=(9, -4) if r["ours"] else (6, 4), textcoords="offset points", va="top" if r["ours"] else "baseline",
+                        fontsize=10 if r["ours"] else 8, fontweight="bold" if r["ours"] else "normal",
+                        color=ACCENT if r["ours"] else INK)
+        ax.margins(y=0.25)
+        ax.set_xscale("log")
+        ax.set_xlim(3e6, 6e8)
+        ax.set_xticks([1e7, 3e7, 1e8, 3e8])
+        ax.set_xticklabels(["10M", "30M", "100M", "300M"])
+        ax.set_title(f"IND-Eval · {metric}", loc="left", fontsize=12, fontweight="bold", color=INK)
+        ax.text(1.0, 1.02, "lower is better", transform=ax.transAxes, ha="right", fontsize=8.5, color=GREY)
+        ax.set_xlabel("Parameters (log scale)")
+    note = INDEVAL_NOTE.format(name=next(r["model"] for r in rows if r["ours"]))
+    lines = textwrap.wrap(note, 150)
+    fig.text(0.5, 0.01, "\n".join(lines), ha="center", fontsize=8.5, color=GREY, linespacing=1.4)
+    fig.tight_layout(rect=(0, 0.03 + 0.035 * len(lines), 1, 1))
+    fig.savefig(path, dpi=160, metadata={"Software": None})
+    plt.close(fig)
+
+
+def indeval_section(name, params, results=os.path.join(ROOT, "benchmarks", "results", "indeval", "headline.json")):
+    """Figure + table from our results and the published numbers; empty when IND-Eval was not run."""
+    if not os.path.exists(results):
+        return ""
+    import json
+    with open(results) as f:
+        hd = json.load(f)
+    pub = load_indeval()
+    rows = indeval_rows(pub, {"params": params, "per_source": {s: hd["per_source"][s][name] for s in pub["sources"]}},
+                        name)
+    indeval_figure(rows, os.path.join(FIG, "indeval.png"))
+    return indeval_table(rows, pub)

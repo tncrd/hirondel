@@ -51,6 +51,16 @@ a permissive license, the others shown hollow.
 
 <!-- gen:univariate -->
 
+### Industrial data: IND-Eval
+
+![IND-Eval, accuracy against size](showcase/figures/indeval.png)
+
+Five industrial sources of [IND-Eval](https://arxiv.org/abs/2610.16652), none in the training data. Hirondel: our run,
+each channel alone, no covariates. Other models: numbers published in the IND-Eval paper (joint forecasting, PRONTO's
+covariates). nMASE / nCRPS, lower is better:
+
+<!-- gen:indeval -->
+
 ![Accuracy against size, official leaderboards](showcase/figures/pareto.png)
 
 Official leaderboards, read on 2026-10-23 (some models use covariates or joint multivariate forecasting there).

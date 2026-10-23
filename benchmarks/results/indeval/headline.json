@@ -1,0 +1,74 @@
+{
+ "sources": [
+  "neats",
+  "3w",
+  "pronto",
+  "mds",
+  "tablet_compression"
+ ],
+ "revision": "9b0dce3fd91a97b9428ab1da532f08403f4106e1",
+ "nMASE_nCRPS": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Hirondel": [
+   0.8394585030466645,
+   0.5360696060339625
+  ]
+ },
+ "per_source": {
+  "neats": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.9368143433520967,
+    0.49582878780446255
+   ]
+  },
+  "3w": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.7541403103864984,
+    0.6528115309640273
+   ]
+  },
+  "pronto": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.955892523670328,
+    0.8531490131734684
+   ]
+  },
+  "mds": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.8378814877160333,
+    0.49289676556784473
+   ]
+  },
+  "tablet_compression": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.7367138181060787,
+    0.32524116317096835
+   ]
+  }
+ },
+ "univariate": true,
+ "covariates": "none"
+}

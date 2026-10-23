@@ -1,0 +1,47 @@
+{
+ "source": "mds",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Hirondel": [
+   0.8378814877160333,
+   0.49289676556784473
+  ]
+ },
+ "tasks": {
+  "mds-10s_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.8472629822905727,
+    0.48970612444804534
+   ]
+  },
+  "mds-2min_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.8127327648174851,
+    0.48459185316971237
+   ]
+  },
+  "mds-5min_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.8542437007403484,
+    0.5046104739788431
+   ]
+  }
+ },
+ "n_pairs": 115515,
+ "n_left_out_of_mase": 23829
+}

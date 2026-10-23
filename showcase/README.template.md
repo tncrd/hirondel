@@ -32,6 +32,24 @@ TimesFM-3 use covariates and were not run in this setting; they appear in the of
 Pareto fronts are drawn over models with a permissive license; models under a non-commercial or restricted license are
 shown hollow. Every value, with its source, is in `showcase/data/univariate.csv`.
 
+### Industrial data: IND-Eval
+
+[IND-Eval](https://arxiv.org/abs/2610.16652) gathers forecasting tasks from industrial processes: offshore drilling
+(NEATS), oil wells (3W), a multiphase flow facility (PRONTO), a solar and battery microgrid (Mesa del Sol) and tablet
+compression. None of these sources is in our training data. Here Hirondel forecasts each sensor channel alone, without
+covariates; the numbers of the other models are **those published in the IND-Eval paper**, where they forecast the
+channels of a window jointly and read PRONTO's control signals as covariates.
+
+<p align="center"><img src="showcase/figures/indeval.png" alt="IND-Eval, accuracy against size" width="100%"></p>
+
+nMASE / nCRPS (normalised by Seasonal Naive; lower is better), best of each metric in bold:
+
+<!-- gen:indeval -->
+
+Hirondel's numbers are our run of `benchmarks/indeval.py` on the published data (`benchmarks/results/indeval/`); our
+Seasonal Naive normalisation matches the paper's to a few thousandths, not bit for bit. IND-Eval has no leaderboard. The
+five sources are those not already in GIFT-Eval or TIME (the paper also averages MetroPT-3, ETT, Electricity and Solar).
+
 ### Official leaderboards
 
 The official leaderboards mix settings: some models use covariates (fev-bench) or forecast the variables of a series

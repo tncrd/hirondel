@@ -70,6 +70,23 @@ a permissive license, the others shown hollow.
 | Chronos-2 | 119.5M | Apache-2.0 | 0.7037 | 0.4911 | 0.6659 | 0.5584 | 43.97 |
 | TimesFM-2.5 | 231.3M | Apache-2.0 | 0.7050 | 0.4903 | 0.6686 | 0.5674 | 42.20 |
 
+### Industrial data: IND-Eval
+
+![IND-Eval, accuracy against size](showcase/figures/indeval.png)
+
+Five industrial sources of [IND-Eval](https://arxiv.org/abs/2610.16652), none in the training data. Hirondel: our run,
+each channel alone, no covariates. Other models: numbers published in the IND-Eval paper (joint forecasting, PRONTO's
+covariates). nMASE / nCRPS, lower is better:
+
+| Source | Hirondel (7.5M, ours) | Chronos-2 (119M) | TiRex-2 (83M) | TimesFM-3 (331M) |
+|---|---|---|---|---|
+| NEATS | 0.937 / 0.496 | 0.915 / 0.516 | **0.899** / 0.551 | 0.924 / **0.494** |
+| 3W | **0.754** / **0.653** | 0.847 / 0.749 | 0.837 / 0.786 | 0.756 / 0.690 |
+| PRONTO | 0.956 / 0.853 | 0.754 / 0.569 | 0.957 / 0.719 | **0.617** / **0.473** |
+| Mesa del Sol | **0.838** / 0.493 | 0.864 / 0.948 | 0.901 / 0.542 | 0.841 / **0.481** |
+| Tablet compression | 0.737 / 0.325 | 0.744 / 0.324 | 0.736 / 0.321 | **0.729** / **0.318** |
+| **Geometric mean, 5 sources** | 0.839 / 0.536 | 0.822 / 0.583 | 0.863 / 0.558 | **0.766** / **0.477** |
+
 ![Accuracy against size, official leaderboards](showcase/figures/pareto.png)
 
 Official leaderboards, read on 2026-10-23 (some models use covariates or joint multivariate forecasting there).

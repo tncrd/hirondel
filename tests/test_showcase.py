@@ -4,7 +4,7 @@ import re
 
 import pytest
 
-from showcase import build
+from showcase import build, render
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 
@@ -86,3 +86,14 @@ def test_univariate_rows_include_our_runs_without_an_official_entry():
                                  meta=meta)
     assert rows == [{"model": "T", "params": 5, "license": "b", "permissive": False, "benchmark": "GIFT-Eval",
                      "metric": "MASE", "value": 0.71, "source": "computed by us", "date": build.DATE}]
+
+
+def test_indeval_table_from_published_numbers_and_ours():
+    pub = render.load_indeval()
+    ours = {"per_source": {s: [0.9, 0.5] for s in pub["sources"]}, "nMASE_nCRPS": {}}
+    rows = render.indeval_rows(pub, ours, "Hirondel")
+    chronos = next(r for r in rows if r["model"] == "Chronos-2")
+    assert chronos["mean"] == pytest.approx((0.822, 0.583), abs=5e-4)               # geometric mean of the five sources
+    assert next(r for r in rows if r["model"] == "Hirondel")["mean"] == pytest.approx((0.9, 0.5))
+    table = render.indeval_table(rows, pub)
+    assert "| 3W |" in table and "**0.473**" in table                               # TimesFM-3 best nCRPS on PRONTO

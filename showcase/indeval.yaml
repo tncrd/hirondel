@@ -1,0 +1,28 @@
+# IND-Eval: published numbers of the paper (cognitedata, "IND-Eval", arXiv 2610.16652, results table "IND-Eval results for
+# Chronos-2, TiRex-2, and TimesFM-3 over 187 tasks"), per source, nMASE / nCRPS (normalised by Seasonal Naive). Only the
+# five industrial sources: MetroPT-3 is part of TIME and Electricity, Solar, ETT of GIFT-Eval. In the paper, each model
+# forecasts the targets of a window jointly and reads PRONTO's control channels as covariates. Our model: our run of
+# benchmarks/indeval.py (benchmarks/results/indeval), univariate, no covariates.
+# Sizes: the Hub's safetensors count, read on 2026-10-23.
+paper: "arXiv 2610.16652"
+sources: [neats, 3w, pronto, mds, tablet_compression]
+source_names: {neats: NEATS, 3w: 3W, pronto: PRONTO, mds: Mesa del Sol, tablet_compression: Tablet compression}
+models:
+  - name: Chronos-2
+    params: 119477664
+    license: Apache-2.0
+    permissive: true
+    nmase: {neats: 0.915, 3w: 0.847, pronto: 0.754, mds: 0.864, tablet_compression: 0.744}
+    ncrps: {neats: 0.516, 3w: 0.749, pronto: 0.569, mds: 0.948, tablet_compression: 0.324}
+  - name: TiRex-2
+    params: 82501744           # huggingface.co/NX-AI/TiRex-2; its card: 38.4M parameters active in univariate mode
+    license: Apache-2.0
+    permissive: true
+    nmase: {neats: 0.899, 3w: 0.837, pronto: 0.957, mds: 0.901, tablet_compression: 0.736}
+    ncrps: {neats: 0.551, 3w: 0.786, pronto: 0.719, mds: 0.542, tablet_compression: 0.321}
+  - name: TimesFM-3
+    params: 330710976
+    license: TimesFM Non-Commercial License v1.0
+    permissive: false
+    nmase: {neats: 0.924, 3w: 0.756, pronto: 0.617, mds: 0.841, tablet_compression: 0.729}
+    ncrps: {neats: 0.494, 3w: 0.690, pronto: 0.473, mds: 0.481, tablet_compression: 0.318}

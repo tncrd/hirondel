@@ -51,6 +51,31 @@ TimesFM-3 use covariates and were not run in this setting; they appear in the of
 Pareto fronts are drawn over models with a permissive license; models under a non-commercial or restricted license are
 shown hollow. Every value, with its source, is in `showcase/data/univariate.csv`.
 
+### Industrial data: IND-Eval
+
+[IND-Eval](https://arxiv.org/abs/2610.16652) gathers forecasting tasks from industrial processes: offshore drilling
+(NEATS), oil wells (3W), a multiphase flow facility (PRONTO), a solar and battery microgrid (Mesa del Sol) and tablet
+compression. None of these sources is in our training data. Here Hirondel forecasts each sensor channel alone, without
+covariates; the numbers of the other models are **those published in the IND-Eval paper**, where they forecast the
+channels of a window jointly and read PRONTO's control signals as covariates.
+
+<p align="center"><img src="showcase/figures/indeval.png" alt="IND-Eval, accuracy against size" width="100%"></p>
+
+nMASE / nCRPS (normalised by Seasonal Naive; lower is better), best of each metric in bold:
+
+| Source | Hirondel (7.5M, ours) | Chronos-2 (119M) | TiRex-2 (83M) | TimesFM-3 (331M) |
+|---|---|---|---|---|
+| NEATS | 0.937 / 0.496 | 0.915 / 0.516 | **0.899** / 0.551 | 0.924 / **0.494** |
+| 3W | **0.754** / **0.653** | 0.847 / 0.749 | 0.837 / 0.786 | 0.756 / 0.690 |
+| PRONTO | 0.956 / 0.853 | 0.754 / 0.569 | 0.957 / 0.719 | **0.617** / **0.473** |
+| Mesa del Sol | **0.838** / 0.493 | 0.864 / 0.948 | 0.901 / 0.542 | 0.841 / **0.481** |
+| Tablet compression | 0.737 / 0.325 | 0.744 / 0.324 | 0.736 / 0.321 | **0.729** / **0.318** |
+| **Geometric mean, 5 sources** | 0.839 / 0.536 | 0.822 / 0.583 | 0.863 / 0.558 | **0.766** / **0.477** |
+
+Hirondel's numbers are our run of `benchmarks/indeval.py` on the published data (`benchmarks/results/indeval/`); our
+Seasonal Naive normalisation matches the paper's to a few thousandths, not bit for bit. IND-Eval has no leaderboard. The
+five sources are those not already in GIFT-Eval or TIME (the paper also averages MetroPT-3, ETT, Electricity and Solar).
+
 ### Official leaderboards
 
 The official leaderboards mix settings: some models use covariates (fev-bench) or forecast the variables of a series
