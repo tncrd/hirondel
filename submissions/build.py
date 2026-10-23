@@ -57,7 +57,7 @@ class {cls}Model(fev.ForecastingModel):
     """{display} from {code_url} (weights: {hf_url}).
 
     Univariate and covariate-blind: every target column is forecast as its own series, covariate columns are not read.
-    Default inference procedure of the package (flip average). A context with no observed value, which the package's
+    Default inference procedure of the package (flip average, zero clipping of non-negative series). A context with no observed value, which the package's
     `forecast()` refuses, is run through the model on its empty context (as in the package's benchmark adapter).
     """
 

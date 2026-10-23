@@ -15,9 +15,9 @@ Headline numbers of this package (float32), computed with each benchmark's offic
 <!-- results:start -->
 | Benchmark | MASE | CRPS (fev-bench: SQL) |
 |---|---|---|
-| GIFT-Eval (97 tasks, normalised by Seasonal Naive; lower is better) | 0.7011 | 0.4825 |
-| fev-bench (100 tasks, skill score in %; higher is better) | 32.80 | 44.80 |
-| TIME (98 tasks, normalised by Seasonal Naive; lower is better) | 0.6555 | 0.5527 |
+| GIFT-Eval (97 tasks, normalised by Seasonal Naive; lower is better) | 0.7003 | 0.4816 |
+| fev-bench (100 tasks, skill score in %; higher is better) | 32.91 | 44.90 |
+| TIME (98 tasks, normalised by Seasonal Naive; lower is better) | 0.6551 | 0.5520 |
 <!-- results:end -->
 
 On the fev-bench leaderboard this ranks 7 of 33 (SQL) and 6 of 33 (MASE) among the models the site shows by default (2026-10-22).
@@ -34,9 +34,9 @@ settings were written before any score (`benchmarks/competitors.yaml`).
 | Model | Parameters | License | GIFT-Eval MASE | GIFT-Eval CRPS | TIME MASE | TIME CRPS | fev-bench SQL skill |
 |---|---|---|---|---|---|---|---|
 | Timestral-5M | 5.2M | Modified MIT (revenue cap) | 0.7102 | 0.4836 | 0.6571 | 0.5490 | 44.36 |
-| **Nom (ours)** | 7.5M | Apache-2.0 | 0.7011 | 0.4825 | 0.6555 | 0.5527 | 44.80 |
+| **Nom (ours)** | 7.5M | Apache-2.0 | 0.7003 | 0.4816 | 0.6551 | 0.5520 | 44.90 |
 | Toto-2.0-22m | 21.9M | Apache-2.0 | 0.7226 | 0.5009 | 0.6751 | 0.5654 | 42.37 |
-| Timestral-28M | 27.8M | Modified MIT (revenue cap) | 0.6817 | 0.4641 |  |  | 45.86 |
+| Timestral-28M | 27.8M | Modified MIT (revenue cap) | 0.6817 | 0.4641 | 0.6455 | 0.5408 | 45.86 |
 | TiRex | 35.0M | NX-AI Community License | 0.7213 | 0.4921 | 0.6831 | 0.5731 | 42.58 |
 | Chronos-2 | 119.5M | Apache-2.0 | 0.7037 | 0.4911 | 0.6659 | 0.5584 | 43.97 |
 | TimesFM-2.5 | 231.3M | Apache-2.0 | 0.7050 | 0.4903 | 0.6686 | 0.5674 | 42.20 |
@@ -80,17 +80,21 @@ print(forecast.quantile(0.9)[0, :4])  # upper 90% quantile
 
 `forecast()` takes one series (1-D array), a batch of equal-length series (2-D array) or a list of series of any
 lengths; NaN values are treated as missing. By default (`flip=True`) each forecast averages the model run on the series
-and on its negation; `flip=False` runs one pass instead of two. `forecast_df()` does the same for a long pandas
-DataFrame (`item_id`, `timestamp`, `target`) and returns one row per future timestamp.
+and on its negation; `flip=False` runs one pass instead of two. Also by default (`clip_nonnegative=True`, a flag of
+`config.json`), when every observed value of a series is >= 0, its quantiles are clamped at 0 after the flip average;
+series with a negative value are left as they are. `clip_nonnegative=False` turns it off. `forecast_df()` does the same
+for a long pandas DataFrame (`item_id`, `timestamp`, `target`) and returns one row per future timestamp.
 
 ### Tail levels 0.01, 0.05, 0.95, 0.99
 
 `forecast.quantile(q)` also accepts 0.01, 0.05, 0.95 and 0.99 (and `forecast_df(..., tail_quantiles=True)` adds their
 columns). **These levels are extrapolated, not learned**: the network predicts the 9 levels 0.1 ... 0.9; each tail is
 then extended by an exponential fitted on its two outermost levels (the `ExponentialTailApproximation` of GluonTS),
-after the flip average. No extra weights; the 9 predicted levels are unchanged.
+after the flip average (and floored at 0 for the series clipped at 0). No extra weights; the 9 predicted levels are
+unchanged.
 
-Measured coverage P(y ≤ q), this model with `flip=True`:
+Measured coverage P(y ≤ q), this model with `flip=True`, before zero clipping was added (clipping only raises lower-tail
+values of non-negative series, so their lower coverage can only go up):
 
 | data | 0.01 | 0.05 | 0.95 | 0.99 |
 |---|---|---|---|---|

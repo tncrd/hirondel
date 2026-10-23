@@ -14,7 +14,7 @@ forecast_fn(contexts: list[np.ndarray], prediction_length: int) -> np.ndarray  #
 returning the quantiles 0.1, ..., 0.9 on the raw scale (contexts are 1-D float arrays, NaN = missing).
 `benchmarks.adapter.GluonTSAdapter(forecast_fn, prediction_length)` turns it into a GluonTS predictor, checks shapes and
 finiteness, and emits `QuantileForecast` objects. `nom_forecast_fn(forecaster)` is the released model with its default
-inference procedure (flip on).
+inference procedure (flip on, zero clipping of non-negative series on).
 
 ## GIFT-Eval
 
@@ -81,3 +81,18 @@ python -m benchmarks.competitors gift --name Chronos-2 --gift-eval gift-eval --d
 
 Results: `results/gift_competitors/<model>/` (`all_results.csv`, and `headline.json` with the package version and the
 date). These are "same protocol, computed by us" numbers, not the leaderboards' official ones.
+
+## Zero clipping (`clip_nonnegative`)
+
+The released default clamps the quantiles of non-negative series at 0, after the flip average. It was measured before
+being adopted, with `benchmarks/experiments/clip_zero.py` (variant `after_flip`, which the package default reproduces
+exactly: `tests/test_clip_zero.py`). The results in `results/{gift,fev,time}` are those of the default; the same model
+without clipping is kept in `results/experiments/clip_zero/off/`.
+
+| | GIFT-Eval MASE / CRPS | fev-bench skill MASE / SQL (%) | TIME MASE / CRPS |
+|---|---|---|---|
+| without clipping | 0.7011 / 0.4825 | 32.80 / 44.80 | 0.6555 / 0.5527 |
+| with clipping (default) | 0.7003 / 0.4816 | 32.91 / 44.90 | 0.6551 / 0.5520 |
+
+The gain is small but goes the same way on every benchmark and metric. The variant `per_pass` (clipping the direct pass
+before the average) gains less on GIFT-Eval (0.7008 / 0.4821) and was not kept.

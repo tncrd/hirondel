@@ -1,4 +1,5 @@
-"""Measurement only, outside the published inference path: zero clipping of the quantiles of series whose observed context
+"""Measurement of zero clipping, made before it became the package default (`clip_nonnegative`, which reproduces
+`after_flip` exactly): zero clipping of the quantiles of series whose observed context
 is non-negative (Timestral's `clip_nonnegative` rule). Two variants, as forecast functions for the benchmark adapters:
 
 - `after_flip`: the package's forecast (flip average included), then every quantile clipped at 0;
@@ -24,7 +25,7 @@ def non_negative(contexts) -> np.ndarray:
 
 def after_flip(forecaster):
     def fn(contexts, prediction_length):
-        q = nom_forecast_fn(forecaster)(contexts, prediction_length)
+        q = nom_forecast_fn(forecaster, clip_nonnegative=False)(contexts, prediction_length)
         keep = non_negative(contexts)[:, None, None]
         return np.where(keep, np.maximum(q, 0), q).astype(np.float32)
     return fn
@@ -32,7 +33,7 @@ def after_flip(forecaster):
 
 def per_pass(forecaster, clip: bool = True):
     def fn(contexts, prediction_length):
-        one_pass = nom_forecast_fn(forecaster, flip=False)              # handles contexts with no observed value
+        one_pass = nom_forecast_fn(forecaster, flip=False, clip_nonnegative=False)             # handles contexts with no observed value
         up = one_pass(contexts, prediction_length)
         down = one_pass([-np.asarray(c) for c in contexts], prediction_length)
         if clip:

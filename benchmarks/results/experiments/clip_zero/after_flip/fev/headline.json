@@ -1,0 +1,14 @@
+{
+ "SQL": {
+  "skill_score": 44.89564402090558,
+  "win_rate": 74.375,
+  "rank": 7,
+  "n_models": 33
+ },
+ "MASE": {
+  "skill_score": 32.90608759518422,
+  "win_rate": 72.28125000000001,
+  "rank": 6,
+  "n_models": 33
+ }
+}

@@ -43,6 +43,7 @@ class NomConfig:
     min_scale: float = 1e-5
     range_margin: float = 1e4
     flip: bool = True
+    clip_nonnegative: bool = True
     format_version: int = FORMAT_VERSION
 
     @classmethod

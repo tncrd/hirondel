@@ -2,7 +2,7 @@
 
 `tests/data/parity_reference.npz` holds fixed input series and the quantiles the reference
 implementation returned for them (float32, CPU, one thread, the torch version stored in the file).
-`forecast()` must reproduce them to 1e-6. This holds with that same torch version on one thread; other
+`forecast(..., clip_nonnegative=False)` must reproduce them to 1e-6 (the reference has no zero clipping). This holds with that same torch version on one thread; other
 torch versions agree to a few 1e-6 of the series' standard deviation (rounding differences), which is
 reported but not required.
 
@@ -47,7 +47,7 @@ def _cases():
 @pytest.mark.parametrize("case, ref", _cases(), ids=lambda x: x["name"] if isinstance(x, dict) else "")
 def test_forecast_matches_reference(forecaster, case, ref):
     context = [ref[f"{case['name']}/context_{j}"] for j in range(case["n_series"])]
-    out = forecaster.forecast(context, case["prediction_length"], flip=case["flip"])
+    out = forecaster.forecast(context, case["prediction_length"], flip=case["flip"], clip_nonnegative=False)
     expected = ref[f"{case['name']}/quantiles"]
     scale = np.array([np.nanstd(c) for c in context])[:, None, None]
     gap = float((np.abs(out.quantiles - expected) / scale).max())
@@ -72,7 +72,7 @@ def test_reference_quantiles_never_cross():
 @pytest.mark.parametrize("case, ref", _cases(), ids=lambda x: x["name"] if isinstance(x, dict) else "")
 def test_forecast_never_crosses_on_reference_inputs(forecaster, case, ref):
     context = [ref[f"{case['name']}/context_{j}"] for j in range(case["n_series"])]
-    q = forecaster.forecast(context, case["prediction_length"], flip=case["flip"]).quantiles
+    q = forecaster.forecast(context, case["prediction_length"], flip=case["flip"], clip_nonnegative=False).quantiles
     assert (np.diff(q, axis=-1) >= 0).all(), case["name"]
 
 
@@ -98,7 +98,7 @@ def test_gpu_agrees_with_reference():
     ref = np.load(REFERENCE)
     for case in json.loads(str(ref["cases"])):
         context = [ref[f"{case['name']}/context_{j}"] for j in range(case["n_series"])]
-        q = gpu.forecast(context, case["prediction_length"], flip=case["flip"]).quantiles
+        q = gpu.forecast(context, case["prediction_length"], flip=case["flip"], clip_nonnegative=False).quantiles
         scale = np.array([np.nanstd(c) for c in context])[:, None, None]
         assert float((np.abs(q - ref[f"{case['name']}/quantiles"]) / scale).max()) < 1e-4, case["name"]
         assert (np.diff(q, axis=-1) >= 0).all(), case["name"]

@@ -1,4 +1,5 @@
 """Shapes and contracts of `forecast()`, on a randomly initialised model with the released architecture."""
+import json
 import os
 
 import numpy as np
@@ -293,3 +294,45 @@ def test_forecast_df_without_pandas_says_how_to_install(forecaster, monkeypatch)
     monkeypatch.setattr(builtins, "__import__", no_pandas)
     with pytest.raises(ImportError, match='pip install "nom\\[pandas\\]"'):
         forecaster.forecast_df(None, 12)
+
+
+# ---- zero clipping of non-negative series --------------------------------------------------------------------------
+def _clip_contexts():
+    t = np.arange(300, dtype=np.float32)
+    pos = np.maximum(0, np.sin(2 * np.pi * t / 24)) * 3              # non-negative, many zeros
+    neg = np.sin(2 * np.pi * t / 24)                                  # takes negative values
+    gaps = pos.copy()
+    gaps[:50] = np.nan                                                # missing values do not count
+    return [pos, neg, gaps]
+
+
+def test_clip_nonnegative_is_the_default_and_a_config_flag(forecaster):
+    assert forecaster.cfg.clip_nonnegative is True
+    ctx = _clip_contexts()
+    np.testing.assert_array_equal(forecaster.forecast(ctx, 24).quantiles,
+                                  forecaster.forecast(ctx, 24, clip_nonnegative=True).quantiles)
+    off = NomForecaster(NomModel(NomConfig.from_dict({**json.load(open(CONFIG)), "clip_nonnegative": False})))
+    off.model.load_state_dict(forecaster.model.state_dict())
+    np.testing.assert_array_equal(off.forecast(ctx, 24).quantiles,
+                                  forecaster.forecast(ctx, 24, clip_nonnegative=False).quantiles)
+
+
+def test_clip_nonnegative_clamps_after_the_flip_only_non_negative_series(forecaster):
+    ctx = _clip_contexts()
+    raw = forecaster.forecast(ctx, 24, clip_nonnegative=False).quantiles
+    assert (raw[[0, 2]] < 0).any()                                    # the test would be empty otherwise
+    q = forecaster.forecast(ctx, 24).quantiles
+    np.testing.assert_array_equal(q[[0, 2]], np.maximum(raw[[0, 2]], 0))
+    np.testing.assert_array_equal(q[1], raw[1])
+    assert (np.diff(q, axis=-1) >= 0).all()
+
+
+def test_clip_nonnegative_floors_the_extrapolated_tails(forecaster):
+    ctx = _clip_contexts()
+    out = forecaster.forecast(ctx, 24)
+    raw = forecaster.forecast(ctx, 24, clip_nonnegative=False)
+    for t in (0.01, 0.05):
+        assert (out.quantile(t)[[0, 2]] >= 0).all()
+        np.testing.assert_array_equal(out.quantile(t)[1], raw.quantile(t)[1])
+    np.testing.assert_array_equal(out.quantile(0.99)[[0, 2]],
+                                  np.maximum(Forecast(out.quantiles, out.quantile_levels).quantile(0.99)[[0, 2]], 0))

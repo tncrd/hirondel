@@ -14,18 +14,18 @@ model-index:
       - task: {type: time-series-forecasting, name: Probabilistic forecasting}
         dataset: {type: Salesforce/GiftEval, name: GIFT-Eval (97 tasks)}
         metrics:
-          - {type: mase, name: MASE (normalised by Seasonal Naive), value: 0.7011}
-          - {type: crps, name: CRPS (normalised by Seasonal Naive), value: 0.4825}
+          - {type: mase, name: MASE (normalised by Seasonal Naive), value: 0.7003}
+          - {type: crps, name: CRPS (normalised by Seasonal Naive), value: 0.4816}
       - task: {type: time-series-forecasting, name: Probabilistic forecasting}
         dataset: {type: autogluon/fev_datasets, name: fev-bench (100 tasks)}
         metrics:
-          - {type: skill-score, name: Skill score, MASE (%), value: 32.80}
-          - {type: skill-score, name: Skill score, SQL (%), value: 44.80}
+          - {type: skill-score, name: Skill score, MASE (%), value: 32.91}
+          - {type: skill-score, name: Skill score, SQL (%), value: 44.90}
       - task: {type: time-series-forecasting, name: Probabilistic forecasting}
         dataset: {type: Real-TSF/TIME, name: TIME (98 tasks)}
         metrics:
-          - {type: mase, name: MASE (normalised by Seasonal Naive), value: 0.6555}
-          - {type: crps, name: CRPS (normalised by Seasonal Naive), value: 0.5527}
+          - {type: mase, name: MASE (normalised by Seasonal Naive), value: 0.6551}
+          - {type: crps, name: CRPS (normalised by Seasonal Naive), value: 0.5520}
 ---
 
 ![Nom](showcase/figures/banner.png)
@@ -42,9 +42,9 @@ A small foundation model for zero-shot probabilistic time-series forecasting: 7.
 <!-- results:start -->
 | Benchmark | MASE | CRPS (fev-bench: SQL) |
 |---|---|---|
-| GIFT-Eval (97 tasks, normalised by Seasonal Naive; lower is better) | 0.7011 | 0.4825 |
-| fev-bench (100 tasks, skill score in %; higher is better) | 32.80 | 44.80 |
-| TIME (98 tasks, normalised by Seasonal Naive; lower is better) | 0.6555 | 0.5527 |
+| GIFT-Eval (97 tasks, normalised by Seasonal Naive; lower is better) | 0.7003 | 0.4816 |
+| fev-bench (100 tasks, skill score in %; higher is better) | 32.91 | 44.90 |
+| TIME (98 tasks, normalised by Seasonal Naive; lower is better) | 0.6551 | 0.5520 |
 <!-- results:end -->
 
 On the fev-bench leaderboard this ranks 7 of 33 (SQL) and 6 of 33 (MASE) among the models the site shows by default (2026-10-22).
@@ -58,9 +58,9 @@ a permissive license, the others shown hollow.
 | Model | Parameters | License | GIFT-Eval MASE | GIFT-Eval CRPS | TIME MASE | TIME CRPS | fev-bench SQL skill |
 |---|---|---|---|---|---|---|---|
 | Timestral-5M | 5.2M | Modified MIT (revenue cap) | 0.7102 | 0.4836 | 0.6571 | 0.5490 | 44.36 |
-| **Nom (ours)** | 7.5M | Apache-2.0 | 0.7011 | 0.4825 | 0.6555 | 0.5527 | 44.80 |
+| **Nom (ours)** | 7.5M | Apache-2.0 | 0.7003 | 0.4816 | 0.6551 | 0.5520 | 44.90 |
 | Toto-2.0-22m | 21.9M | Apache-2.0 | 0.7226 | 0.5009 | 0.6751 | 0.5654 | 42.37 |
-| Timestral-28M | 27.8M | Modified MIT (revenue cap) | 0.6817 | 0.4641 |  |  | 45.86 |
+| Timestral-28M | 27.8M | Modified MIT (revenue cap) | 0.6817 | 0.4641 | 0.6455 | 0.5408 | 45.86 |
 | TiRex | 35.0M | NX-AI Community License | 0.7213 | 0.4921 | 0.6831 | 0.5731 | 42.58 |
 | Chronos-2 | 119.5M | Apache-2.0 | 0.7037 | 0.4911 | 0.6659 | 0.5584 | 43.97 |
 | TimesFM-2.5 | 231.3M | Apache-2.0 | 0.7050 | 0.4903 | 0.6686 | 0.5674 | 42.20 |

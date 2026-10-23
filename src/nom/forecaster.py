@@ -20,6 +20,7 @@ ArrayLike = Union[np.ndarray, torch.Tensor, Sequence[float]]
 class Forecast:
     quantiles: np.ndarray                 # [n_series, prediction_length, n_quantiles], raw scale
     quantile_levels: tuple[float, ...]
+    nonnegative: np.ndarray | None = None  # [n_series] bool: series clipped at 0 (their extrapolated tails too)
 
     # Not predicted by the network: extrapolated from the predicted levels by an exponential tail (see `quantile`).
     EXTRAPOLATED_LEVELS = (0.01, 0.05, 0.95, 0.99)
@@ -49,7 +50,7 @@ class Forecast:
         (GluonTS ExponentialTailApproximation). Low tail, tau < 0.1: q_tau = q_0.1 + a ln(tau / 0.1), a = (q_0.2 -
         q_0.1) / ln 2. High tail, tau > 0.9: q_tau = q_0.9 - b ln((1 - tau) / 0.1), b = (q_0.9 - q_0.8) / ln 2. They are
         computed from `quantiles`, i.e. after the flip average; non-crossing predicted levels give a, b >= 0, so the
-        tails never cross them."""
+        tails never cross them. Series marked `nonnegative` (zero clipping) have their tails floored at 0 too."""
         i = self._index(q)
         if i is not None:
             return self.quantiles[..., i]
@@ -63,8 +64,12 @@ class Forecast:
         q10, q20, q80, q90 = (self.quantiles[..., k] for k in idx)
         ln2 = math.log(2.0)                          # Python floats keep the dtype of the quantiles
         if q < 0.5:
-            return q10 + (q20 - q10) / ln2 * math.log(q / 0.1)
-        return q90 - (q90 - q80) / ln2 * math.log((1 - q) / 0.1)
+            tail = q10 + (q20 - q10) / ln2 * math.log(q / 0.1)
+        else:
+            tail = q90 - (q90 - q80) / ln2 * math.log((1 - q) / 0.1)
+        if self.nonnegative is not None:
+            tail = np.where(self.nonnegative[:, None], np.maximum(tail, 0), tail)
+        return tail
 
 
 class NomForecaster:
@@ -198,14 +203,27 @@ class NomForecaster:
             q = 0.5 * (q - self._predict(-ctx, neg_views, avail, prediction_length).flip(-1))
         return q.float().cpu().numpy()
 
-    def forecast(self, context, prediction_length: int, flip: bool | None = None) -> Forecast:
+    @staticmethod
+    def _nonnegative(series: list[np.ndarray]) -> np.ndarray:
+        """Per series: every observed value >= 0 (at least one is observed)."""
+        out = []
+        for s in series:
+            obs = np.isfinite(s)
+            out.append(bool(obs.any() and (s[obs] >= 0).all()))
+        return np.array(out, bool)
+
+    def forecast(self, context, prediction_length: int, flip: bool | None = None,
+                 clip_nonnegative: bool | None = None) -> Forecast:
         """Forecast each series of `context` (1-D array, 2-D array [n, length], or a list of 1-D series).
 
         NaN values are treated as missing. The last `context_length` points are read at full resolution;
         older history, when present, enters through the coarse readings.
         flip=True (default) averages the forecast of the series with the mirrored forecast of its negation;
-        flip=False runs one pass instead of two."""
+        flip=False runs one pass instead of two.
+        clip_nonnegative=True (default) clamps every quantile at 0, after the flip average, for each series whose
+        observed context is non-negative; other series are left as they are."""
         flip = self.cfg.flip if flip is None else flip
+        clip = self.cfg.clip_nonnegative if clip_nonnegative is None else clip_nonnegative
         if isinstance(prediction_length, bool) or not isinstance(prediction_length, (int, np.integer)) \
                 or prediction_length < 1:
             raise ValueError(f"prediction_length must be a positive integer, got {prediction_length!r}")
@@ -213,11 +231,16 @@ class NomForecaster:
         series = self._as_series(context)
         out = [self._forecast_batch(series[i:i + self.batch_size], prediction_length, flip)
                for i in range(0, len(series), self.batch_size)]
-        return Forecast(np.concatenate(out, 0), tuple(self.cfg.quantile_levels))
+        q = np.concatenate(out, 0)
+        if not clip:
+            return Forecast(q, tuple(self.cfg.quantile_levels))
+        nonneg = self._nonnegative(series)
+        q = np.where(nonneg[:, None, None], np.maximum(q, 0), q)
+        return Forecast(q, tuple(self.cfg.quantile_levels), nonneg)
 
     def forecast_df(self, df, prediction_length: int, id_column: str = "item_id", timestamp_column: str = "timestamp",
                     target: str = "target", freq: str | None = None, flip: bool | None = None,
-                    tail_quantiles: bool = False):
+                    clip_nonnegative: bool | None = None, tail_quantiles: bool = False):
         """Forecast every series of a long DataFrame (one row per id and timestamp) and return a long DataFrame.
 
         Each series is sorted by timestamp and placed on a regular grid; missing rows and NaN targets count as
@@ -250,7 +273,7 @@ class NomForecaster:
             ids.append(item)
             series.append(values)
             futures.append(pd.date_range(grid[-1], periods=prediction_length + 1, freq=f)[1:])
-        out = self.forecast(series, prediction_length, flip=flip)
+        out = self.forecast(series, prediction_length, flip=flip, clip_nonnegative=clip_nonnegative)
         levels = out.all_levels if tail_quantiles else out.quantile_levels
         values = np.stack([out.quantile(q) for q in levels], -1)
         frames = []

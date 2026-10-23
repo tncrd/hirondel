@@ -103,6 +103,12 @@ def pareto_figure(rows, models, ours_name, path, title=OFFICIAL_TITLE, note=OFFI
             ax.fill_between(grid, f1, np.where(np.isfinite(f0), f0, f1), where=np.isfinite(f0) & (f1 < f0 - 1e-12),
                             color=ACCENT_FILL, step="post", zorder=0, lw=0)
             ax.plot(xs1, ys1, color=ACCENT, lw=1.7, zorder=3)
+        span = max(p[2] for p in pts) - min(p[2] for p in pts) or 1.0
+
+        def near_ours(x, y):
+            return bool(ours) and abs(np.log10(x / ours[0][1])) < 0.35 and abs(y - ours[0][2]) < 0.12 * span
+
+        below = any(near_ours(x, y) and y < ours[0][2] for _, x, y in others)
         for name, x, y in others:
             front = name in on_front
             if permissive[name]:
@@ -110,12 +116,16 @@ def pareto_figure(rows, models, ours_name, path, title=OFFICIAL_TITLE, note=OFFI
             else:
                 ax.scatter([x], [y], s=22, facecolors=BG, edgecolors=GREY, linewidths=1.1, zorder=4)
             dx, dy, ha = LABEL_OFFSETS_BY_BENCH.get(bench, {}).get(name) or LABEL_OFFSETS.get(name, (5, 4, "left"))
+            if near_ours(x, y):                   # a neighbour of ours: its label on the side away from ours
+                dy = -12 if y < ours[0][2] else 6
             ax.annotate(name, (x, y), xytext=(dx, dy), textcoords="offset points", fontsize=8, ha=ha,
                         color=INK if front else "#7A7A7A", style="normal" if permissive[name] else "italic", zorder=5)
         for name, x, y in ours:
             ax.scatter([x], [y], s=120, color=ACCENT, zorder=6, edgecolors="white", linewidths=1.4)
-            ax.annotate(f"{name} (ours)", (x, y), xytext=(-9, -4), textcoords="offset points", fontsize=10.5,
-                        fontweight="bold", color=ACCENT, ha="right", va="top", zorder=7)
+            # below the point, unless a neighbour sits just below it: then above
+            ax.annotate(f"{name} (ours)", (x, y), xytext=(-9, 5 if below else -4), textcoords="offset points",
+                        fontsize=10.5, fontweight="bold", color=ACCENT, ha="right", va="bottom" if below else "top",
+                        zorder=7)
         ax.margins(y=0.09)
         ax.set_xscale("log")
         ax.set_xlim(1.2e6, x_max)

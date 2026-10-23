@@ -44,8 +44,9 @@ class GluonTSAdapter:
                                        start_date=e["start"] + len(e["target"]), item_id=e.get("item_id"))
 
 
-def nom_forecast_fn(forecaster, flip: bool | None = None) -> ForecastFn:
-    """The released model: `NomForecaster.forecast` with its default inference procedure (flip on unless disabled).
+def nom_forecast_fn(forecaster, flip: bool | None = None, clip_nonnegative: bool | None = None) -> ForecastFn:
+    """The released model: `NomForecaster.forecast` with its default inference procedure (flip and zero clipping on
+    unless disabled).
 
     Benchmarks contain contexts with no observed value whose labels are still scored (GIFT-Eval: bitbrains,
     electricity/W). `forecast()` refuses such a series; here it is run through the model on its empty context, as the
@@ -55,7 +56,7 @@ def nom_forecast_fn(forecaster, flip: bool | None = None) -> ForecastFn:
         out = np.empty((len(contexts), prediction_length, len(LEVELS)), np.float32)
         if (~empty).any():
             out[~empty] = forecaster.forecast([c for c, e in zip(contexts, empty) if not e], prediction_length,
-                                              flip=flip).quantiles
+                                              flip=flip, clip_nonnegative=clip_nonnegative).quantiles
         if empty.any():
             use_flip = forecaster.cfg.flip if flip is None else flip
             out[empty] = forecaster._forecast_batch([c for c, e in zip(contexts, empty) if e], prediction_length,
