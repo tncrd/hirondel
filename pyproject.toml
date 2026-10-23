@@ -5,7 +5,9 @@ build-backend = "hatchling.build"
 [project]
 name = "hirondel"
 version = "1.0.0"
-description = "A small univariate time-series foundation model for zero-shot probabilistic forecasting."
+description = "Zero-shot time-series forecasting model (7M parameters)"
+authors = [{ name = "The Hirondel Authors" }]
+keywords = ["forecasting", "time-series", "foundation-model"]
 readme = "README.md"
 requires-python = ">=3.10"
 license = "Apache-2.0"
@@ -16,6 +18,11 @@ dependencies = [
     "safetensors",
     "huggingface_hub",
 ]
+
+[project.urls]
+Homepage = "https://github.com/tncrd/hirondel"
+Repository = "https://github.com/tncrd/hirondel"
+"Model weights" = "https://huggingface.co/Tncrd/Hirondel-7M"
 
 [project.optional-dependencies]
 pandas = ["pandas"]

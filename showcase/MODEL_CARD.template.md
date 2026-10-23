@@ -9,7 +9,7 @@ tags:
   - zero-shot
   - probabilistic-forecasting
 model-index:
-  - name: Hirondel
+  - name: Hirondel-7M
     results:
       - task: {type: time-series-forecasting, name: Probabilistic forecasting}
         dataset: {type: Salesforce/GiftEval, name: GIFT-Eval (97 tasks)}
@@ -30,10 +30,12 @@ model-index:
 
 ![Hirondel](showcase/figures/banner.png)
 
-# Hirondel
+# Hirondel-7M: zero-shot probabilistic time-series forecasting
 
-A small foundation model for zero-shot probabilistic time-series forecasting: 7.5M parameters, 9 quantiles from 0.1 to
-0.9, any horizon, CPU-friendly. Code and weights under Apache-2.0.
+*Hirondel — from French* hirondelle *(swallow), the bird said to tell the weather.*
+
+Hirondel is a 7M-parameter time-series forecasting model for zero-shot probabilistic forecasting: 9 quantiles from 0.1
+to 0.9, any horizon, CPU-friendly. Code and weights under Apache-2.0: https://github.com/tncrd/hirondel.
 
 <!-- gen:sentence -->
 
@@ -44,7 +46,7 @@ A small foundation model for zero-shot probabilistic time-series forecasting: 7.
 ![Accuracy against size, univariate setting](showcase/figures/univariate.png)
 
 Univariate setting: every model forecasts each series alone, without covariates (competitors run by us in forced
-univariate mode with their public packages; TiRex and TimesFM-2.5 univariate by design). Pareto fronts over models with
+univariate mode with their public packages; TiRex, TimesFM-2.5, FlowState-r1.1 and Moirai-2.0 univariate by design). Pareto fronts over models with
 a permissive license, the others shown hollow.
 
 <!-- gen:univariate -->
@@ -67,7 +69,8 @@ forecast = forecaster.forecast(context, prediction_length=48)
 print(forecast.quantiles.shape)   # (1, 48, 9)
 ```
 
-Install, inference details, tail levels, hardware and numerical parity: see the code repository's README.
+Install with `pip install hirondel`. Inference details, tail levels, hardware and numerical parity: see the code
+repository's README (https://github.com/tncrd/hirondel).
 
 ## Training data
 
@@ -84,3 +87,14 @@ split, fev-bench or TIME is in the training data.
 ## License
 
 Apache-2.0 for code and weights. `NOTICE` must be kept when redistributing.
+
+## Citation
+
+```bibtex
+@misc{hirondel2026,
+  title        = {Hirondel-7M: zero-shot probabilistic time-series forecasting},
+  author       = {{The Hirondel Authors}},
+  year         = {2026},
+  howpublished = {\url{https://huggingface.co/Tncrd/Hirondel-7M}}
+}
+```

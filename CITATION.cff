@@ -1,14 +1,16 @@
 cff-version: 1.2.0
 message: "If you use this model, please cite it as below."
-title: "Hirondel: a small univariate time-series foundation model"
+title: "Hirondel-7M: zero-shot probabilistic time-series forecasting"
 type: software
 authors:
   - name: "The Hirondel Authors"
+    alias: "tncrd"
 version: 1.0.0
 license: Apache-2.0
 repository-code: "https://github.com/tncrd/hirondel"
+url: "https://huggingface.co/Tncrd/Hirondel-7M"
+date-released: "2026-10-23"
 keywords:
-  - time series
   - forecasting
-  - foundation model
-  - probabilistic forecasting
+  - time-series
+  - foundation-model

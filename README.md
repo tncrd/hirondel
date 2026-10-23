@@ -2,7 +2,9 @@
 
 # Hirondel
 
-A small foundation model for zero-shot probabilistic time-series forecasting: **7.5M parameters**, 9 quantiles from 0.1
+*Hirondel — from French* hirondelle *(swallow), the bird said to tell the weather.*
+
+Hirondel is a 7M-parameter time-series forecasting model for zero-shot probabilistic forecasting: 9 quantiles from 0.1
 to 0.9 (tails to 0.01 and 0.99 by extrapolation), any horizon, CPU-friendly, **Apache-2.0** code and weights.
 
 **The most accurate forecasting model under 10M parameters with public weights and a permissive license, on GIFT-Eval, fev-bench and TIME** (official leaderboards, read on 2026-10-23; how this was checked: `showcase/README.md`).
@@ -59,12 +61,14 @@ jointly. Official results of well-known models, read on 2026-10-23, against thei
 
 ## Install
 
-From a clone of this repository (Python 3.10 or newer, PyTorch 2.4 or newer):
+Python 3.10 or newer, PyTorch 2.4 or newer:
 
 ```bash
-pip install .            # core: torch, numpy, safetensors, huggingface_hub
-pip install ".[pandas]"  # adds forecast_df for pandas DataFrames
+pip install hirondel             # core: torch, numpy, safetensors, huggingface_hub
+pip install "hirondel[pandas]"   # adds forecast_df for pandas DataFrames
 ```
+
+From a clone of this repository: `pip install .` (or `pip install ".[pandas]"`).
 
 ## Quick start
 
@@ -145,7 +149,16 @@ Code and weights: Apache-2.0 (`LICENSE`). The training data and the attribution 
 
 ## Citation
 
-See `CITATION.cff`.
+```bibtex
+@misc{hirondel2026,
+  title        = {Hirondel-7M: zero-shot probabilistic time-series forecasting},
+  author       = {{The Hirondel Authors}},
+  year         = {2026},
+  howpublished = {\url{https://huggingface.co/Tncrd/Hirondel-7M}}
+}
+```
+
+The same reference is in `CITATION.cff`.
 
 ## Contributing
 

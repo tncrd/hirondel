@@ -181,7 +181,8 @@ def same_protocol_figure(sp, sizes, ours_name, path, permissive=None):
             else:
                 ax.scatter([x], [r[metric]], s=26, facecolors=BG, edgecolors=DARK, linewidths=1.1, zorder=4)
             ax.annotate(f"{r['model']} (ours)" if mine else r["model"], (x, r[metric]),
-                        xytext=(7, -13) if mine else (5, 4), textcoords="offset points",
+                        xytext=(7, -13) if mine else (5, -11) if r["model"] == "TiRex" else (5, 4),
+                        textcoords="offset points",                      # TiRex below: Toto-2.0-22m sits beside it
                         fontsize=10 if mine else 8, fontweight="bold" if mine else "normal",
                         color=ACCENT if mine else INK)
         ax.set_xscale("log")
@@ -296,7 +297,7 @@ def all(rows, sp, ours, models, model_path, uni=None):
         sizes.setdefault(r["model"], sizes.get(r["model"].split(" (")[0]))
     permissive = {m["name"]: m["permissive"] for m in models["models"]}
     same_protocol_figure(sp_all, sizes, name, os.path.join(FIG, "same_protocol.png"), permissive)
-    banner(model_path, name, "A 7.5M-parameter foundation model\nfor probabilistic time-series forecasting",
+    banner(model_path, name, "A 7M-parameter model for zero-shot\nprobabilistic time-series forecasting",
            os.path.join(FIG, "banner.png"))
     with open(os.path.join(HERE, "sentence.txt")) as f:
         sentence = f.read().strip()
