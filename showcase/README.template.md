@@ -33,7 +33,7 @@ shown hollow. Every value, with its source, is in `showcase/data/univariate.csv`
 ### Official leaderboards
 
 The official leaderboards mix settings: some models use covariates (fev-bench) or forecast the variables of a series
-jointly. Official results of well-known models, read on 2026-10-22 (GIFT-Eval on 2026-10-23), against their size (sources:
+jointly. Official results of well-known models, read on 2026-10-23, against their size (sources:
 `showcase/data/official.csv`):
 
 <p align="center"><img src="showcase/figures/pareto.png" alt="Accuracy against size on the official leaderboards" width="100%"></p>

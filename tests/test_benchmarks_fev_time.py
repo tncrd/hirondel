@@ -103,3 +103,17 @@ def test_gift_naive_folder_in_old_and_new_clones(tmp_path):
         root = tmp_path / name / "gift-eval"
         (root / "results" / name).mkdir(parents=True)
         assert gift.naive_csv(str(root)) == str(root / "results" / name / "all_results.csv")
+
+
+def test_time_score_keeps_the_run_provenance(tmp_path):
+    """The forecast stage of a competitor writes its provenance (package, revision, date) to headline.json; the score
+    stage adds the metrics to it instead of overwriting it."""
+    ours, naive, out = str(tmp_path / "ours"), str(tmp_path / "naive"), str(tmp_path / "out")
+    _metrics(ours, "m", "A/H", "short", [1.0, 3.0], [0.5, 0.5])
+    _metrics(naive, "seasonal_naive", "A/H", "short", [4.0], [1.0])
+    os.makedirs(out)
+    json.dump({"model": "m", "revision": "abc", "MASE": "stale"}, open(os.path.join(out, "headline.json"), "w"))
+    h = time_bench.write_results(ours, "m", naive, out)
+    saved = json.load(open(os.path.join(out, "headline.json")))
+    assert saved["revision"] == "abc" and saved["model"] == "m"
+    assert saved["MASE"] == h["MASE"] and saved["n_tasks"] == 1

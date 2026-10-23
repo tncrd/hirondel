@@ -1,4 +1,13 @@
 {
+ "model": "Chronos-2",
+ "variant": null,
+ "repo_id": "amazon/chronos-2",
+ "revision": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+ "package": "chronos-forecasting",
+ "package_version": "2.3.2",
+ "date": "2026-10-22",
+ "protocol": "forced univariate, computed by us",
+ "provenance_note": "restored on 2026-10-23 from the fev-bench run of the same environment and revision (the score stage used to overwrite this file)",
  "n_tasks": 98,
  "MASE": 0.6659164031127732,
  "CRPS": 0.5583821445963848

@@ -1,0 +1,12 @@
+{
+ "model": "Toto-2.0-4m",
+ "variant": null,
+ "repo_id": "Datadog/Toto-2.0-4m",
+ "revision": "8306a9801cf98c0f5ffe4b2dcc8f496e616d84d9",
+ "package": "toto-models",
+ "package_version": "1.0.0",
+ "date": "2026-10-23",
+ "protocol": "forced univariate, computed by us",
+ "SQL": 40.044450646911,
+ "MASE": 27.136034049467273
+}

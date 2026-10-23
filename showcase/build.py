@@ -21,7 +21,7 @@ RESULTS = os.path.join(ROOT, "benchmarks", "results")
 DATE = "2026-10-22"
 SOURCES = {
     "GIFT-Eval": "github.com/SalesforceAIResearch/gift-eval @ cfaefe0, results/{key}/all_results.csv",
-    "fev-bench": "github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results",
+    "fev-bench": "github.com/autogluon/fev @ ceb25ae, benchmarks/fev_bench/results",
     "TIME": "huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/{key}",
 }
 OURS_SOURCES = {"GIFT-Eval": "benchmarks/results/gift/all_results.csv", "fev-bench": "benchmarks/results/fev/summaries.json",

@@ -7,7 +7,7 @@ Univariate and covariate-blind: every target column is forecast as its own serie
 columns are not read. All 100 tasks are scored. Our training data contains none of the fev-bench datasets (`DATA.md`),
 so no task is declared `trained_on_this_dataset`.
 
-    git clone https://github.com/autogluon/fev && git -C fev checkout f9e2c7d
+    git clone https://github.com/autogluon/fev && git -C fev checkout ceb25ae
     pip install ".[bench]" "fev==0.9.0"
     python -m benchmarks.fev_bench --fev-bench fev/benchmarks/fev_bench --out benchmarks/results/fev [--device cuda]
 """

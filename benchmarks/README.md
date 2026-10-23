@@ -35,7 +35,7 @@ gluonts 0.16.3 and numpy 2 (needed for recent Python versions); the numbers in `
 ## fev-bench
 
 ```bash
-git clone https://github.com/autogluon/fev && git -C fev checkout f9e2c7d
+git clone https://github.com/autogluon/fev && git -C fev checkout ceb25ae
 pip install ".[bench]" "fev==0.9.0"
 python -m benchmarks.fev_bench --fev-bench fev/benchmarks/fev_bench --out benchmarks/results/fev --device cuda
 ```

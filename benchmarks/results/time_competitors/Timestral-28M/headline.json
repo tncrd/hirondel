@@ -1,4 +1,13 @@
 {
+ "model": "Timestral-28M",
+ "variant": null,
+ "repo_id": "mistralai/Timestral-28M",
+ "revision": "49b26409ac87b5935539a5d8ffe7f397b720db47",
+ "package": "timestral",
+ "package_version": "1.0.0",
+ "date": "2026-10-23",
+ "protocol": "forced univariate, computed by us",
+ "provenance_note": "restored on 2026-10-23 from the fev-bench run of the same environment and revision (the score stage used to overwrite this file)",
  "n_tasks": 98,
  "MASE": 0.6455366056014898,
  "CRPS": 0.5407749869755876

@@ -42,3 +42,9 @@ both under restricted licenses. The check should be repeated whenever the leader
 same Seasonal Naive (identical in both copies). The new entries under 10M parameters below ours on both metrics:
 TimeSSM-2.5M (0.7544 / 0.5128), Mobius-0 (0.7140 / 0.4959), Yug (0.7443 / 0.5287). EFG-base (0.7006 / 0.48159, no public
 weights) is just behind ours (0.7003 / 0.48156). The sentence holds.
+
+**fev-bench and TIME re-checked on 2026-10-23.** fev `ceb25ae` adds TimeH2O-v1 (109M parameters, non-commercial) and
+TimeRSI-1.5 (closed API), and now hides TimeH2O-v1-tiny on the site; our skill scores are unchanged and our rank too
+(7th in SQL, 6th in MASE, of 33 visible models). TIME: the results (`Real-TSF/TIME-Output` `4c93dea`) are the latest; the
+evaluation code changed only by new model scripts. GIFT-Eval: the evaluation code (`src/`) and the task lists of the
+official notebooks are identical in `6fdb10d` and `cfaefe0`. The sentence holds.

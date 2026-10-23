@@ -148,8 +148,13 @@ def write_results(results_root: str, model_name: str, naive_root: str, out_dir: 
             (m, c), (nm, nc) = ours[k], naive[k]
             f.write(f"{k[0]}/{k[1]},{m!r},{c!r},{m / nm!r},{c / nc!r}\n")
     h = headline(results_root, model_name, naive_root)
-    with open(os.path.join(out_dir, "headline.json"), "w") as f:
-        json.dump(h, f, indent=1)
+    path = os.path.join(out_dir, "headline.json")
+    saved = {}
+    if os.path.exists(path):                   # provenance written by the forecast stage (competitors) is kept
+        with open(path) as f:
+            saved = json.load(f)
+    with open(path, "w") as f:
+        json.dump({**saved, **h}, f, indent=1)
     return h
 
 

@@ -49,11 +49,12 @@ LABEL_OFFSETS_BY_BENCH = {"GIFT-Eval": {"Toto-2.0-22m": (5, 4, "left"), "TiRex":
                           "fev-bench": {"t0-gamma": (6, -12, "left"), "Timestral-209M": (-6, 5, "right"),
                                         "TiRex": (8, 2, "left"), "Toto-2.0-22m": (-6, -12, "right")}}
 
-LABEL_OFFSETS_BY_PANEL = {("GIFT-Eval", "MASE"): {"FlowState-r1.1": (5, 4, "left")}}
+LABEL_OFFSETS_BY_PANEL = {("GIFT-Eval", "MASE"): {"FlowState-r1.1": (5, 4, "left")},
+                          ("fev-bench", "MASE"): {"Moirai-2.0-small": (6, -12, "left")}}
 
 
 OFFICIAL_TITLE = "Official leaderboards (some models use covariates or forecast the variables of a series jointly)"
-OFFICIAL_NOTE = ("Official leaderboard results, read on 2026-10-22, GIFT-Eval on 2026-10-23 (fev-bench: 1 - skill score). Pareto fronts over models "
+OFFICIAL_NOTE = ("Official leaderboard results, read on 2026-10-23 (fev-bench: 1 - skill score). Pareto fronts over models "
                  "with a permissive license; the others are shown hollow. Sizes from the official model cards. "
                  "Sources: showcase/data/official.csv.")
 UNIVARIATE_TITLE = "Univariate setting: every model forecasts each series alone, without covariates"

@@ -1,13 +1,13 @@
 {
  "SQL": {
   "skill_score": 44.796054126575946,
-  "win_rate": 73.87500000000001,
+  "win_rate": 73.1875,
   "rank": 7,
   "n_models": 33
  },
  "MASE": {
   "skill_score": 32.80388774486731,
-  "win_rate": 71.9375,
+  "win_rate": 71.125,
   "rank": 6,
   "n_models": 33
  }

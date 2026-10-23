@@ -1,4 +1,13 @@
 {
+ "model": "Toto-2.0-22m",
+ "variant": null,
+ "repo_id": "Datadog/Toto-2.0-22m",
+ "revision": "685e4ae3e2be8d8998025e53dd98e7fdcb296a89",
+ "package": "toto-models",
+ "package_version": "1.0.0",
+ "date": "2026-10-22",
+ "protocol": "forced univariate, computed by us",
+ "provenance_note": "restored on 2026-10-23 from the fev-bench run of the same environment and revision (the score stage used to overwrite this file)",
  "n_tasks": 98,
  "MASE": 0.6750696479600302,
  "CRPS": 0.5654072897912326

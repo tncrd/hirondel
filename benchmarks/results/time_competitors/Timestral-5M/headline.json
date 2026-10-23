@@ -1,4 +1,13 @@
 {
+ "model": "Timestral-5M",
+ "variant": null,
+ "repo_id": "mistralai/Timestral-5M",
+ "revision": "bdd20cfc15a3fea0e4cb5ccef37f8d3ca7aa335f",
+ "package": "timestral",
+ "package_version": "1.0.0",
+ "date": "2026-10-23",
+ "protocol": "forced univariate, computed by us",
+ "provenance_note": "restored on 2026-10-23 from the fev-bench run of the same environment and revision (the score stage used to overwrite this file)",
  "n_tasks": 98,
  "MASE": 0.6570917999712697,
  "CRPS": 0.5490081006804212

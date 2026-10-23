@@ -51,7 +51,7 @@ a permissive license, the others shown hollow.
 
 ![Accuracy against size, official leaderboards](showcase/figures/pareto.png)
 
-Official leaderboards, read on 2026-10-22, GIFT-Eval on 2026-10-23 (some models use covariates or joint multivariate forecasting there).
+Official leaderboards, read on 2026-10-23 (some models use covariates or joint multivariate forecasting there).
 Sources: `showcase/data/` in the code repository.
 
 ## Usage
