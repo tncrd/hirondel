@@ -13,7 +13,8 @@ def test_list_is_the_one_written_before_scoring():
     pytest.importorskip("yaml")
     c = competitors.load_list(os.path.join(ROOT, "benchmarks", "competitors.yaml"))
     assert [m["name"] for m in c["competitors"]] == ["Timestral-5M", "Timestral-28M", "Chronos-2", "TiRex",
-                                                     "TimesFM-2.5", "Toto-2.0-22m"]
+                                                     "TimesFM-2.5", "Toto-2.0-22m",
+                                                     "Toto-2.0-4m"]       # amendment of 2026-10-23
     for m in c["competitors"]:
         assert {"repo_id", "revision", "card_statement", "license", "package", "source"} <= set(m)
         assert len(m["revision"]) == 40
@@ -65,5 +66,6 @@ def test_result_folders_per_benchmark():
 def test_univariate_runs_on_fev_and_time_are_listed():
     pytest.importorskip("yaml")
     c = competitors.load_list(os.path.join(ROOT, "benchmarks", "competitors.yaml"))
-    assert c["fev_time_univariate_runs"] == ["Chronos-2", "Toto-2.0-22m", "Timestral-5M", "Timestral-28M"]
-    assert c["natively_univariate"] == ["TiRex", "TimesFM-2.5"]
+    assert c["fev_time_univariate_runs"] == ["Chronos-2", "Toto-2.0-22m", "Timestral-5M", "Timestral-28M",
+                                           "Toto-2.0-4m"]
+    assert c["natively_univariate"] == ["TiRex", "TimesFM-2.5", "FlowState-r1.1", "Moirai-2.0-small"]

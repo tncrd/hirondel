@@ -42,7 +42,8 @@ def _style(plt):
 LABEL_OFFSETS = {"t0-gamma": (-6, -12, "right"), "TimesFM-3": (6, 4, "left"), "Toto-2.0-22m": (5, -12, "left"),
                  "TiRex": (6, 6, "left"), "Timestral-5M": (-6, 6, "right"), "Timestral-209M": (6, -12, "left"),
                  "Moirai-2.0-small": (6, 4, "left")}
-LABEL_OFFSETS_BY_BENCH = {"GIFT-Eval": {"Toto-2.0-22m": (5, 4, "left"), "TiRex": (6, -12, "left")},
+LABEL_OFFSETS_BY_BENCH = {"GIFT-Eval": {"Toto-2.0-22m": (5, 4, "left"), "TiRex": (6, -12, "left"),
+                                        "FlowState-r1.1": (-6, 5, "right")},
                           "TIME": {"t0-gamma": (6, -12, "left"), "Timestral-209M": (-6, 5, "right"),
                                    "Timestral-5M": (-6, 6, "right")},
                           "fev-bench": {"t0-gamma": (6, -12, "left"), "Timestral-209M": (-6, 5, "right"),
@@ -55,8 +56,10 @@ OFFICIAL_NOTE = ("Official leaderboard results, read on 2026-10-22 (fev-bench: 1
                  "Sources: showcase/data/official.csv.")
 UNIVARIATE_TITLE = "Univariate setting: every model forecasts each series alone, without covariates"
 UNIVARIATE_NOTE = ("Our runs of each model in forced univariate mode with its public package (benchmarks/competitors.yaml); "
-                   "TiRex and TimesFM-2.5, univariate by design, from their official results. Pareto fronts over models "
-                   "with a permissive license; the others hollow. Sources: showcase/data/univariate.csv.")
+                   "TiRex, TimesFM-2.5, FlowState-r1.1 and Moirai-2.0, univariate by design, from their official results. "
+                   "t0-gamma and TimesFM-3 use covariates and were not run in this setting: see the official leaderboards "
+                   "figure. Pareto fronts over models with a permissive license; the others hollow. "
+                   "Sources: showcase/data/univariate.csv.")
 
 
 def pareto_figure(rows, models, ours_name, path, title=OFFICIAL_TITLE, note=OFFICIAL_NOTE):
@@ -149,8 +152,9 @@ def pareto_figure(rows, models, ours_name, path, title=OFFICIAL_TITLE, note=OFFI
     fig.suptitle(title, x=0.012, y=0.997, ha="left", fontsize=14, fontweight="bold", color=INK)
     fig.legend(handles=handles, loc="upper center", ncol=8, frameon=False, fontsize=9, bbox_to_anchor=(0.5, 0.965))
     import textwrap
-    fig.text(0.5, 0.004, "\n".join(textwrap.wrap(note, 190)), ha="center", fontsize=8.5, color=GREY, linespacing=1.4)
-    fig.tight_layout(rect=(0, 0.035, 1, 0.93))
+    lines = textwrap.wrap(note, 190)
+    fig.text(0.5, 0.004, "\n".join(lines), ha="center", fontsize=8.5, color=GREY, linespacing=1.4)
+    fig.tight_layout(rect=(0, 0.012 + 0.017 * len(lines), 1, 0.93))     # room for every line of the note
     os.makedirs(os.path.dirname(path), exist_ok=True)
     fig.savefig(path, dpi=160, metadata={"Software": None})
     plt.close(fig)

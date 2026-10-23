@@ -70,6 +70,15 @@ competitors:
     package: toto-models
     source: https://huggingface.co/Datadog/Toto-2.0-22m
 
+  - name: Toto-2.0-4m        # added 2026-10-23 (amendment at the end of this file)
+    repo_id: Datadog/Toto-2.0-4m
+    revision: 8306a9801cf98c0f5ffe4b2dcc8f496e616d84d9
+    card_statement: "Toto-2.0-4m | 4m (model table of the card)"
+    hub_count: 4144448
+    license: Apache-2.0
+    package: toto-models
+    source: https://huggingface.co/Datadog/Toto-2.0-4m
+
 # Amendment, 2026-10-22, before any score: on GIFT-Eval, TiRex runs from NX-AI/TiRex-1.1-gifteval (revision
 # 01b1ebc83a87e82b119f907fe7e43d015db23e9d), the checkpoint of TiRex's leaderboard entry and official notebook,
 # whose card says "the pretraining dataset has been cleaned to remove overlaps with the GIFT-Eval test dataset".
@@ -95,5 +104,18 @@ gift_eval_variants:
 # comparison is extended to fev-bench and TIME for the models whose official numbers there come from joint multivariate
 # forecasting and/or covariates (Chronos-2, Toto-2.0, Timestral). TiRex and TimesFM-2.5 forecast each series alone by
 # design; their official fev-bench and TIME numbers are already in the univariate setting and are used as they are.
-fev_time_univariate_runs: [Chronos-2, Toto-2.0-22m, Timestral-5M, Timestral-28M]
-natively_univariate: [TiRex, TimesFM-2.5]
+#
+# Amendment, 2026-10-23 (user decision), after the scores above, to complete the univariate figure with the models of the
+# official figure. Univariate by design, read in their own sources, official numbers used as they are:
+#   - FlowState-r1.1: "While datasets are treated as univariate series, and therefore predictions always have only one
+#     channel" (arXiv 2508.05287, appendix; the r1.1 card changes data, context and layer sizes, not this).
+#   - Moirai-2.0-small: "Currently, Moirai 2.0 is designed for univariate time-series input." and "we have dropped
+#     support for multivariate forecasting and the use of covariates" (arXiv 2511.11698, sections 3.1 and 5).
+# Run by us in forced univariate mode on the three benchmarks: Toto-2.0-4m (multivariate, like Toto-2.0-22m), the only
+# other model with a permissive license under 10M parameters.
+# Not in the univariate setting, shown in the official figure only: TimesFM-3 ("TimesFM 3.0 introduces native
+# multivariate time-series forecasting, flexible covariate support", github.com/google-research/timesfm) and t0-gamma
+# (target history, past and known-future covariates, its technical report); a forced run of either (256M-331M) does
+# not fit the release day.
+fev_time_univariate_runs: [Chronos-2, Toto-2.0-22m, Timestral-5M, Timestral-28M, Toto-2.0-4m]
+natively_univariate: [TiRex, TimesFM-2.5, FlowState-r1.1, Moirai-2.0-small]

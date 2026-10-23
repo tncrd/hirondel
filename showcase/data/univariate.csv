@@ -37,6 +37,14 @@ Timestral-28M,27821184,Modified MIT (revenue cap),False,fev-bench,MASE,33.981846
 Timestral-28M,27821184,Modified MIT (revenue cap),False,fev-bench,SQL,45.861907,"computed by us, forced univariate (benchmarks/results/fev_competitors/Timestral-28M)",2026-10-22
 Timestral-28M,27821184,Modified MIT (revenue cap),False,TIME,MASE,0.645537,"computed by us, forced univariate (benchmarks/results/time_competitors/Timestral-28M)",2026-10-22
 Timestral-28M,27821184,Modified MIT (revenue cap),False,TIME,CRPS,0.540775,"computed by us, forced univariate (benchmarks/results/time_competitors/Timestral-28M)",2026-10-22
+FlowState-r1.1,18500000,Apache-2.0,True,GIFT-Eval,MASE,0.701391,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/Granite-FlowState-r1.1/all_results.csv (univariate by design)",2026-10-22
+FlowState-r1.1,18500000,Apache-2.0,True,GIFT-Eval,CRPS,0.490133,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/Granite-FlowState-r1.1/all_results.csv (univariate by design)",2026-10-22
+Moirai-2.0-small,11387208,CC-BY-NC-4.0,False,GIFT-Eval,MASE,0.728130,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/Moirai2/all_results.csv (univariate by design)",2026-10-22
+Moirai-2.0-small,11387208,CC-BY-NC-4.0,False,GIFT-Eval,CRPS,0.516438,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/Moirai2/all_results.csv (univariate by design)",2026-10-22
+Moirai-2.0-small,11387208,CC-BY-NC-4.0,False,fev-bench,MASE,27.224649,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results (univariate by design)",2026-10-22
+Moirai-2.0-small,11387208,CC-BY-NC-4.0,False,fev-bench,SQL,39.313741,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results (univariate by design)",2026-10-22
+Moirai-2.0-small,11387208,CC-BY-NC-4.0,False,TIME,MASE,0.702996,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/Moirai2 (univariate by design)",2026-10-22
+Moirai-2.0-small,11387208,CC-BY-NC-4.0,False,TIME,CRPS,0.588487,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/Moirai2 (univariate by design)",2026-10-22
 Timestral-28M,27821184,Modified MIT (revenue cap),False,GIFT-Eval,CRPS,0.464089,"computed by us, forced univariate (benchmarks/results/gift_competitors/Timestral-28M)",2026-10-22
 Timestral-28M,27821184,Modified MIT (revenue cap),False,GIFT-Eval,MASE,0.681696,"computed by us, forced univariate (benchmarks/results/gift_competitors/Timestral-28M)",2026-10-22
 Timestral-5M,5208960,Modified MIT (revenue cap),False,GIFT-Eval,CRPS,0.483613,"computed by us, forced univariate (benchmarks/results/gift_competitors/Timestral-5M)",2026-10-22

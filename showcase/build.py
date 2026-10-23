@@ -233,7 +233,9 @@ def main():
     write_csv(os.path.join(HERE, "data", "official.csv"), rows)
     lst = load_models()
     meta = {m["name"]: m for m in lst["models"]}
-    uni = univariate_rows(rows, computed_univariate(), {"TiRex", "TimesFM-2.5"}, lst["ours"]["name"], meta)
+    from benchmarks.competitors import load_list
+    native = set(load_list(os.path.join(ROOT, "benchmarks", "competitors.yaml"))["natively_univariate"])
+    uni = univariate_rows(rows, computed_univariate(), native, lst["ours"]["name"], meta)
     write_csv(os.path.join(HERE, "data", "univariate.csv"), uni)
     write_csv(os.path.join(HERE, "data", "same_protocol.csv"), same_protocol())
     print(f"{len(rows)} official values -> showcase/data/official.csv")

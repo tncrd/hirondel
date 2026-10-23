@@ -25,9 +25,11 @@ On the fev-bench leaderboard this ranks 7 of 33 (SQL) and 6 of 33 (MASE) among t
 ### Univariate setting: every model forecasts each series alone
 
 This model forecasts each series on its own, without covariates. Here every model is compared in that same setting:
-we ran Chronos-2, Toto-2.0, TiRex and Timestral in forced univariate mode with their public packages; TiRex and
-TimesFM-2.5 forecast each series alone by design (official results used where we did not run them). The list and the
-settings were written before any score (`benchmarks/competitors.yaml`).
+we ran Chronos-2, Toto-2.0 (4m and 22m), TiRex and Timestral in forced univariate mode with their public packages;
+TiRex, TimesFM-2.5, FlowState-r1.1 and Moirai-2.0 forecast each series alone by design (official results used where we
+did not run them). The first list and its settings were written before any score; the models added later, to match the
+official figure, are dated amendments with the source of each decision (`benchmarks/competitors.yaml`). t0-gamma and
+TimesFM-3 use covariates and were not run in this setting; they appear in the official figure below.
 
 <p align="center"><img src="showcase/figures/univariate.png" alt="Accuracy against size, univariate setting" width="100%"></p>
 
@@ -35,6 +37,8 @@ settings were written before any score (`benchmarks/competitors.yaml`).
 |---|---|---|---|---|---|---|---|
 | Timestral-5M | 5.2M | Modified MIT (revenue cap) | 0.7102 | 0.4836 | 0.6571 | 0.5490 | 44.36 |
 | **Nom (ours)** | 7.5M | Apache-2.0 | 0.7003 | 0.4816 | 0.6551 | 0.5520 | 44.90 |
+| Moirai-2.0-small | 11.4M | CC-BY-NC-4.0 | 0.7281 | 0.5164 | 0.7030 | 0.5885 | 39.31 |
+| FlowState-r1.1 | 18.5M | Apache-2.0 | 0.7014 | 0.4901 |  |  |  |
 | Toto-2.0-22m | 21.9M | Apache-2.0 | 0.7226 | 0.5009 | 0.6751 | 0.5654 | 42.37 |
 | Timestral-28M | 27.8M | Modified MIT (revenue cap) | 0.6817 | 0.4641 | 0.6455 | 0.5408 | 45.86 |
 | TiRex | 35.0M | NX-AI Community License | 0.7213 | 0.4921 | 0.6831 | 0.5731 | 42.58 |

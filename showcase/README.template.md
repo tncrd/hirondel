@@ -17,9 +17,11 @@ Headline numbers of this package (float32), computed with each benchmark's offic
 ### Univariate setting: every model forecasts each series alone
 
 This model forecasts each series on its own, without covariates. Here every model is compared in that same setting:
-we ran Chronos-2, Toto-2.0, TiRex and Timestral in forced univariate mode with their public packages; TiRex and
-TimesFM-2.5 forecast each series alone by design (official results used where we did not run them). The list and the
-settings were written before any score (`benchmarks/competitors.yaml`).
+we ran Chronos-2, Toto-2.0 (4m and 22m), TiRex and Timestral in forced univariate mode with their public packages;
+TiRex, TimesFM-2.5, FlowState-r1.1 and Moirai-2.0 forecast each series alone by design (official results used where we
+did not run them). The first list and its settings were written before any score; the models added later, to match the
+official figure, are dated amendments with the source of each decision (`benchmarks/competitors.yaml`). t0-gamma and
+TimesFM-3 use covariates and were not run in this setting; they appear in the official figure below.
 
 <p align="center"><img src="showcase/figures/univariate.png" alt="Accuracy against size, univariate setting" width="100%"></p>
 

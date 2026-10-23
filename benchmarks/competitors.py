@@ -174,7 +174,8 @@ def result_name(name: str, variant: str | None) -> str:
 
 
 LOADERS = {"Timestral-5M": timestral, "Timestral-28M": timestral, "Chronos-2": chronos2, "TiRex": tirex,
-           "TimesFM-2.5": timesfm25, "Toto-2.0-22m": toto2}
+           "TimesFM-2.5": timesfm25, "Toto-2.0-22m": toto2,
+           "Toto-2.0-4m": toto2}
 
 
 def main():
