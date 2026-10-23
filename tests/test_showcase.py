@@ -96,4 +96,4 @@ def test_indeval_table_from_published_numbers_and_ours():
     assert chronos["mean"] == pytest.approx((0.822, 0.583), abs=5e-4)               # geometric mean of the five sources
     assert next(r for r in rows if r["model"] == "Hirondel")["mean"] == pytest.approx((0.9, 0.5))
     table = render.indeval_table(rows, pub)
-    assert "| 3W |" in table and "**0.473**" in table                               # TimesFM-3 best nCRPS on PRONTO
+    assert "| 3W (oil wells) |" in table and "**0.473**" in table                               # TimesFM-3 best nCRPS on PRONTO

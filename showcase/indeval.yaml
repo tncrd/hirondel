@@ -6,7 +6,7 @@
 # Sizes: the Hub's safetensors count, read on 2026-10-23.
 paper: "arXiv 2610.16652"
 sources: [neats, 3w, pronto, mds, tablet_compression]
-source_names: {neats: NEATS, 3w: 3W, pronto: PRONTO, mds: Mesa del Sol, tablet_compression: Tablet compression}
+source_names: {neats: NEATS (offshore drilling), 3w: 3W (oil wells), pronto: PRONTO (multiphase flow), mds: Mesa del Sol (solar and battery microgrid), tablet_compression: Tablet compression (pharmaceutical)}
 models:
   - name: Chronos-2
     params: 119477664
