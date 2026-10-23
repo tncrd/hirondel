@@ -1,0 +1,437 @@
+{
+ "source": "neats",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Timestral-5M (joint, covariates)": [
+   0.8996498618088924,
+   0.48423923114832196
+  ]
+ },
+ "tasks": {
+  "banambu-deep-1__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9206024466057547,
+    0.49495458965923217
+   ]
+  },
+  "banambu-deep-1__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8738226258323366,
+    0.5313223087060285
+   ]
+  },
+  "bassett-deep-1__mwd-lwd-dml_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9272350638438314,
+    0.555787652913817
+   ]
+  },
+  "bassett-deep-1__mwd-lwd-dml_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9095109718987006,
+    0.5648295289501025
+   ]
+  },
+  "bdc-2-01__mwd-lwd-dml-st1_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9713716515727351,
+    0.6406696716908992
+   ]
+  },
+  "bdc-2-01__mwd-lwd-dml-st1_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8903741205548438,
+    0.6058752322096069
+   ]
+  },
+  "bdc-2-01__mwd-lwd-dml_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9401165058562929,
+    0.6266586508099371
+   ]
+  },
+  "bdc-2-01__mwd-lwd-dml_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9743214491087706,
+    0.6910812827194169
+   ]
+  },
+  "bdc-2-04-phase-2__mwd-lwd-dml_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    1.1909983340097947,
+    0.7751959073564397
+   ]
+  },
+  "bdc-2-04-phase-2__mwd-lwd-dml_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    1.1505693651346476,
+    0.7986456070194579
+   ]
+  },
+  "bdc-3-05-p__mwd-lwd-dml_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9923146216319415,
+    0.6924941406971128
+   ]
+  },
+  "bdc-3-05-p__mwd-lwd-dml_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9530034443682932,
+    0.6858099370434797
+   ]
+  },
+  "gemtree-1__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8544202829473123,
+    0.4207192972693956
+   ]
+  },
+  "gemtree-1__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8157277366156293,
+    0.45602388463852433
+   ]
+  },
+  "holonema-1__mwd-lwd-dml_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    1.1717450678447139,
+    0.42227277748966574
+   ]
+  },
+  "holonema-1__mwd-lwd-dml_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    1.1180097710407317,
+    0.41529166341197604
+   ]
+  },
+  "la-rocca-1__lwd-dds_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.7120682923026755,
+    0.25149691918536216
+   ]
+  },
+  "la-rocca-1__lwd-dds_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.6750449830425856,
+    0.3343911834568677
+   ]
+  },
+  "la-rocca-1__lwd-pwd_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9989647105623005,
+    0.14271835180049966
+   ]
+  },
+  "la-rocca-1__lwd-pwd_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9938730403240336,
+    0.20264915549066878
+   ]
+  },
+  "lpa-01__mudlogging_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9696312429430807,
+    0.6633011994600638
+   ]
+  },
+  "lpa-01__mudlogging_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9079452641444561,
+    0.6607124304837196
+   ]
+  },
+  "lpa-01__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.7459279363999696,
+    0.5215730386185377
+   ]
+  },
+  "lpa-01__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.7858057132738221,
+    0.5806412924525283
+   ]
+  },
+  "lpa-01__mwd-lwd_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9869675517231483,
+    0.6175397071821757
+   ]
+  },
+  "lpa-01__mwd-lwd_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9413796476431172,
+    0.6036627983465506
+   ]
+  },
+  "lpa-02__mudlogging_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8371296039623003,
+    0.5863948300484486
+   ]
+  },
+  "lpa-02__mudlogging_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8246868856203916,
+    0.5781853260592753
+   ]
+  },
+  "lpa-02__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9200369658315316,
+    0.14213884364365728
+   ]
+  },
+  "lpa-02__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.792059150418969,
+    0.15358865967484625
+   ]
+  },
+  "lpa-03__mudlogging_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9683601943838362,
+    0.7581283582742447
+   ]
+  },
+  "lpa-03__mudlogging_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9278592572806768,
+    0.7109658363745093
+   ]
+  },
+  "lpa-03__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9319279983831439,
+    0.6962798429356
+   ]
+  },
+  "lpa-03__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8779661370472683,
+    0.675257740902853
+   ]
+  },
+  "psa-02-phase-1__mudlogging-gravel-pack_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.5532485217843637,
+    0.17764488737740117
+   ]
+  },
+  "psa-02-phase-1__mudlogging-gravel-pack_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.5407862290604188,
+    0.21098681996975865
+   ]
+  },
+  "psa-02-phase-1__mudlogging_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.948283115090108,
+    0.5671623432543259
+   ]
+  },
+  "psa-02-phase-1__mudlogging_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9129640082656022,
+    0.5318924874150968
+   ]
+  },
+  "psa-02-phase-1__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9575295391309783,
+    0.5733755075016044
+   ]
+  },
+  "psa-02-phase-1__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9709388626306017,
+    0.6579084151264442
+   ]
+  },
+  "sca-03__lwd-pwd_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9478286981426447,
+    0.6430881675327693
+   ]
+  },
+  "sca-03__lwd-pwd_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9588983474420371,
+    0.696744736594962
+   ]
+  }
+ },
+ "n_pairs": 9934,
+ "n_left_out_of_mase": 138
+}

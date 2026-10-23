@@ -329,17 +329,24 @@ def _gmean(x):
     return math.exp(sum(math.log(v) for v in x) / len(x))
 
 
-def indeval_rows(pub, ours, name):
-    """One row per model: per-source (nMASE, nCRPS) and their geometric mean over the five sources. Ours first."""
-    src = pub["sources"]
+def indeval_rows(pub, ours, name, computed=()):
+    """One row per model: per-source (nMASE, nCRPS) and the geometric means over the five industrial sources (`mean`,
+    the headline) and over the nine of the paper (`mean9`). Ours first, then the models we ran with the same harness
+    (`computed`: entries of `pub["computed"]` with their `per_source`), then the published numbers."""
+    src, src9 = pub["sources"], pub["sources"] + pub["shared_sources"]
     rows = [{"model": name, "params": ours.get("params"), "permissive": True, "ours": True, "covariates": False,
-             "per_source": {s: tuple(ours["per_source"][s]) for s in src}}]
+             "per_source": {s: tuple(ours["per_source"][s]) for s in src9}}]
+    for c in computed:
+        rows.append({"model": c["name"], "label": c.get("label"), "params": c["params"], "permissive": c["permissive"],
+                     "ours": False, "covariates": c["covariates"], "offset": c.get("offset"),
+                     "per_source": {s: tuple(c["per_source"][s]) for s in src9}})
     for m in pub["models"]:
         rows.append({"model": m["name"], "params": m["params"], "permissive": m["permissive"], "ours": False,
                      "covariates": m.get("covariates", False),
-                     "per_source": {s: (m["nmase"][s], m["ncrps"][s]) for s in src}})
+                     "per_source": {s: (m["nmase"][s], m["ncrps"][s]) for s in src9}})
     for r in rows:
-        r["mean"] = (_gmean([r["per_source"][s][0] for s in src]), _gmean([r["per_source"][s][1] for s in src]))
+        for key, ss in (("mean", src), ("mean9", src9)):
+            r[key] = (_gmean([r["per_source"][s][0] for s in ss]), _gmean([r["per_source"][s][1] for s in ss]))
     return rows
 
 
@@ -349,12 +356,12 @@ def _size(p):
 
 def _label(r):
     size = _size(r["params"]) if r["params"] else ""
-    return f"{r['model']} ({size}{', ' if size and r['ours'] else ''}{'ours' if r['ours'] else ''})"
+    return f"{r.get('label') or r['model']} ({size}{', ' if size and r['ours'] else ''}{'ours' if r['ours'] else ''})"
 
 
 def indeval_table(rows, pub):
-    """Markdown table, nMASE / nCRPS per source and their mean; the best value of each metric in bold."""
-    src = pub["sources"]
+    """Markdown table, nMASE / nCRPS per source: the five industrial sources and their mean, then the four shared with
+    GIFT-Eval or TIME and the mean over the nine; the best value of each metric in bold."""
     head = ["Source"] + [_label(r) for r in rows]
     lines = ["| " + " | ".join(head) + " |", "|" + "---|" * len(head)]
 
@@ -362,15 +369,19 @@ def indeval_table(rows, pub):
         best = [min(get(r)[k] for r in rows) for k in (0, 1)]
         return [" / ".join((f"**{get(r)[k]:.3f}**" if abs(get(r)[k] - best[k]) < 1e-12 else f"{get(r)[k]:.3f}")
                            for k in (0, 1)) for r in rows]
-    for s in src:
+    for s in pub["sources"]:
         lines.append(f"| {pub['source_names'][s]} | " + " | ".join(cells(lambda r: r["per_source"][s])) + " |")
-    lines.append("| **Geometric mean, 5 sources** | " + " | ".join(cells(lambda r: r["mean"])) + " |")
+    lines.append("| **Geometric mean, 5 industrial sources** | " + " | ".join(cells(lambda r: r["mean"])) + " |")
+    for s in pub["shared_sources"]:
+        lines.append(f"| {pub['source_names'][s]} | " + " | ".join(cells(lambda r: r["per_source"][s])) + " |")
+    lines.append("| **Geometric mean, 9 sources (the paper's aggregate)** | "
+                 + " | ".join(cells(lambda r: r["mean9"])) + " |")
     return "\n".join(lines)
 
 
 INDEVAL_NOTE = ("IND-Eval, five industrial sources (NEATS, 3W, PRONTO, Mesa del Sol, tablet compression); geometric mean of "
-                "the sources. {name}: our run, each channel forecast alone, no covariates. Others: numbers published in "
-                "the IND-Eval paper (arXiv 2610.16652), joint forecasting with PRONTO's covariates.")
+                "the sources. {name} and Timestral-5M: our runs, same harness. Chronos-2, TiRex-2, TimesFM-3: numbers "
+                "published in the IND-Eval paper (arXiv 2610.16652), joint forecasting with PRONTO's covariates.")
 
 
 def indeval_figure(rows, path):
@@ -390,8 +401,9 @@ def indeval_figure(rows, path):
                 ax.scatter([x], [y], s=60, marker=marker, color=DARK, zorder=4, edgecolors="none")
             else:
                 ax.scatter([x], [y], s=60, marker=marker, facecolors=BG, edgecolors=DARK, linewidths=1.1, zorder=4)
-            ax.annotate(f"{r['model']} (ours)" if r["ours"] else r["model"], (x, y),
-                        xytext=(9, -4) if r["ours"] else (6, 4), textcoords="offset points", va="top" if r["ours"] else "baseline",
+            ax.annotate(f"{r['model']} (ours)" if r["ours"] else r.get("label") or r["model"], (x, y),
+                        xytext=(9, -4) if r["ours"] else tuple(r.get("offset") or (6, 4)), textcoords="offset points",
+                        va="top" if r["ours"] else "baseline",
                         fontsize=10 if r["ours"] else 8, fontweight="bold" if r["ours"] else "normal",
                         color=ACCENT if r["ours"] else INK)
         ax.margins(y=0.25)
@@ -405,8 +417,8 @@ def indeval_figure(rows, path):
             ax.legend(handles=[Line2D([], [], ls="", marker="o", color=DARK, label="univariate, no covariates"),
                                Line2D([], [], ls="", marker="X", color=DARK, markersize=8,
                                       label="joint, with covariates (PRONTO)"),
-                               Line2D([], [], ls="", marker="X", markerfacecolor=BG, markeredgecolor=DARK, markersize=8,
-                                      label="hollow: non-commercial license")],
+                               Line2D([], [], ls="", marker="o", markerfacecolor=BG, markeredgecolor=DARK,
+                                      label="hollow: non-commercial or restricted license")],
                       loc="upper left", fontsize=8, frameon=False)
         ax.text(1.0, 1.02, "lower is better", transform=ax.transAxes, ha="right", fontsize=8.5, color=GREY)
         ax.set_xlabel("Parameters (log scale)")
@@ -426,7 +438,14 @@ def indeval_section(name, params, results=os.path.join(ROOT, "benchmarks", "resu
     with open(results) as f:
         hd = json.load(f)
     pub = load_indeval()
-    rows = indeval_rows(pub, {"params": params, "per_source": {s: hd["per_source"][s][name] for s in pub["sources"]}},
-                        name)
+    computed = []
+    for c in pub.get("computed", []):
+        path = os.path.join(ROOT, "benchmarks", "results", "indeval_competitors", c["name"], "headline.json")
+        if os.path.exists(path):
+            with open(path) as f:
+                computed.append({**c, "per_source": {s: v[c["name"]] for s, v in json.load(f)["per_source"].items()}})
+    src9 = pub["sources"] + pub["shared_sources"]
+    rows = indeval_rows(pub, {"params": params, "per_source": {s: hd["per_source"][s][name] for s in src9}}, name,
+                        computed)
     indeval_figure(rows, os.path.join(FIG, "indeval.png"))
     return indeval_table(rows, pub)

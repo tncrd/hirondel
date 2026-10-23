@@ -1,0 +1,217 @@
+{
+ "source": "3w",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Timestral-5M": [
+   0.7677271171570668,
+   0.6854972631750483
+  ]
+ },
+ "tasks": {
+  "event-0_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.8184571379802292,
+    0.7024868182218369
+   ]
+  },
+  "event-0_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.8265143331313914,
+    0.7368007285097494
+   ]
+  },
+  "event-1_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.5803367512511556,
+    0.6295654182252066
+   ]
+  },
+  "event-1_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.6410049646956963,
+    0.656435778993445
+   ]
+  },
+  "event-2_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.9508248924705638,
+    0.8756737900204601
+   ]
+  },
+  "event-2_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.9809849273904135,
+    0.875887929811763
+   ]
+  },
+  "event-3_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.6037195136699198,
+    0.529573901418181
+   ]
+  },
+  "event-3_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.4839813075269246,
+    0.3927874410604183
+   ]
+  },
+  "event-4_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.6668648082505839,
+    0.5279813953279122
+   ]
+  },
+  "event-4_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.5814581060573379,
+    0.4013882456573427
+   ]
+  },
+  "event-5_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.9918523045095613,
+    0.6408394491665902
+   ]
+  },
+  "event-5_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.7293104649697459,
+    0.47010624336526113
+   ]
+  },
+  "event-6_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    1.0704294291030798,
+    1.227794944718184
+   ]
+  },
+  "event-6_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.858479351907486,
+    0.6525573227102354
+   ]
+  },
+  "event-7_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.8776754664362182,
+    0.8433463826062618
+   ]
+  },
+  "event-7_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.8893513000165834,
+    0.8286281712445072
+   ]
+  },
+  "event-8_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.7074248204718483,
+    0.7447772851744722
+   ]
+  },
+  "event-8_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.7260914161935236,
+    0.7945114487317563
+   ]
+  },
+  "event-9_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.8645518390926947,
+    0.9153943786664852
+   ]
+  },
+  "event-9_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.8257519816783212,
+    0.794409758676677
+   ]
+  }
+ },
+ "n_pairs": 11429,
+ "n_left_out_of_mase": 0
+}

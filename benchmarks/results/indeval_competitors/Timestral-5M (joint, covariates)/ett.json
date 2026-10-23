@@ -1,0 +1,177 @@
+{
+ "source": "ett",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Timestral-5M (joint, covariates)": [
+   0.8396015197786614,
+   0.6555009316862815
+  ]
+ },
+ "tasks": {
+  "ett1-15T_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8436939689744688,
+    0.6610891483498804
+   ]
+  },
+  "ett1-15T_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8315661993789187,
+    0.7041332229879267
+   ]
+  },
+  "ett1-15T_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.6959000011552008,
+    0.6256773475324912
+   ]
+  },
+  "ett1-D_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9879300722079976,
+    0.6982349561303289
+   ]
+  },
+  "ett1-H_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8923556036220877,
+    0.5343817013203115
+   ]
+  },
+  "ett1-H_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.7908239727025076,
+    0.5503388168385741
+   ]
+  },
+  "ett1-H_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8081338463301401,
+    0.7040177957203981
+   ]
+  },
+  "ett1-W_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8273517827584553,
+    0.7788751593542721
+   ]
+  },
+  "ett2-15T_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8866271361245854,
+    0.7990751455312152
+   ]
+  },
+  "ett2-15T_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8283652112043703,
+    0.7988317316201646
+   ]
+  },
+  "ett2-15T_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.6640014753992038,
+    0.6318076101110213
+   ]
+  },
+  "ett2-D_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9293616264734716,
+    0.5997032593157221
+   ]
+  },
+  "ett2-H_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.925659576074031,
+    0.5343098054627311
+   ]
+  },
+  "ett2-H_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8183173764275958,
+    0.5757885732852703
+   ]
+  },
+  "ett2-H_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.7828278671053973,
+    0.7350950871456726
+   ]
+  },
+  "ett2-W_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9969407686930918,
+    0.647752378508147
+   ]
+  }
+ },
+ "n_pairs": 1078,
+ "n_left_out_of_mase": 0
+}

@@ -1,0 +1,47 @@
+{
+ "source": "mds",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Timestral-5M (joint, covariates)": [
+   0.8462734941376574,
+   0.4918984881637095
+  ]
+ },
+ "tasks": {
+  "mds-10s_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8513304229137186,
+    0.47996085099380603
+   ]
+  },
+  "mds-2min_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8223418074398319,
+    0.4892379206480141
+   ]
+  },
+  "mds-5min_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8657284553469201,
+    0.5068746094749215
+   ]
+  }
+ },
+ "n_pairs": 115515,
+ "n_left_out_of_mase": 23829
+}

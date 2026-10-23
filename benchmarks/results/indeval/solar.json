@@ -1,0 +1,97 @@
+{
+ "source": "solar",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Hirondel": [
+   0.8638837265871427,
+   0.4948428693517174
+  ]
+ },
+ "tasks": {
+  "solar-10T_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.9291272503945606,
+    0.48970371893734127
+   ]
+  },
+  "solar-10T_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.8671705141293158,
+    0.5175874513741816
+   ]
+  },
+  "solar-10T_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.8601264053901692,
+    0.5851905784402048
+   ]
+  },
+  "solar-D_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.8347201539222296,
+    0.4941942810894879
+   ]
+  },
+  "solar-H_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.8821484068151583,
+    0.33461359262523194
+   ]
+  },
+  "solar-H_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.9200323848860879,
+    0.36745849831278987
+   ]
+  },
+  "solar-H_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.8775560974385873,
+    0.5577623100257135
+   ]
+  },
+  "solar-W_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.7529043520843632,
+    0.7151963867409398
+   ]
+  }
+ },
+ "n_pairs": 8905,
+ "n_left_out_of_mase": 0
+}

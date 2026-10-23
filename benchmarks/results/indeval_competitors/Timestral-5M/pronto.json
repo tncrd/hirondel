@@ -1,0 +1,137 @@
+{
+ "source": "pronto",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Timestral-5M": [
+   0.9679174932901962,
+   0.8878915635799458
+  ]
+ },
+ "tasks": {
+  "pronto_D2E1_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    1.0401035850059293,
+    1.0473462966062366
+   ]
+  },
+  "pronto_D2E1_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    1.0170279543244272,
+    1.0381176248947717
+   ]
+  },
+  "pronto_D2E2_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.723316606582576,
+    0.5955570797879259
+   ]
+  },
+  "pronto_D2E2_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.8536479094335895,
+    0.7829493220207642
+   ]
+  },
+  "pronto_D3E1_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.9870114575204972,
+    1.098167258956806
+   ]
+  },
+  "pronto_D3E1_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.9992008204553673,
+    1.0637633966153692
+   ]
+  },
+  "pronto_D3E2_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    1.2901390612163242,
+    1.2612992426596572
+   ]
+  },
+  "pronto_D3E2_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    1.2139332660581927,
+    1.2070049009418449
+   ]
+  },
+  "pronto_D4E1_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.8415910409238775,
+    0.7685235161013796
+   ]
+  },
+  "pronto_D4E1_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.963661664875371,
+    0.8944772173059757
+   ]
+  },
+  "pronto_D4E2_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.8662486260574443,
+    0.5687404586960256
+   ]
+  },
+  "pronto_D4E2_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M": [
+    0.9540448874070139,
+    0.6809950785613959
+   ]
+  }
+ },
+ "n_pairs": 144,
+ "n_left_out_of_mase": 0
+}

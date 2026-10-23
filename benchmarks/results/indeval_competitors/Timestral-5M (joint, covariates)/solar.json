@@ -1,0 +1,97 @@
+{
+ "source": "solar",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Timestral-5M (joint, covariates)": [
+   0.8775415602981954,
+   0.4944926908122294
+  ]
+ },
+ "tasks": {
+  "solar-10T_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9707927219528328,
+    0.5038364999278316
+   ]
+  },
+  "solar-10T_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8444934750618691,
+    0.49054124671299787
+   ]
+  },
+  "solar-10T_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8032802240333151,
+    0.5337421282894169
+   ]
+  },
+  "solar-D_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8467440681357232,
+    0.49771223598071984
+   ]
+  },
+  "solar-H_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8532045117057366,
+    0.3289317556676202
+   ]
+  },
+  "solar-H_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9271039537972442,
+    0.3616151094227032
+   ]
+  },
+  "solar-H_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.871247439725741,
+    0.5360949884149673
+   ]
+  },
+  "solar-W_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9151165519626531,
+    0.8539057467033543
+   ]
+  }
+ },
+ "n_pairs": 8905,
+ "n_left_out_of_mase": 0
+}

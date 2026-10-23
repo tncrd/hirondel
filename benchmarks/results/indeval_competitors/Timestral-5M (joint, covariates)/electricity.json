@@ -1,0 +1,97 @@
+{
+ "source": "electricity",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Timestral-5M (joint, covariates)": [
+   0.7222649785811248,
+   0.5819578057027398
+  ]
+ },
+ "tasks": {
+  "electricity-15T_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.7547417638074695,
+    0.6453907318888391
+   ]
+  },
+  "electricity-15T_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.724668922600411,
+    0.6583935608245159
+   ]
+  },
+  "electricity-15T_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.5925790488333599,
+    0.5127521392710982
+   ]
+  },
+  "electricity-D_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.6799414602117968,
+    0.5153802792325357
+   ]
+  },
+  "electricity-H_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8086668843103799,
+    0.5648895674338412
+   ]
+  },
+  "electricity-H_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.7933322687887444,
+    0.5941435659677352
+   ]
+  },
+  "electricity-H_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.7136029529996508,
+    0.632781014397626
+   ]
+  },
+  "electricity-W_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.7340661617653331,
+    0.5516708184741551
+   ]
+  }
+ },
+ "n_pairs": 37117,
+ "n_left_out_of_mase": 98
+}

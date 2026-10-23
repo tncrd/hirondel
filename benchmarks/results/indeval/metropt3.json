@@ -1,0 +1,47 @@
+{
+ "source": "metropt3",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Hirondel": [
+   0.4143708212058838,
+   0.3269352285729799
+  ]
+ },
+ "tasks": {
+  "metropt3_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.48890150091229007,
+    0.3543793450646425
+   ]
+  },
+  "metropt3_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.3753901313333123,
+    0.3136383592641035
+   ]
+  },
+  "metropt3_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel": [
+    0.3876709659692422,
+    0.3144036547047109
+   ]
+  }
+ },
+ "n_pairs": 2850,
+ "n_left_out_of_mase": 0
+}

@@ -1,0 +1,217 @@
+{
+ "source": "3w",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Timestral-5M (joint, covariates)": [
+   0.7624854938513841,
+   0.6813518512958834
+  ]
+ },
+ "tasks": {
+  "event-0_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8144038895686527,
+    0.6979266098254113
+   ]
+  },
+  "event-0_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8226898821491174,
+    0.7321244536111073
+   ]
+  },
+  "event-1_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.5699820702764423,
+    0.6304497355683809
+   ]
+  },
+  "event-1_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.6350120592519514,
+    0.6442420672913421
+   ]
+  },
+  "event-2_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9476414608714103,
+    0.8731665124682738
+   ]
+  },
+  "event-2_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9780590875569911,
+    0.8627373402074733
+   ]
+  },
+  "event-3_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.5814715031724932,
+    0.5095835889630542
+   ]
+  },
+  "event-3_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.4696744983872069,
+    0.38317767979254663
+   ]
+  },
+  "event-4_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.6433288051286898,
+    0.5196470782350284
+   ]
+  },
+  "event-4_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.5632997056871172,
+    0.3979778819568072
+   ]
+  },
+  "event-5_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9504088760162328,
+    0.6156610361324947
+   ]
+  },
+  "event-5_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.7134040972941846,
+    0.4670124373171873
+   ]
+  },
+  "event-6_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    1.0926377781105074,
+    1.2413401189180013
+   ]
+  },
+  "event-6_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8545186101610286,
+    0.6413239414273917
+   ]
+  },
+  "event-7_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.885082439415832,
+    0.8489019247344582
+   ]
+  },
+  "event-7_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9010429400232168,
+    0.839872482124164
+   ]
+  },
+  "event-8_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.6983191269561376,
+    0.7464148964266716
+   ]
+  },
+  "event-8_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.7376837444468543,
+    0.7909100300124836
+   ]
+  },
+  "event-9_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.916482255209433,
+    0.9544112506663732
+   ]
+  },
+  "event-9_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8321166719534452,
+    0.8009837358596089
+   ]
+  }
+ },
+ "n_pairs": 11429,
+ "n_left_out_of_mase": 0
+}

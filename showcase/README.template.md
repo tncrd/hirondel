@@ -36,9 +36,18 @@ shown hollow. Every value, with its source, is in `showcase/data/univariate.csv`
 
 [IND-Eval](https://arxiv.org/abs/2610.16652) gathers forecasting tasks from industrial processes: offshore drilling
 (NEATS), oil wells (3W), a multiphase flow facility (PRONTO), a solar and battery microgrid (Mesa del Sol) and tablet
-compression. None of these sources is in our training data. Here Hirondel forecasts each sensor channel alone, without
-covariates; the numbers of the other models are **those published in the IND-Eval paper**, where they forecast the
-channels of a window jointly and read PRONTO's control signals as covariates.
+compression. None of these five sources is in our training data, and they make the headline. The paper also averages
+four sources that public benchmarks already use: MetroPT-3 (part of TIME), ETT, Electricity and Solar (part of
+GIFT-Eval). We report them below the five, with the paper's mean over the nine. They say less about unseen data: the
+paper's own audit finds Electricity and Solar documented in the pretraining data of Chronos-2 and TiRex-2.
+
+Who computed what:
+- **Hirondel**: our run, each sensor channel forecast alone, without covariates.
+- **Timestral-5M**, the model closest in size: our run with the same harness, twice: as Hirondel, then forecasting the
+  channels of a window jointly with PRONTO's control signals as known covariates (`benchmarks/competitors.py indeval
+  --variant joint`).
+- **Chronos-2, TiRex-2, TimesFM-3**: the numbers **published in the IND-Eval paper**, where they forecast the channels
+  of a window jointly and read PRONTO's control signals as covariates.
 
 <p align="center"><img src="showcase/figures/indeval.png" alt="IND-Eval, accuracy against size" width="100%"></p>
 
@@ -46,13 +55,19 @@ nMASE / nCRPS (normalised by Seasonal Naive; lower is better), best of each metr
 
 <!-- gen:indeval -->
 
-Hirondel loses ground mainly on PRONTO, a process driven by control signals: the other models read these signals as
-covariates, Hirondel, being univariate, does not, so it cannot anticipate the changes they cause. On the four other
-sources it is within 5 % of the best model or ahead of it, with 11 to 47 times fewer parameters.
+On PRONTO, a process driven by control signals, the models that read these signals as covariates are far ahead:
+Timestral-5M goes from 0.968 / 0.888 without them to 0.696 / 0.591 with them. Hirondel, being univariate, cannot
+anticipate the changes they cause. On the four other industrial sources, the geometric means are close: Hirondel
+0.813 / 0.477, TimesFM-3 0.809 / 0.478, Timestral-5M 0.811 / 0.479 (joint, with covariates: 0.806 / 0.478), Chronos-2
+0.840 / 0.587, TiRex-2 0.840 / 0.524. On each of these four sources Hirondel is within 5 % of the best model or ahead of
+it, with 11 to 44 times fewer parameters than Chronos-2, TiRex-2 and TimesFM-3.
 
-Hirondel's numbers are our run of `benchmarks/indeval.py` on the published data (`benchmarks/results/indeval/`); our
-Seasonal Naive normalisation matches the paper's to a few thousandths, not bit for bit. IND-Eval has no leaderboard. The
-five sources are those not already in GIFT-Eval or TIME (the paper also averages MetroPT-3, ETT, Electricity and Solar).
+Hirondel's and Timestral-5M's numbers are our runs of `benchmarks/indeval.py` on the published data
+(`benchmarks/results/indeval/`, `benchmarks/results/indeval_competitors/`). Our Seasonal Naive normalisation matches the
+paper's to a few thousandths on the industrial sources and to about 1 % on the four others, not bit for bit. Windows
+whose context is constant (a fifth of Mesa del Sol's) have no MASE scale: they are left out of the MASE of every model
+and of Seasonal Naive, and kept in the CRPS. ETT is not distributed (CC BY-ND): its tasks are rebuilt locally with the
+dataset's own script. IND-Eval has no leaderboard.
 
 ### Official leaderboards
 

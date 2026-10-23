@@ -1,0 +1,47 @@
+{
+ "source": "metropt3",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Timestral-5M (joint, covariates)": [
+   0.3582417706199824,
+   0.2739808895766174
+  ]
+ },
+ "tasks": {
+  "metropt3_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.4517815578958813,
+    0.32426169050038134
+   ]
+  },
+  "metropt3_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.33036408673303863,
+    0.26667930972742254
+   ]
+  },
+  "metropt3_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.3080401595852983,
+    0.23783504562862756
+   ]
+  }
+ },
+ "n_pairs": 2850,
+ "n_left_out_of_mase": 0
+}

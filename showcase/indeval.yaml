@@ -1,31 +1,50 @@
 # IND-Eval: published numbers of the paper (cognitedata, "IND-Eval", arXiv 2610.16652, results table "IND-Eval results for
-# Chronos-2, TiRex-2, and TimesFM-3 over 187 tasks"), per source, nMASE / nCRPS (normalised by Seasonal Naive). Only the
-# five industrial sources: MetroPT-3 is part of TIME and Electricity, Solar, ETT of GIFT-Eval. In the paper, each model
+# Chronos-2, TiRex-2, and TimesFM-3 over 187 tasks"), per source, nMASE / nCRPS (normalised by Seasonal Naive). Headline:
+# the five industrial sources. The four others (`shared_sources`) are reported apart: MetroPT-3 is part of TIME and
+# Electricity, Solar, ETT of GIFT-Eval; the paper's audit finds Electricity and Solar documented in the pretraining of
+# Chronos-2 and TiRex-2 (appendix, contamination table). The paper's aggregate over the nine sources is the geometric
+# mean of these values (checked: 0.755 / 0.539, 0.779 / 0.537, 0.713 / 0.473). In the paper, each model
 # forecasts the targets of a window jointly and reads PRONTO's control channels as covariates. Our model: our run of
 # benchmarks/indeval.py (benchmarks/results/indeval), univariate, no covariates.
 # Sizes: the Hub's safetensors count, read on 2026-10-23.
 paper: "arXiv 2610.16652"
 sources: [neats, 3w, pronto, mds, tablet_compression]
-source_names: {neats: NEATS (offshore drilling), 3w: 3W (oil wells), pronto: PRONTO (multiphase flow), mds: Mesa del Sol (solar and battery microgrid), tablet_compression: Tablet compression (pharmaceutical)}
+shared_sources: [metropt3, ett, electricity, solar]
+source_names: {neats: NEATS (offshore drilling), 3w: 3W (oil wells), pronto: PRONTO (multiphase flow), mds: Mesa del Sol (solar and battery microgrid), tablet_compression: Tablet compression (pharmaceutical), metropt3: MetroPT-3 (metro compressor; in TIME), ett: ETT (electricity transformers; in GIFT-Eval), electricity: Electricity (370 meters; in GIFT-Eval), solar: Solar (137 PV plants; in GIFT-Eval)}
 models:
   - name: Chronos-2
     covariates: true           # in the paper: PRONTO's control channels as covariates, joint forecasting
     params: 119477664
     license: Apache-2.0
     permissive: true
-    nmase: {neats: 0.915, 3w: 0.847, pronto: 0.754, mds: 0.864, tablet_compression: 0.744}
-    ncrps: {neats: 0.516, 3w: 0.749, pronto: 0.569, mds: 0.948, tablet_compression: 0.324}
+    nmase: {neats: 0.915, 3w: 0.847, pronto: 0.754, mds: 0.864, tablet_compression: 0.744, metropt3: 0.409, ett: 0.853, electricity: 0.680, solar: 0.891}
+    ncrps: {neats: 0.516, 3w: 0.749, pronto: 0.569, mds: 0.948, tablet_compression: 0.324, metropt3: 0.322, ett: 0.674, electricity: 0.545, solar: 0.478}
   - name: TiRex-2
     covariates: true           # in the paper: PRONTO's control channels as covariates, joint forecasting
     params: 82501744           # huggingface.co/NX-AI/TiRex-2; its card: 38.4M parameters active in univariate mode
     license: Apache-2.0
     permissive: true
-    nmase: {neats: 0.899, 3w: 0.837, pronto: 0.957, mds: 0.901, tablet_compression: 0.736}
-    ncrps: {neats: 0.551, 3w: 0.786, pronto: 0.719, mds: 0.542, tablet_compression: 0.321}
+    nmase: {neats: 0.899, 3w: 0.837, pronto: 0.957, mds: 0.901, tablet_compression: 0.736, metropt3: 0.394, ett: 0.856, electricity: 0.723, solar: 0.911}
+    ncrps: {neats: 0.551, 3w: 0.786, pronto: 0.719, mds: 0.542, tablet_compression: 0.321, metropt3: 0.322, ett: 0.692, electricity: 0.590, solar: 0.523}
   - name: TimesFM-3
     covariates: true           # in the paper: PRONTO's control channels as covariates, joint forecasting
     params: 330710976
     license: TimesFM Non-Commercial License v1.0
     permissive: false
-    nmase: {neats: 0.924, 3w: 0.756, pronto: 0.617, mds: 0.841, tablet_compression: 0.729}
-    ncrps: {neats: 0.494, 3w: 0.690, pronto: 0.473, mds: 0.481, tablet_compression: 0.318}
+    nmase: {neats: 0.924, 3w: 0.756, pronto: 0.617, mds: 0.841, tablet_compression: 0.729, metropt3: 0.354, ett: 0.836, electricity: 0.699, solar: 0.869}
+    ncrps: {neats: 0.494, 3w: 0.690, pronto: 0.473, mds: 0.481, tablet_compression: 0.318, metropt3: 0.277, ett: 0.649, electricity: 0.558, solar: 0.482}
+# Same harness and data as ours, run by us: benchmarks/competitors.py indeval (results in
+# benchmarks/results/indeval_competitors/<name>/). Univariate as Hirondel, then joint with PRONTO's covariates as in the
+# paper (variant "joint").
+computed:
+  - name: Timestral-5M
+    covariates: false
+    params: 5208960
+    license: Modified MIT (no rights for companies above $20M monthly revenue)
+    permissive: false
+  - name: Timestral-5M (joint, covariates)
+    label: Timestral-5M, joint + covariates
+    covariates: true
+    params: 5208960
+    license: Modified MIT (no rights for companies above $20M monthly revenue)
+    permissive: false

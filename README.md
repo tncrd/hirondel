@@ -55,30 +55,50 @@ shown hollow. Every value, with its source, is in `showcase/data/univariate.csv`
 
 [IND-Eval](https://arxiv.org/abs/2610.16652) gathers forecasting tasks from industrial processes: offshore drilling
 (NEATS), oil wells (3W), a multiphase flow facility (PRONTO), a solar and battery microgrid (Mesa del Sol) and tablet
-compression. None of these sources is in our training data. Here Hirondel forecasts each sensor channel alone, without
-covariates; the numbers of the other models are **those published in the IND-Eval paper**, where they forecast the
-channels of a window jointly and read PRONTO's control signals as covariates.
+compression. None of these five sources is in our training data, and they make the headline. The paper also averages
+four sources that public benchmarks already use: MetroPT-3 (part of TIME), ETT, Electricity and Solar (part of
+GIFT-Eval). We report them below the five, with the paper's mean over the nine. They say less about unseen data: the
+paper's own audit finds Electricity and Solar documented in the pretraining data of Chronos-2 and TiRex-2.
+
+Who computed what:
+- **Hirondel**: our run, each sensor channel forecast alone, without covariates.
+- **Timestral-5M**, the model closest in size: our run with the same harness, twice: as Hirondel, then forecasting the
+  channels of a window jointly with PRONTO's control signals as known covariates (`benchmarks/competitors.py indeval
+  --variant joint`).
+- **Chronos-2, TiRex-2, TimesFM-3**: the numbers **published in the IND-Eval paper**, where they forecast the channels
+  of a window jointly and read PRONTO's control signals as covariates.
 
 <p align="center"><img src="showcase/figures/indeval.png" alt="IND-Eval, accuracy against size" width="100%"></p>
 
 nMASE / nCRPS (normalised by Seasonal Naive; lower is better), best of each metric in bold:
 
-| Source | Hirondel (7.5M, ours) | Chronos-2 (119M) | TiRex-2 (83M) | TimesFM-3 (331M) |
-|---|---|---|---|---|
-| NEATS (offshore drilling) | 0.937 / 0.496 | 0.915 / 0.516 | **0.899** / 0.551 | 0.924 / **0.494** |
-| 3W (oil wells) | **0.754** / **0.653** | 0.847 / 0.749 | 0.837 / 0.786 | 0.756 / 0.690 |
-| PRONTO (multiphase flow) | 0.956 / 0.853 | 0.754 / 0.569 | 0.957 / 0.719 | **0.617** / **0.473** |
-| Mesa del Sol (solar and battery microgrid) | **0.838** / 0.493 | 0.864 / 0.948 | 0.901 / 0.542 | 0.841 / **0.481** |
-| Tablet compression (pharmaceutical) | 0.737 / 0.325 | 0.744 / 0.324 | 0.736 / 0.321 | **0.729** / **0.318** |
-| **Geometric mean, 5 sources** | 0.839 / 0.536 | 0.822 / 0.583 | 0.863 / 0.558 | **0.766** / **0.477** |
+| Source | Hirondel (7.5M, ours) | Timestral-5M (5.2M) | Timestral-5M, joint + covariates (5.2M) | Chronos-2 (119M) | TiRex-2 (83M) | TimesFM-3 (331M) |
+|---|---|---|---|---|---|---|
+| NEATS (offshore drilling) | 0.937 / 0.496 | 0.903 / 0.484 | 0.900 / **0.484** | 0.915 / 0.516 | **0.899** / 0.551 | 0.924 / 0.494 |
+| 3W (oil wells) | **0.754** / **0.653** | 0.768 / 0.685 | 0.762 / 0.681 | 0.847 / 0.749 | 0.837 / 0.786 | 0.756 / 0.690 |
+| PRONTO (multiphase flow) | 0.956 / 0.853 | 0.968 / 0.888 | 0.696 / 0.591 | 0.754 / 0.569 | 0.957 / 0.719 | **0.617** / **0.473** |
+| Mesa del Sol (solar and battery microgrid) | **0.838** / 0.493 | 0.853 / 0.491 | 0.846 / 0.492 | 0.864 / 0.948 | 0.901 / 0.542 | 0.841 / **0.481** |
+| Tablet compression (pharmaceutical) | 0.737 / 0.325 | 0.730 / 0.323 | **0.727** / 0.323 | 0.744 / 0.324 | 0.736 / 0.321 | 0.729 / **0.318** |
+| **Geometric mean, 5 industrial sources** | 0.839 / 0.536 | 0.840 / 0.542 | 0.783 / 0.499 | 0.822 / 0.583 | 0.863 / 0.558 | **0.766** / **0.477** |
+| MetroPT-3 (metro compressor; in TIME) | 0.414 / 0.327 | 0.388 / 0.311 | 0.358 / **0.274** | 0.409 / 0.322 | 0.394 / 0.322 | **0.354** / 0.277 |
+| ETT (electricity transformers; in GIFT-Eval) | 0.847 / 0.666 | 0.846 / 0.660 | 0.840 / 0.656 | 0.853 / 0.674 | 0.856 / 0.692 | **0.836** / **0.649** |
+| Electricity (370 meters; in GIFT-Eval) | 0.715 / 0.576 | 0.722 / 0.582 | 0.722 / 0.582 | **0.680** / **0.545** | 0.723 / 0.590 | 0.699 / 0.558 |
+| Solar (137 PV plants; in GIFT-Eval) | **0.864** / 0.495 | 0.878 / 0.494 | 0.878 / 0.494 | 0.891 / **0.478** | 0.911 / 0.523 | 0.869 / 0.482 |
+| **Geometric mean, 9 sources (the paper's aggregate)** | 0.766 / 0.519 | 0.762 / 0.520 | 0.726 / 0.489 | 0.755 / 0.539 | 0.779 / 0.537 | **0.713** / **0.473** |
 
-Hirondel loses ground mainly on PRONTO, a process driven by control signals: the other models read these signals as
-covariates, Hirondel, being univariate, does not, so it cannot anticipate the changes they cause. On the four other
-sources it is within 5 % of the best model or ahead of it, with 11 to 47 times fewer parameters.
+On PRONTO, a process driven by control signals, the models that read these signals as covariates are far ahead:
+Timestral-5M goes from 0.968 / 0.888 without them to 0.696 / 0.591 with them. Hirondel, being univariate, cannot
+anticipate the changes they cause. On the four other industrial sources, the geometric means are close: Hirondel
+0.813 / 0.477, TimesFM-3 0.809 / 0.478, Timestral-5M 0.811 / 0.479 (joint, with covariates: 0.806 / 0.478), Chronos-2
+0.840 / 0.587, TiRex-2 0.840 / 0.524. On each of these four sources Hirondel is within 5 % of the best model or ahead of
+it, with 11 to 44 times fewer parameters than Chronos-2, TiRex-2 and TimesFM-3.
 
-Hirondel's numbers are our run of `benchmarks/indeval.py` on the published data (`benchmarks/results/indeval/`); our
-Seasonal Naive normalisation matches the paper's to a few thousandths, not bit for bit. IND-Eval has no leaderboard. The
-five sources are those not already in GIFT-Eval or TIME (the paper also averages MetroPT-3, ETT, Electricity and Solar).
+Hirondel's and Timestral-5M's numbers are our runs of `benchmarks/indeval.py` on the published data
+(`benchmarks/results/indeval/`, `benchmarks/results/indeval_competitors/`). Our Seasonal Naive normalisation matches the
+paper's to a few thousandths on the industrial sources and to about 1 % on the four others, not bit for bit. Windows
+whose context is constant (a fifth of Mesa del Sol's) have no MASE scale: they are left out of the MASE of every model
+and of Seasonal Naive, and kept in the CRPS. ETT is not distributed (CC BY-ND): its tasks are rebuilt locally with the
+dataset's own script. IND-Eval has no leaderboard.
 
 ### Official leaderboards
 

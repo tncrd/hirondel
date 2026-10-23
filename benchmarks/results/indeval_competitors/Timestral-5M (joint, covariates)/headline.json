@@ -1,0 +1,135 @@
+{
+ "model": "Timestral-5M (joint, covariates)",
+ "variant": "joint",
+ "repo_id": "mistralai/Timestral-5M",
+ "revision": "9b0dce3fd91a97b9428ab1da532f08403f4106e1",
+ "package": "timestral",
+ "package_version": "1.0.0",
+ "date": "2026-10-23",
+ "protocol": "joint, PRONTO's control channels as known covariates, computed by us",
+ "sources": [
+  "neats",
+  "3w",
+  "pronto",
+  "mds",
+  "tablet_compression",
+  "metropt3",
+  "ett",
+  "electricity",
+  "solar"
+ ],
+ "nMASE_nCRPS": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Timestral-5M (joint, covariates)": [
+   0.7258574911423215,
+   0.4890509188239259
+  ]
+ },
+ "nMASE_nCRPS_industrial": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Timestral-5M (joint, covariates)": [
+   0.7825096751184362,
+   0.4990779134823166
+  ]
+ },
+ "per_source": {
+  "neats": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8996498618088924,
+    0.48423923114832196
+   ]
+  },
+  "3w": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.7624854938513841,
+    0.6813518512958834
+   ]
+  },
+  "pronto": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.6955494743659195,
+    0.5908608330754791
+   ]
+  },
+  "mds": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8462734941376574,
+    0.4918984881637095
+   ]
+  },
+  "tablet_compression": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.7266155889547309,
+    0.322886324880632
+   ]
+  },
+  "metropt3": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.3582417706199824,
+    0.2739808895766174
+   ]
+  },
+  "ett": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8396015197786614,
+    0.6555009316862815
+   ]
+  },
+  "electricity": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.7222649785811248,
+    0.5819578057027398
+   ]
+  },
+  "solar": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.8775415602981954,
+    0.4944926908122294
+   ]
+  }
+ },
+ "univariate": true,
+ "covariates": "none"
+}

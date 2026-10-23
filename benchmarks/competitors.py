@@ -71,12 +71,16 @@ def _by_length(contexts: list, batch: int):
 
 
 # ---- one loader per model --------------------------------------------------------------------------------------------
-def timestral(m: dict, device: str):
-    """Timestral forecaster defaults (context up to 32 768, symmetric averaging, non-negative clipping), one variate."""
+def timestral(m: dict, device: str, variant: str | None = None):
+    """Timestral forecaster defaults (context up to 32 768, symmetric averaging, non-negative clipping), one variate.
+    Variant "joint" (IND-Eval only): the targets of a window forecast jointly, PRONTO's control channels passed as known
+    covariates with their future, as the IND-Eval paper does for the other models."""
     import torch
     from timestral import TimestralForecaster
     fc = TimestralForecaster.from_pretrained(m["repo_id"], device=device, revision=m["revision"])
     idx = level_indices(fc.quantile_levels)
+    if variant == "joint":
+        return _timestral_joint(fc, idx)
 
     def fn(contexts, H):
         out = np.empty((len(contexts), H, 9), np.float32)
@@ -86,6 +90,49 @@ def timestral(m: dict, device: str):
                 q = fc.forecast(x[:, None, :], H).quantiles[:, 0][..., idx]
             out[rows] = q.float().cpu().numpy()
         return out
+    return fn
+
+
+def _timestral_joint(fc, idx, series: int = 128):
+    """A joint model of `indeval.score_task`: consecutive windows with the same numbers of targets and covariates are
+    batched (about `series` target series per call), each window left-padded with NaN to the longest context."""
+    import torch
+    from benchmarks import indeval
+
+    def run(group, H):
+        T = max(len(c) for w in group for c in w["targets"] + [x for x, _ in w["covariates"]])
+        x = np.full((len(group), len(group[0]["targets"]), T), np.nan, np.float32)
+        for b, w in enumerate(group):
+            for v, c in enumerate(w["targets"]):
+                x[b, v, T - len(c):] = c
+        kw = {}
+        if group[0]["covariates"]:
+            k = np.full((len(group), len(group[0]["covariates"]), T + H), np.nan, np.float32)
+            for b, w in enumerate(group):
+                for v, (c, f) in enumerate(w["covariates"]):
+                    k[b, v, T - len(c):T] = c
+                    k[b, v, T:] = f[:H]
+            kw["known_covariates"] = k
+        with torch.no_grad():
+            q = fc.forecast(x, H, **kw).quantiles[..., idx].float().cpu().numpy()      # (B, V, H, 9)
+        for b, w in enumerate(group):
+            yield from q[b, :len(w["targets"])]
+
+    def task(path):
+        group = []
+        for w in indeval.iter_windows(path):
+            shape = (len(w["targets"]), len(w["covariates"]))
+            if group and (shape != (len(group[0]["targets"]), len(group[0]["covariates"]))
+                          or (len(group) + 1) * shape[0] > series):
+                yield from run(group, group[0]["H"])
+                group = []
+            group.append(w)
+        if group:
+            yield from run(group, group[0]["H"])
+
+    def fn(contexts, H):
+        raise ValueError("Timestral joint: IND-Eval only (needs the windows of a task, see `task`)")
+    fn.task = task
     return fn
 
 
@@ -161,7 +208,8 @@ def toto2(m: dict, device: str):
     return fn
 
 
-VARIANTS = {("TiRex", "resample"): "TiRex (resampling)"}
+VARIANTS = {("TiRex", "resample"): "TiRex (resampling)",
+            ("Timestral-5M", "joint"): "Timestral-5M (joint, covariates)"}
 
 
 def result_name(name: str, variant: str | None) -> str:
@@ -180,11 +228,12 @@ LOADERS = {"Timestral-5M": timestral, "Timestral-28M": timestral, "Chronos-2": c
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("benchmark", choices=["gift", "fev", "time"])
+    ap.add_argument("benchmark", choices=["gift", "fev", "time", "indeval"])
     ap.add_argument("--name", required=True, choices=sorted(LOADERS))
     ap.add_argument("--gift-eval", help="gift: clone of github.com/SalesforceAIResearch/gift-eval")
     ap.add_argument("--fev-bench", help="fev: benchmarks/fev_bench of a clone of github.com/autogluon/fev")
     ap.add_argument("--work", help="time: work folder with the contexts of `benchmarks.time_bench dump`")
+    ap.add_argument("--data", help="indeval: folder holding data/<source>/*.parquet (see benchmarks/indeval.py)")
     ap.add_argument("--out", default=None)
     ap.add_argument("--device", default="cpu")
     ap.add_argument("--resume", action="store_true", help="skip the tasks already in all_results.csv")
@@ -203,7 +252,8 @@ def main():
     import datetime
     meta = {"model": line, "variant": a.variant, "repo_id": m["repo_id"], "revision": m["revision"], "package": package,
             "package_version": version(package), "date": datetime.date.today().isoformat(),
-            "protocol": "forced univariate, computed by us"}
+            "protocol": ("joint, PRONTO's control channels as known covariates, computed by us" if a.variant == "joint"
+                         else "forced univariate, computed by us")}
     if a.benchmark == "gift":
         with open(os.path.join(a.gift_eval, "notebooks", "dataset_properties.json")) as f:
             properties = json.load(f)
@@ -221,6 +271,14 @@ def main():
         h = fev_bench.headline(s, run, a.fev_bench, out)
         meta.update({k: v["skill_score"] for k, v in h.items()})
         print(f"\n{line} fev-bench: skill SQL {h['SQL']['skill_score']:.2f}  MASE {h['MASE']['skill_score']:.2f}")
+    elif a.benchmark == "indeval":
+        from benchmarks import indeval
+        model = fn if hasattr(fn, "task") else (lambda C, H, Y: list(fn(C, H)))
+        indeval.run(a.data, indeval.SOURCES + indeval.SHARED, {line: model}, out, log=lambda *x: print(*x, flush=True))
+        with open(os.path.join(out, "headline.json")) as f:
+            meta.update(json.load(f))
+        print(f"\n{line} IND-Eval: 5 industrial sources {meta['nMASE_nCRPS_industrial'][line]}, "
+              f"9 sources {meta['nMASE_nCRPS'][line]}")
     else:
         from benchmarks import time_bench
         time_bench.forecast(a.work, fn, line)

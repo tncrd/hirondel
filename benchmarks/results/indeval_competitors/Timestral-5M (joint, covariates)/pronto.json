@@ -1,0 +1,137 @@
+{
+ "source": "pronto",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Timestral-5M (joint, covariates)": [
+   0.6955494743659195,
+   0.5908608330754791
+  ]
+ },
+ "tasks": {
+  "pronto_D2E1_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    1.0354583046914914,
+    0.959410201229206
+   ]
+  },
+  "pronto_D2E1_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    1.0146476314951949,
+    0.9368115550505952
+   ]
+  },
+  "pronto_D2E2_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.3719862498929165,
+    0.4320805840378175
+   ]
+  },
+  "pronto_D2E2_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.32319641894084594,
+    0.3734004975167346
+   ]
+  },
+  "pronto_D3E1_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.9967044769693933,
+    1.0851631885609905
+   ]
+  },
+  "pronto_D3E1_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    1.0160556062348247,
+    1.0757421692465003
+   ]
+  },
+  "pronto_D3E2_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    1.4025081640494375,
+    1.1062781216363569
+   ]
+  },
+  "pronto_D3E2_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    1.2693453574547093,
+    1.060635146955413
+   ]
+  },
+  "pronto_D4E1_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.611613939520846,
+    0.5043312222567028
+   ]
+  },
+  "pronto_D4E1_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.7939924633639839,
+    0.4779386403028334
+   ]
+  },
+  "pronto_D4E2_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.32627931959198536,
+    0.215004276229236
+   ]
+  },
+  "pronto_D4E2_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-5M (joint, covariates)": [
+    0.3553388127389806,
+    0.1758966360700571
+   ]
+  }
+ },
+ "n_pairs": 144,
+ "n_left_out_of_mase": 0
+}

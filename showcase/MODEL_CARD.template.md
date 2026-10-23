@@ -55,15 +55,20 @@ a permissive license, the others shown hollow.
 
 ![IND-Eval, accuracy against size](showcase/figures/indeval.png)
 
-Five industrial sources of [IND-Eval](https://arxiv.org/abs/2610.16652), none in the training data. Hirondel: our run,
-each channel alone, no covariates. Other models: numbers published in the IND-Eval paper (joint forecasting, PRONTO's
-covariates). nMASE / nCRPS, lower is better:
+Five industrial sources of [IND-Eval](https://huggingface.co/datasets/cognitedata/IND-Eval), none in the training
+data, then the four the paper adds from public benchmarks (MetroPT-3 in TIME; ETT, Electricity, Solar in GIFT-Eval).
+Hirondel: our run, each channel alone, no covariates. Timestral-5M: our run with the same harness, univariate, then
+joint with PRONTO's covariates. Chronos-2, TiRex-2, TimesFM-3: numbers published in the IND-Eval paper (joint
+forecasting, PRONTO's covariates). nMASE / nCRPS, lower is better:
 
 <!-- gen:indeval -->
 
-Hirondel loses ground mainly on PRONTO, a process driven by control signals: the other models read these signals as
-covariates, Hirondel, being univariate, does not, so it cannot anticipate the changes they cause. On the four other
-sources it is within 5 % of the best model or ahead of it, with 11 to 47 times fewer parameters.
+On PRONTO, a process driven by control signals, the models that read these signals as covariates are far ahead:
+Timestral-5M goes from 0.968 / 0.888 without them to 0.696 / 0.591 with them. Hirondel, being univariate, cannot
+anticipate the changes they cause. On the four other industrial sources, the geometric means are close: Hirondel
+0.813 / 0.477, TimesFM-3 0.809 / 0.478, Timestral-5M 0.811 / 0.479 (joint, with covariates: 0.806 / 0.478), Chronos-2
+0.840 / 0.587, TiRex-2 0.840 / 0.524. On each of these four sources Hirondel is within 5 % of the best model or ahead of
+it, with 11 to 44 times fewer parameters than Chronos-2, TiRex-2 and TimesFM-3.
 
 ![Accuracy against size, official leaderboards](showcase/figures/pareto.png)
 

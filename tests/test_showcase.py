@@ -90,10 +90,15 @@ def test_univariate_rows_include_our_runs_without_an_official_entry():
 
 def test_indeval_table_from_published_numbers_and_ours():
     pub = render.load_indeval()
-    ours = {"per_source": {s: [0.9, 0.5] for s in pub["sources"]}, "nMASE_nCRPS": {}}
-    rows = render.indeval_rows(pub, ours, "Hirondel")
+    src9 = pub["sources"] + pub["shared_sources"]
+    ours = {"per_source": {s: [0.9, 0.5] for s in src9}, "nMASE_nCRPS": {}}
+    other = {**pub["computed"][0], "per_source": {s: [0.95, 0.55] for s in src9}}
+    rows = render.indeval_rows(pub, ours, "Hirondel", [other])
     chronos = next(r for r in rows if r["model"] == "Chronos-2")
     assert chronos["mean"] == pytest.approx((0.822, 0.583), abs=5e-4)               # geometric mean of the five sources
+    assert chronos["mean9"] == pytest.approx((0.755, 0.539), abs=5e-4)              # the paper's aggregate, nine sources
+    assert [r["model"] for r in rows][:2] == ["Hirondel", "Timestral-5M"]
     assert next(r for r in rows if r["model"] == "Hirondel")["mean"] == pytest.approx((0.9, 0.5))
     table = render.indeval_table(rows, pub)
     assert "| 3W (oil wells) |" in table and "**0.473**" in table                               # TimesFM-3 best nCRPS on PRONTO
+    assert "| **Geometric mean, 9 sources (the paper's aggregate)** |" in table and "Timestral-5M (5.2M)" in table
