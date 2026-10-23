@@ -8,8 +8,8 @@ import pytest
 from submissions import build
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
-ARGS = dict(display="Hirondel", hf_url="https://huggingface.co/Tncrd/Hirondel-7M", code_url="https://github.com/account/hirondel",
-            org="Hirondel authors", git_ref="v1.0")
+ARGS = dict(display="Hirondel", hf_url="https://huggingface.co/Tncrd/Hirondel-7M", code_url="https://github.com/tncrd/hirondel",
+            org="The Hirondel Authors", git_ref="v1.0.0")
 
 
 def test_gift_bundle(tmp_path):
@@ -28,7 +28,7 @@ def test_fev_bundle(tmp_path):
     assert len(rows) == 100 and {r["model_name"] for r in rows} == {"Hirondel"}
     assert all(r["trained_on_this_dataset"] in ("False", "false") for r in rows)
     req = open(os.path.join(out, "models", "hirondel", "requirements.txt")).read()
-    assert "git+https://github.com/account/hirondel" in req and "@v1.0" in req
+    assert "git+https://github.com/tncrd/hirondel" in req and "@v1.0.0" in req
     src = open(os.path.join(out, "models", "hirondel", "model.py")).read()
     compile(src, "model.py", "exec")
     assert 'model_name = "hirondel"' in src and "trained_on_datasets = []" in src

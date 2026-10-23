@@ -1,8 +1,8 @@
 """Leaderboard submission bundles from this repository's results. Nothing is sent: each bundle holds the files and the
 steps of one leaderboard's official procedure (read on 2026-10-22).
 
-    python -m submissions.build --display Hirondel --hf-url https://huggingface.co/<user>/<repo> \
-        --code-url https://github.com/<user>/<repo> --org "<name>" --git-ref v1.0 [--time-results <folder>]
+    python -m submissions.build --display Hirondel --hf-url https://huggingface.co/Tncrd/Hirondel-7M \
+        --code-url https://github.com/tncrd/hirondel --org "<name>" --git-ref v1.0.0 [--time-results <folder>]
 
 - GIFT-Eval: pull request to github.com/SalesforceAIResearch/gift-eval adding results/<model>/{all_results.csv,
   config.json} (gift-eval README, "Submission").
@@ -25,7 +25,7 @@ RESULTS = os.path.join(os.path.dirname(HERE), "benchmarks", "results")
 
 
 def _package() -> str:
-    import hirondel as pkg                                       # the installed package (renamed with tools/rename.py)
+    import hirondel as pkg                                       # the installed package
     return pkg.__name__
 
 
@@ -171,7 +171,7 @@ def main():
     ap.add_argument("--hf-url", required=True)
     ap.add_argument("--code-url", required=True)
     ap.add_argument("--org", required=True)
-    ap.add_argument("--git-ref", default="v1.0")
+    ap.add_argument("--git-ref", default="v1.0.0")
     ap.add_argument("--time-results", help="output/results/<name> folder written by `benchmarks.time_bench score`")
     ap.add_argument("--out", default=os.path.join(HERE, "out"))
     a = ap.parse_args()
