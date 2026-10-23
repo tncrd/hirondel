@@ -72,6 +72,10 @@ nMASE / nCRPS (normalised by Seasonal Naive; lower is better), best of each metr
 | Tablet compression (pharmaceutical) | 0.737 / 0.325 | 0.744 / 0.324 | 0.736 / 0.321 | **0.729** / **0.318** |
 | **Geometric mean, 5 sources** | 0.839 / 0.536 | 0.822 / 0.583 | 0.863 / 0.558 | **0.766** / **0.477** |
 
+Hirondel loses ground mainly on PRONTO, a process driven by control signals: the other models read these signals as
+covariates, Hirondel, being univariate, does not, so it cannot anticipate the changes they cause. On the four other
+sources it is within 5 % of the best model or ahead of it, with 11 to 47 times fewer parameters.
+
 Hirondel's numbers are our run of `benchmarks/indeval.py` on the published data (`benchmarks/results/indeval/`); our
 Seasonal Naive normalisation matches the paper's to a few thousandths, not bit for bit. IND-Eval has no leaderboard. The
 five sources are those not already in GIFT-Eval or TIME (the paper also averages MetroPT-3, ETT, Electricity and Solar).

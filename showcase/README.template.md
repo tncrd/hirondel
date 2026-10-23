@@ -46,6 +46,10 @@ nMASE / nCRPS (normalised by Seasonal Naive; lower is better), best of each metr
 
 <!-- gen:indeval -->
 
+Hirondel loses ground mainly on PRONTO, a process driven by control signals: the other models read these signals as
+covariates, Hirondel, being univariate, does not, so it cannot anticipate the changes they cause. On the four other
+sources it is within 5 % of the best model or ahead of it, with 11 to 47 times fewer parameters.
+
 Hirondel's numbers are our run of `benchmarks/indeval.py` on the published data (`benchmarks/results/indeval/`); our
 Seasonal Naive normalisation matches the paper's to a few thousandths, not bit for bit. IND-Eval has no leaderboard. The
 five sources are those not already in GIFT-Eval or TIME (the paper also averages MetroPT-3, ETT, Electricity and Solar).

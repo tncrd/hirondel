@@ -61,6 +61,10 @@ covariates). nMASE / nCRPS, lower is better:
 
 <!-- gen:indeval -->
 
+Hirondel loses ground mainly on PRONTO, a process driven by control signals: the other models read these signals as
+covariates, Hirondel, being univariate, does not, so it cannot anticipate the changes they cause. On the four other
+sources it is within 5 % of the best model or ahead of it, with 11 to 47 times fewer parameters.
+
 ![Accuracy against size, official leaderboards](showcase/figures/pareto.png)
 
 Official leaderboards, read on 2026-10-23 (some models use covariates or joint multivariate forecasting there).

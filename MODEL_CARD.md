@@ -87,6 +87,10 @@ covariates). nMASE / nCRPS, lower is better:
 | Tablet compression (pharmaceutical) | 0.737 / 0.325 | 0.744 / 0.324 | 0.736 / 0.321 | **0.729** / **0.318** |
 | **Geometric mean, 5 sources** | 0.839 / 0.536 | 0.822 / 0.583 | 0.863 / 0.558 | **0.766** / **0.477** |
 
+Hirondel loses ground mainly on PRONTO, a process driven by control signals: the other models read these signals as
+covariates, Hirondel, being univariate, does not, so it cannot anticipate the changes they cause. On the four other
+sources it is within 5 % of the best model or ahead of it, with 11 to 47 times fewer parameters.
+
 ![Accuracy against size, official leaderboards](showcase/figures/pareto.png)
 
 Official leaderboards, read on 2026-10-23 (some models use covariates or joint multivariate forecasting there).

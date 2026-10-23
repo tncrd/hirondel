@@ -9,18 +9,21 @@ sources: [neats, 3w, pronto, mds, tablet_compression]
 source_names: {neats: NEATS (offshore drilling), 3w: 3W (oil wells), pronto: PRONTO (multiphase flow), mds: Mesa del Sol (solar and battery microgrid), tablet_compression: Tablet compression (pharmaceutical)}
 models:
   - name: Chronos-2
+    covariates: true           # in the paper: PRONTO's control channels as covariates, joint forecasting
     params: 119477664
     license: Apache-2.0
     permissive: true
     nmase: {neats: 0.915, 3w: 0.847, pronto: 0.754, mds: 0.864, tablet_compression: 0.744}
     ncrps: {neats: 0.516, 3w: 0.749, pronto: 0.569, mds: 0.948, tablet_compression: 0.324}
   - name: TiRex-2
+    covariates: true           # in the paper: PRONTO's control channels as covariates, joint forecasting
     params: 82501744           # huggingface.co/NX-AI/TiRex-2; its card: 38.4M parameters active in univariate mode
     license: Apache-2.0
     permissive: true
     nmase: {neats: 0.899, 3w: 0.837, pronto: 0.957, mds: 0.901, tablet_compression: 0.736}
     ncrps: {neats: 0.551, 3w: 0.786, pronto: 0.719, mds: 0.542, tablet_compression: 0.321}
   - name: TimesFM-3
+    covariates: true           # in the paper: PRONTO's control channels as covariates, joint forecasting
     params: 330710976
     license: TimesFM Non-Commercial License v1.0
     permissive: false

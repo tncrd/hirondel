@@ -332,10 +332,11 @@ def _gmean(x):
 def indeval_rows(pub, ours, name):
     """One row per model: per-source (nMASE, nCRPS) and their geometric mean over the five sources. Ours first."""
     src = pub["sources"]
-    rows = [{"model": name, "params": ours.get("params"), "permissive": True, "ours": True,
+    rows = [{"model": name, "params": ours.get("params"), "permissive": True, "ours": True, "covariates": False,
              "per_source": {s: tuple(ours["per_source"][s]) for s in src}}]
     for m in pub["models"]:
         rows.append({"model": m["name"], "params": m["params"], "permissive": m["permissive"], "ours": False,
+                     "covariates": m.get("covariates", False),
                      "per_source": {s: (m["nmase"][s], m["ncrps"][s]) for s in src}})
     for r in rows:
         r["mean"] = (_gmean([r["per_source"][s][0] for s in src]), _gmean([r["per_source"][s][1] for s in src]))
@@ -369,8 +370,7 @@ def indeval_table(rows, pub):
 
 INDEVAL_NOTE = ("IND-Eval, five industrial sources (NEATS, 3W, PRONTO, Mesa del Sol, tablet compression); geometric mean of "
                 "the sources. {name}: our run, each channel forecast alone, no covariates. Others: numbers published in "
-                "the IND-Eval paper (arXiv 2610.16652), joint forecasting with PRONTO's covariates. Hollow: non-commercial "
-                "license.")
+                "the IND-Eval paper (arXiv 2610.16652), joint forecasting with PRONTO's covariates.")
 
 
 def indeval_figure(rows, path):
@@ -383,12 +383,13 @@ def indeval_figure(rows, path):
     for ax, k, metric in zip(axes, (0, 1), ("nMASE", "nCRPS")):
         for r in rows:
             x, y = r["params"], r["mean"][k]
+            marker = "X" if r["covariates"] else "o"             # cross: reads covariates; circle: univariate
             if r["ours"]:
-                ax.scatter([x], [y], s=120, color=ACCENT, zorder=4, edgecolors="white", linewidths=1.4)
+                ax.scatter([x], [y], s=120, marker=marker, color=ACCENT, zorder=4, edgecolors="white", linewidths=1.4)
             elif r["permissive"]:
-                ax.scatter([x], [y], s=28, color=DARK, zorder=4, edgecolors="none")
+                ax.scatter([x], [y], s=60, marker=marker, color=DARK, zorder=4, edgecolors="none")
             else:
-                ax.scatter([x], [y], s=26, facecolors=BG, edgecolors=DARK, linewidths=1.1, zorder=4)
+                ax.scatter([x], [y], s=60, marker=marker, facecolors=BG, edgecolors=DARK, linewidths=1.1, zorder=4)
             ax.annotate(f"{r['model']} (ours)" if r["ours"] else r["model"], (x, y),
                         xytext=(9, -4) if r["ours"] else (6, 4), textcoords="offset points", va="top" if r["ours"] else "baseline",
                         fontsize=10 if r["ours"] else 8, fontweight="bold" if r["ours"] else "normal",
@@ -399,6 +400,14 @@ def indeval_figure(rows, path):
         ax.set_xticks([1e7, 3e7, 1e8, 3e8])
         ax.set_xticklabels(["10M", "30M", "100M", "300M"])
         ax.set_title(f"IND-Eval · {metric}", loc="left", fontsize=12, fontweight="bold", color=INK)
+        if k == 1:                                        # nCRPS panel: its upper left corner is empty
+            from matplotlib.lines import Line2D
+            ax.legend(handles=[Line2D([], [], ls="", marker="o", color=DARK, label="univariate, no covariates"),
+                               Line2D([], [], ls="", marker="X", color=DARK, markersize=8,
+                                      label="joint, with covariates (PRONTO)"),
+                               Line2D([], [], ls="", marker="X", markerfacecolor=BG, markeredgecolor=DARK, markersize=8,
+                                      label="hollow: non-commercial license")],
+                      loc="upper left", fontsize=8, frameon=False)
         ax.text(1.0, 1.02, "lower is better", transform=ax.transAxes, ha="right", fontsize=8.5, color=GREY)
         ax.set_xlabel("Parameters (log scale)")
     note = INDEVAL_NOTE.format(name=next(r["model"] for r in rows if r["ours"]))
