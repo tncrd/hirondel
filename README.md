@@ -35,6 +35,7 @@ TimesFM-3 use covariates and were not run in this setting; they appear in the of
 
 | Model | Parameters | License | GIFT-Eval MASE | GIFT-Eval CRPS | TIME MASE | TIME CRPS | fev-bench SQL skill |
 |---|---|---|---|---|---|---|---|
+| Toto-2.0-4m | 4.1M | Apache-2.0 |  |  | 0.6940 | 0.5850 | 40.04 |
 | Timestral-5M | 5.2M | Modified MIT (revenue cap) | 0.7102 | 0.4836 | 0.6571 | 0.5490 | 44.36 |
 | **Nom (ours)** | 7.5M | Apache-2.0 | 0.7003 | 0.4816 | 0.6551 | 0.5520 | 44.90 |
 | Moirai-2.0-small | 11.4M | CC-BY-NC-4.0 | 0.7281 | 0.5164 | 0.7030 | 0.5885 | 39.31 |
@@ -51,7 +52,7 @@ shown hollow. Every value, with its source, is in `showcase/data/univariate.csv`
 ### Official leaderboards
 
 The official leaderboards mix settings: some models use covariates (fev-bench) or forecast the variables of a series
-jointly. Official results of well-known models, read on 2026-10-22, against their size (sources:
+jointly. Official results of well-known models, read on 2026-10-22 (GIFT-Eval on 2026-10-23), against their size (sources:
 `showcase/data/official.csv`):
 
 <p align="center"><img src="showcase/figures/pareto.png" alt="Accuracy against size on the official leaderboards" width="100%"></p>

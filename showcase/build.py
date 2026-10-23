@@ -20,7 +20,7 @@ ROOT = os.path.dirname(HERE)
 RESULTS = os.path.join(ROOT, "benchmarks", "results")
 DATE = "2026-10-22"
 SOURCES = {
-    "GIFT-Eval": "github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/{key}/all_results.csv",
+    "GIFT-Eval": "github.com/SalesforceAIResearch/gift-eval @ cfaefe0, results/{key}/all_results.csv",
     "fev-bench": "github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results",
     "TIME": "huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/{key}",
 }
@@ -74,9 +74,9 @@ def load_models(path: str = os.path.join(HERE, "models.yaml")) -> dict:
 
 # ---- official numbers ------------------------------------------------------------------------------------------------
 def gift_scores(gift_eval: str, key: str) -> dict:
-    from benchmarks.gift import headline
+    from benchmarks.gift import headline, naive_csv
     h = headline(os.path.join(gift_eval, "results", key, "all_results.csv"),
-                 os.path.join(gift_eval, "results", "seasonal_naive", "all_results.csv"))
+                 naive_csv(gift_eval))
     return {"MASE": h["MASE"], "CRPS": h["CRPS"]}
 
 
@@ -124,7 +124,8 @@ def ours_scores() -> dict:
 def collect(gift_eval: str, fev_bench: str, time_output: str, time_naive: str) -> list[dict]:
     """Rows {model, params, license, permissive, benchmark, metric, value, source, date}; fev values are skill scores (%)."""
     lst = load_models()
-    os.environ["GIFT_NAIVE"] = os.path.join(gift_eval, "results", "seasonal_naive")
+    from benchmarks.gift import naive_csv
+    os.environ["GIFT_NAIVE"] = os.path.dirname(naive_csv(gift_eval))
     rows = []
     ours = ours_scores()
     o = lst["ours"]

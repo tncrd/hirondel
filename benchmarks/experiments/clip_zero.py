@@ -70,7 +70,7 @@ def main():
             props = json.load(fp)
         csv_path = os.path.join(out, "all_results.csv")
         gift.evaluate(lambda pl: GluonTSAdapter(fn, pl), name, props, csv_path)
-        h = gift.headline(csv_path, os.path.join(a.gift_eval, "results", "seasonal_naive", "all_results.csv"))
+        h = gift.headline(csv_path, gift.naive_csv(a.gift_eval))
         print(f"GIFT-Eval {a.variant}: MASE {h['MASE']:.4f}  CRPS {h['CRPS']:.4f}")
     elif a.bench == "fev":
         from benchmarks import fev_bench

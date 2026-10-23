@@ -209,7 +209,7 @@ def main():
             properties = json.load(f)
         out_csv = os.path.join(out, "all_results.csv")
         gift.evaluate(lambda pl: GluonTSAdapter(fn, pl, batch_size=256), line, properties, out_csv, resume=a.resume)
-        h = gift.headline(out_csv, os.path.join(a.gift_eval, "results", "seasonal_naive", "all_results.csv"))
+        h = gift.headline(out_csv, gift.naive_csv(a.gift_eval))
         meta.update(h)
         print(f"\n{line} GIFT-Eval ({h['n_tasks']} tasks): MASE {h['MASE']:.4f}  CRPS {h['CRPS']:.4f}")
     elif a.benchmark == "fev":

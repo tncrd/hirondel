@@ -17,35 +17,39 @@ TiRex,35000000,NX-AI Community License,False,fev-bench,MASE,30.012262,"github.co
 TiRex,35000000,NX-AI Community License,False,fev-bench,SQL,42.576108,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results (univariate by design)",2026-10-22
 TiRex,35000000,NX-AI Community License,False,TIME,MASE,0.683122,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/TiRex (univariate by design)",2026-10-22
 TiRex,35000000,NX-AI Community License,False,TIME,CRPS,0.573097,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/TiRex (univariate by design)",2026-10-22
-TimesFM-2.5,231289280,Apache-2.0,True,GIFT-Eval,MASE,0.705031,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/TimesFM-2.5/all_results.csv (univariate by design)",2026-10-22
-TimesFM-2.5,231289280,Apache-2.0,True,GIFT-Eval,CRPS,0.490288,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/TimesFM-2.5/all_results.csv (univariate by design)",2026-10-22
+TimesFM-2.5,231289280,Apache-2.0,True,GIFT-Eval,MASE,0.705031,"github.com/SalesforceAIResearch/gift-eval @ cfaefe0, results/TimesFM-2.5/all_results.csv (univariate by design)",2026-10-22
+TimesFM-2.5,231289280,Apache-2.0,True,GIFT-Eval,CRPS,0.490288,"github.com/SalesforceAIResearch/gift-eval @ cfaefe0, results/TimesFM-2.5/all_results.csv (univariate by design)",2026-10-22
 TimesFM-2.5,231289280,Apache-2.0,True,fev-bench,MASE,30.197591,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results (univariate by design)",2026-10-22
 TimesFM-2.5,231289280,Apache-2.0,True,fev-bench,SQL,42.200621,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results (univariate by design)",2026-10-22
 TimesFM-2.5,231289280,Apache-2.0,True,TIME,MASE,0.668601,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/TimesFM-2.5 (univariate by design)",2026-10-22
 TimesFM-2.5,231289280,Apache-2.0,True,TIME,CRPS,0.567352,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/TimesFM-2.5 (univariate by design)",2026-10-22
+Toto-2.0-4m,4144448,Apache-2.0,True,TIME,MASE,0.693956,"computed by us, forced univariate (benchmarks/results/time_competitors/Toto-2.0-4m)",2026-10-22
+Toto-2.0-4m,4144448,Apache-2.0,True,TIME,CRPS,0.584991,"computed by us, forced univariate (benchmarks/results/time_competitors/Toto-2.0-4m)",2026-10-22
 Toto-2.0-22m,21915584,Apache-2.0,True,GIFT-Eval,MASE,0.722600,"computed by us, forced univariate (benchmarks/results/gift_competitors/Toto-2.0-22m)",2026-10-22
 Toto-2.0-22m,21915584,Apache-2.0,True,GIFT-Eval,CRPS,0.500852,"computed by us, forced univariate (benchmarks/results/gift_competitors/Toto-2.0-22m)",2026-10-22
 Toto-2.0-22m,21915584,Apache-2.0,True,fev-bench,MASE,29.910529,"computed by us, forced univariate (benchmarks/results/fev_competitors/Toto-2.0-22m)",2026-10-22
 Toto-2.0-22m,21915584,Apache-2.0,True,fev-bench,SQL,42.370439,"computed by us, forced univariate (benchmarks/results/fev_competitors/Toto-2.0-22m)",2026-10-22
 Toto-2.0-22m,21915584,Apache-2.0,True,TIME,MASE,0.675070,"computed by us, forced univariate (benchmarks/results/time_competitors/Toto-2.0-22m)",2026-10-22
 Toto-2.0-22m,21915584,Apache-2.0,True,TIME,CRPS,0.565407,"computed by us, forced univariate (benchmarks/results/time_competitors/Toto-2.0-22m)",2026-10-22
+Timestral-5M,5208960,Modified MIT (revenue cap),False,GIFT-Eval,MASE,0.710241,"computed by us, forced univariate (benchmarks/results/gift_competitors/Timestral-5M)",2026-10-22
+Timestral-5M,5208960,Modified MIT (revenue cap),False,GIFT-Eval,CRPS,0.483613,"computed by us, forced univariate (benchmarks/results/gift_competitors/Timestral-5M)",2026-10-22
 Timestral-5M,5208960,Modified MIT (revenue cap),False,fev-bench,MASE,32.205874,"computed by us, forced univariate (benchmarks/results/fev_competitors/Timestral-5M)",2026-10-22
 Timestral-5M,5208960,Modified MIT (revenue cap),False,fev-bench,SQL,44.364608,"computed by us, forced univariate (benchmarks/results/fev_competitors/Timestral-5M)",2026-10-22
 Timestral-5M,5208960,Modified MIT (revenue cap),False,TIME,MASE,0.657092,"computed by us, forced univariate (benchmarks/results/time_competitors/Timestral-5M)",2026-10-22
 Timestral-5M,5208960,Modified MIT (revenue cap),False,TIME,CRPS,0.549008,"computed by us, forced univariate (benchmarks/results/time_competitors/Timestral-5M)",2026-10-22
+Timestral-28M,27821184,Modified MIT (revenue cap),False,GIFT-Eval,MASE,0.681696,"computed by us, forced univariate (benchmarks/results/gift_competitors/Timestral-28M)",2026-10-22
+Timestral-28M,27821184,Modified MIT (revenue cap),False,GIFT-Eval,CRPS,0.464089,"computed by us, forced univariate (benchmarks/results/gift_competitors/Timestral-28M)",2026-10-22
 Timestral-28M,27821184,Modified MIT (revenue cap),False,fev-bench,MASE,33.981846,"computed by us, forced univariate (benchmarks/results/fev_competitors/Timestral-28M)",2026-10-22
 Timestral-28M,27821184,Modified MIT (revenue cap),False,fev-bench,SQL,45.861907,"computed by us, forced univariate (benchmarks/results/fev_competitors/Timestral-28M)",2026-10-22
 Timestral-28M,27821184,Modified MIT (revenue cap),False,TIME,MASE,0.645537,"computed by us, forced univariate (benchmarks/results/time_competitors/Timestral-28M)",2026-10-22
 Timestral-28M,27821184,Modified MIT (revenue cap),False,TIME,CRPS,0.540775,"computed by us, forced univariate (benchmarks/results/time_competitors/Timestral-28M)",2026-10-22
-FlowState-r1.1,18500000,Apache-2.0,True,GIFT-Eval,MASE,0.701391,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/Granite-FlowState-r1.1/all_results.csv (univariate by design)",2026-10-22
-FlowState-r1.1,18500000,Apache-2.0,True,GIFT-Eval,CRPS,0.490133,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/Granite-FlowState-r1.1/all_results.csv (univariate by design)",2026-10-22
-Moirai-2.0-small,11387208,CC-BY-NC-4.0,False,GIFT-Eval,MASE,0.728130,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/Moirai2/all_results.csv (univariate by design)",2026-10-22
-Moirai-2.0-small,11387208,CC-BY-NC-4.0,False,GIFT-Eval,CRPS,0.516438,"github.com/SalesforceAIResearch/gift-eval @ 6fdb10d, results/Moirai2/all_results.csv (univariate by design)",2026-10-22
+FlowState-r1.1,18500000,Apache-2.0,True,GIFT-Eval,MASE,0.701391,"github.com/SalesforceAIResearch/gift-eval @ cfaefe0, results/Granite-FlowState-r1.1/all_results.csv (univariate by design)",2026-10-22
+FlowState-r1.1,18500000,Apache-2.0,True,GIFT-Eval,CRPS,0.490133,"github.com/SalesforceAIResearch/gift-eval @ cfaefe0, results/Granite-FlowState-r1.1/all_results.csv (univariate by design)",2026-10-22
+Moirai-2.0-small,11387208,CC-BY-NC-4.0,False,GIFT-Eval,MASE,0.728130,"github.com/SalesforceAIResearch/gift-eval @ cfaefe0, results/Moirai2/all_results.csv (univariate by design)",2026-10-22
+Moirai-2.0-small,11387208,CC-BY-NC-4.0,False,GIFT-Eval,CRPS,0.516438,"github.com/SalesforceAIResearch/gift-eval @ cfaefe0, results/Moirai2/all_results.csv (univariate by design)",2026-10-22
 Moirai-2.0-small,11387208,CC-BY-NC-4.0,False,fev-bench,MASE,27.224649,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results (univariate by design)",2026-10-22
 Moirai-2.0-small,11387208,CC-BY-NC-4.0,False,fev-bench,SQL,39.313741,"github.com/autogluon/fev @ f9e2c7d, benchmarks/fev_bench/results (univariate by design)",2026-10-22
 Moirai-2.0-small,11387208,CC-BY-NC-4.0,False,TIME,MASE,0.702996,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/Moirai2 (univariate by design)",2026-10-22
 Moirai-2.0-small,11387208,CC-BY-NC-4.0,False,TIME,CRPS,0.588487,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/Moirai2 (univariate by design)",2026-10-22
-Timestral-28M,27821184,Modified MIT (revenue cap),False,GIFT-Eval,CRPS,0.464089,"computed by us, forced univariate (benchmarks/results/gift_competitors/Timestral-28M)",2026-10-22
-Timestral-28M,27821184,Modified MIT (revenue cap),False,GIFT-Eval,MASE,0.681696,"computed by us, forced univariate (benchmarks/results/gift_competitors/Timestral-28M)",2026-10-22
-Timestral-5M,5208960,Modified MIT (revenue cap),False,GIFT-Eval,CRPS,0.483613,"computed by us, forced univariate (benchmarks/results/gift_competitors/Timestral-5M)",2026-10-22
-Timestral-5M,5208960,Modified MIT (revenue cap),False,GIFT-Eval,MASE,0.710241,"computed by us, forced univariate (benchmarks/results/gift_competitors/Timestral-5M)",2026-10-22
+Toto-2.0-4m,4144448,Apache-2.0,True,fev-bench,MASE,27.136034,"computed by us, forced univariate (benchmarks/results/fev_competitors/Toto-2.0-4m)",2026-10-22
+Toto-2.0-4m,4144448,Apache-2.0,True,fev-bench,SQL,40.044451,"computed by us, forced univariate (benchmarks/results/fev_competitors/Toto-2.0-4m)",2026-10-22

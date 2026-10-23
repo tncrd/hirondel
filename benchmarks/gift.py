@@ -1,7 +1,7 @@
 """GIFT-Eval (97 tasks) with the official harness: `gift_eval.data.Dataset` + `gluonts.model.evaluate_model`, the metric
 list, dataset naming and output columns of the official notebooks (github.com/SalesforceAIResearch/gift-eval,
 `notebooks/*.ipynb`), and the leaderboard headline: geometric mean over the 97 tasks of MASE[0.5] and
-mean_weighted_sum_quantile_loss (CRPS), each divided by Seasonal Naive's value on the same task (`results/seasonal_naive/`).
+mean_weighted_sum_quantile_loss (CRPS), each divided by Seasonal Naive's value on the same task (`results/seasonal_naive/`, `results/Seasonal_Naive/` in recent clones).
 
     git clone https://github.com/SalesforceAIResearch/gift-eval && pip install -e gift-eval ".[bench]"
     export GIFT_EVAL=<folder of the Salesforce/GiftEval dataset>
@@ -111,6 +111,15 @@ def _read(path: str) -> dict:
         return {r["dataset"]: (float(r[MASE_COL]), float(r[CRPS_COL])) for r in csv.DictReader(f)}
 
 
+def naive_csv(gift_eval: str) -> str:
+    """Seasonal Naive's results in a gift-eval clone: results/seasonal_naive, renamed results/Seasonal_Naive in 2026-10."""
+    for name in ("seasonal_naive", "Seasonal_Naive"):
+        p = os.path.join(gift_eval, "results", name, "all_results.csv")
+        if os.path.exists(os.path.dirname(p)):
+            return p
+    raise FileNotFoundError(f"no Seasonal Naive results under {gift_eval}/results")
+
+
 def headline(results_csv: str, naive_csv: str, n_tasks: int = 97) -> dict:
     """Leaderboard headline: geometric mean over the tasks of (model / Seasonal Naive), for MASE and CRPS."""
     ours, naive = _read(results_csv), _read(naive_csv)
@@ -142,7 +151,7 @@ def main():
     os.makedirs(a.out, exist_ok=True)
     out_csv = os.path.join(a.out, "all_results.csv")
     evaluate(lambda pl: GluonTSAdapter(fn, pl, batch_size=a.batch_size), "nom", properties, out_csv)
-    h = headline(out_csv, os.path.join(a.gift_eval, "results", "seasonal_naive", "all_results.csv"))
+    h = headline(out_csv, naive_csv(a.gift_eval))
     print(f"\nGIFT-Eval ({h['n_tasks']} tasks): MASE {h['MASE']:.4f}  CRPS {h['CRPS']:.4f}")
 
 

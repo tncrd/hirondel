@@ -94,3 +94,12 @@ def test_time_results_files(tmp_path):
     rows = open(os.path.join(out, "tasks.csv")).read().splitlines()
     assert rows[0] == "task,MASE,CRPS,MASE_norm,CRPS_norm" and rows[1].startswith("A/H/short,2.0,0.5,0.5,0.5")
     assert json.load(open(os.path.join(out, "headline.json"))) == h and h["n_tasks"] == 1
+
+
+def test_gift_naive_folder_in_old_and_new_clones(tmp_path):
+    """gift-eval renamed results/seasonal_naive to results/Seasonal_Naive (2026-10); both clones are read."""
+    from benchmarks import gift
+    for name in ("seasonal_naive", "Seasonal_Naive"):
+        root = tmp_path / name / "gift-eval"
+        (root / "results" / name).mkdir(parents=True)
+        assert gift.naive_csv(str(root)) == str(root / "results" / name / "all_results.csv")

@@ -49,9 +49,11 @@ LABEL_OFFSETS_BY_BENCH = {"GIFT-Eval": {"Toto-2.0-22m": (5, 4, "left"), "TiRex":
                           "fev-bench": {"t0-gamma": (6, -12, "left"), "Timestral-209M": (-6, 5, "right"),
                                         "TiRex": (8, 2, "left"), "Toto-2.0-22m": (-6, -12, "right")}}
 
+LABEL_OFFSETS_BY_PANEL = {("GIFT-Eval", "MASE"): {"FlowState-r1.1": (5, 4, "left")}}
+
 
 OFFICIAL_TITLE = "Official leaderboards (some models use covariates or forecast the variables of a series jointly)"
-OFFICIAL_NOTE = ("Official leaderboard results, read on 2026-10-22 (fev-bench: 1 - skill score). Pareto fronts over models "
+OFFICIAL_NOTE = ("Official leaderboard results, read on 2026-10-22, GIFT-Eval on 2026-10-23 (fev-bench: 1 - skill score). Pareto fronts over models "
                  "with a permissive license; the others are shown hollow. Sizes from the official model cards. "
                  "Sources: showcase/data/official.csv.")
 UNIVARIATE_TITLE = "Univariate setting: every model forecasts each series alone, without covariates"
@@ -118,7 +120,8 @@ def pareto_figure(rows, models, ours_name, path, title=OFFICIAL_TITLE, note=OFFI
                 ax.scatter([x], [y], s=28 if front else 16, color=DARK if front else GREY, zorder=4, edgecolors="none")
             else:
                 ax.scatter([x], [y], s=22, facecolors=BG, edgecolors=GREY, linewidths=1.1, zorder=4)
-            dx, dy, ha = LABEL_OFFSETS_BY_BENCH.get(bench, {}).get(name) or LABEL_OFFSETS.get(name, (5, 4, "left"))
+            dx, dy, ha = (LABEL_OFFSETS_BY_PANEL.get((bench, metric), {}).get(name)
+                          or LABEL_OFFSETS_BY_BENCH.get(bench, {}).get(name) or LABEL_OFFSETS.get(name, (5, 4, "left")))
             if near_ours(x, y):                   # a neighbour of ours: its label on the side away from ours
                 dy = -12 if y < ours[0][2] else 6
             ax.annotate(name, (x, y), xytext=(dx, dy), textcoords="offset points", fontsize=8, ha=ha,

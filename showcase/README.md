@@ -28,11 +28,17 @@ not only the models in the figures. A model ranked above ours on a benchmark is 
 
 | reason | examples |
 |---|---|
-| agent, ensemble or system of several models | most of the GIFT-Eval entries above ours |
+| agent, ensemble or system of several models | most of the GIFT-Eval entries above ours (since 2026-10-22: PERSONA-AI-T4, RegLab-AH-2, ChakraTS-Lab, Granite-timeseries-ensemble-r1) |
 | fine-tuned on the benchmark data, or declared test-data leakage | GIFT-Eval: Tabby, TurkForecast-FM-Chronos2-LoRA-v1 |
-| no public weights (closed API, weights not released, or no model link) | QiYao-M, DeOSAlphaTimeGPTPredictor-2025, Falcon-2.0, Lingjiang2.0, EXAONE-Forecast, EFG-base, Migas-1.0, TimeRSI, ChakraTS |
-| more than 10M parameters (official card), or built on such a model | STRIDE (+Chronos-2 / +Timer-S1), Chronos-2, TimesFM-2.5 / 3, Toto-2.0 1B / 2.5B, TiRex-2, t0-beta / gamma, Granite-PatchTST-FM-r2, tafsut, Zeus, Timer-S1, Timestral-28M / 123M / 209M |
-| non-commercial or restricted license | TimeH2O-v1-tiny (5.8M, fev-bench), Timestral-5M (5.2M, fev-bench and TIME) |
+| no public weights (closed API, weights not released, or no model link) | QiYao-M, DeOSAlphaTimeGPTPredictor-2025, Falcon-2.0, Lingjiang2.0, EXAONE-Forecast, EFG-base, Migas-1.0, TimeRSI, ChakraTS, Morpheus-2.0, CHARM (63M, API only) |
+| more than 10M parameters (official card), or built on such a model | STRIDE (+Chronos-2 / +Timer-S1), Chronos-2, TimesFM-2.5 / 3, Toto-2.0 1B / 2.5B, TiRex-2, t0-beta / gamma, Granite-PatchTST-FM-r2, tafsut, Zeus, Timer-S1, Timestral-28M / 123M / 209M, TimeH2O-v1 (109M), PCFM (52.9M) |
+| non-commercial or restricted license | TimeH2O-v1-tiny (5.8M, fev-bench and GIFT-Eval), Timestral-5M (5.2M, fev-bench, TIME and GIFT-Eval CRPS) |
 
 Once these are set aside, the only models under 10M parameters ranked above ours are TimeH2O-v1-tiny and Timestral-5M,
 both under restricted licenses. The check should be repeated whenever the leaderboards change.
+
+**Re-checked on 2026-10-23 on GIFT-Eval** (gift-eval `cfaefe0`, 158 result folders; the copy used before, `6fdb10d` of
+2026-07-06, predated 18 entries, among them Timestral, merged on 2026-10-16). Every entry was rescored against the
+same Seasonal Naive (identical in both copies). The new entries under 10M parameters below ours on both metrics:
+TimeSSM-2.5M (0.7544 / 0.5128), Mobius-0 (0.7140 / 0.4959), Yug (0.7443 / 0.5287). EFG-base (0.7006 / 0.48159, no public
+weights) is just behind ours (0.7003 / 0.48156). The sentence holds.

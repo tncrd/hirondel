@@ -3,7 +3,8 @@
 # against every leaderboard entry separately (see showcase/README.md).
 #
 # params: exact count from the Hub's safetensors metadata when it exists, otherwise the model card's statement.
-# Sizes, licenses and revisions read on 2026-10-22. Result keys: the model's name in each leaderboard's published results
+# Sizes, licenses and revisions read on 2026-10-22 (GIFT-Eval results re-read on 2026-10-23 at gift-eval cfaefe0, which adds
+# Timestral, merged on 2026-10-16). Result keys: the model's name in each leaderboard's published results
 # (gift: results/<key>/all_results.csv of gift-eval; fev: model_name in fev's results; time: results/<key>/ of
 # Real-TSF/TIME-Output). null = not on that leaderboard.
 
@@ -13,15 +14,15 @@ ours:
   license: Apache-2.0
 
 models:
-  - {name: Chronos-2, family: Chronos, params: 119477664, size_source: "https://huggingface.co/amazon/chronos-2 (safetensors)", license: Apache-2.0, permissive: true, gift: chronos-2, fev: Chronos-2, time: Chronos-2}
+  - {name: Chronos-2, family: Chronos, params: 119477664, size_source: "https://huggingface.co/amazon/chronos-2 (safetensors)", license: Apache-2.0, permissive: true, gift: Chronos-2, fev: Chronos-2, time: Chronos-2}
   - {name: TiRex, family: TiRex, params: 35000000, size_source: "https://huggingface.co/NX-AI/TiRex-1.1-gifteval (card: 35M parameter)", license: NX-AI Community License, permissive: false, gift: TiRex, fev: TiRex, time: TiRex}
   - {name: TimesFM-2.5, family: TimesFM, params: 231289280, size_source: "https://huggingface.co/google/timesfm-2.5-200m-pytorch (safetensors)", license: Apache-2.0, permissive: true, gift: TimesFM-2.5, fev: TimesFM-2.5, time: TimesFM-2.5}
   - {name: TimesFM-3, family: TimesFM, params: 330710976, size_source: "https://huggingface.co/google/timesfm-3.0-pytorch (safetensors)", license: TimesFM Non-Commercial License v1.0, permissive: false, gift: TimesFM-3, fev: timesfm-3, time: TimesFM-3}
   - {name: Toto-2.0-4m, family: Toto-2.0, params: 4144448, size_source: "https://huggingface.co/Datadog/Toto-2.0-4m (safetensors)", license: Apache-2.0, permissive: true, gift: Toto-2.0-4m, fev: null, time: Toto-2.0-4m}
   - {name: Toto-2.0-22m, family: Toto-2.0, params: 21915584, size_source: "https://huggingface.co/Datadog/Toto-2.0-22m (safetensors)", license: Apache-2.0, permissive: true, gift: Toto-2.0-22m, fev: Toto-2.0-22m, time: Toto-2.0-22m}
-  - {name: Timestral-5M, family: Timestral, params: 5208960, size_source: "https://huggingface.co/mistralai/Timestral-5M (safetensors)", license: Modified MIT (revenue cap), permissive: false, gift: null, fev: Timestral-5M, time: Timestral-5M}
-  - {name: Timestral-28M, family: Timestral, params: 27821184, size_source: "https://huggingface.co/mistralai/Timestral-28M (safetensors)", license: Modified MIT (revenue cap), permissive: false, gift: null, fev: Timestral-28M, time: Timestral-28M}
-  - {name: Timestral-209M, family: Timestral, params: 209312256, size_source: "https://huggingface.co/mistralai/Timestral-209M (safetensors)", license: Modified MIT, permissive: false, gift: null, fev: Timestral-209M, time: Timestral-209M}
+  - {name: Timestral-5M, family: Timestral, params: 5208960, size_source: "https://huggingface.co/mistralai/Timestral-5M (safetensors)", license: Modified MIT (revenue cap), permissive: false, gift: Timestral-5M, fev: Timestral-5M, time: Timestral-5M}
+  - {name: Timestral-28M, family: Timestral, params: 27821184, size_source: "https://huggingface.co/mistralai/Timestral-28M (safetensors)", license: Modified MIT (revenue cap), permissive: false, gift: Timestral-28M, fev: Timestral-28M, time: Timestral-28M}
+  - {name: Timestral-209M, family: Timestral, params: 209312256, size_source: "https://huggingface.co/mistralai/Timestral-209M (safetensors)", license: Modified MIT, permissive: false, gift: Timestral-209M, fev: Timestral-209M, time: Timestral-209M}
   - {name: FlowState-r1.1, family: FlowState, params: 18500000, size_source: "https://huggingface.co/ibm-granite/granite-timeseries-flowstate-r1 (card: r1.1, 18.5M)", license: Apache-2.0, permissive: true, gift: Granite-FlowState-r1.1, fev: null, time: null}
   - {name: Moirai-2.0-small, family: Moirai, params: 11387208, size_source: "https://huggingface.co/Salesforce/moirai-2.0-R-small (safetensors)", license: CC-BY-NC-4.0, permissive: false, gift: Moirai2, fev: Moirai-2.0, time: Moirai2}
   - {name: t0-gamma, family: t0, params: 255614293, size_source: "https://huggingface.co/theforecastingcompany/t0-gamma (safetensors)", license: Apache-2.0, permissive: true, gift: null, fev: t0-gamma, time: t0_gamma}

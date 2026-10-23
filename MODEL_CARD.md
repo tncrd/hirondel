@@ -57,6 +57,7 @@ a permissive license, the others shown hollow.
 
 | Model | Parameters | License | GIFT-Eval MASE | GIFT-Eval CRPS | TIME MASE | TIME CRPS | fev-bench SQL skill |
 |---|---|---|---|---|---|---|---|
+| Toto-2.0-4m | 4.1M | Apache-2.0 |  |  | 0.6940 | 0.5850 | 40.04 |
 | Timestral-5M | 5.2M | Modified MIT (revenue cap) | 0.7102 | 0.4836 | 0.6571 | 0.5490 | 44.36 |
 | **Nom (ours)** | 7.5M | Apache-2.0 | 0.7003 | 0.4816 | 0.6551 | 0.5520 | 44.90 |
 | Moirai-2.0-small | 11.4M | CC-BY-NC-4.0 | 0.7281 | 0.5164 | 0.7030 | 0.5885 | 39.31 |
@@ -69,7 +70,7 @@ a permissive license, the others shown hollow.
 
 ![Accuracy against size, official leaderboards](showcase/figures/pareto.png)
 
-Official leaderboards, read on 2026-10-22 (some models use covariates or joint multivariate forecasting there).
+Official leaderboards, read on 2026-10-22, GIFT-Eval on 2026-10-23 (some models use covariates or joint multivariate forecasting there).
 Sources: `showcase/data/` in the code repository.
 
 ## Usage
