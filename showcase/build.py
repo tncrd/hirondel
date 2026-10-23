@@ -167,6 +167,50 @@ def same_protocol() -> list[dict]:
     return rows
 
 
+def univariate_rows(official: list[dict], computed: dict, natively_univariate: set, ours: str,
+                    meta: dict | None = None) -> list[dict]:
+    """The univariate setting (each series forecast alone, no covariates): our numbers; a competitor's forced-univariate
+    run computed by us when it exists; otherwise its official number only if the model is univariate by design."""
+    out = []
+    for r in official:
+        key = (r["model"], r["benchmark"], r["metric"])
+        if r["model"] == ours:
+            out.append(dict(r))
+        elif key in computed:
+            v, src = computed[key]
+            out.append({**r, "value": v, "source": src})
+        elif r["model"] in natively_univariate:
+            out.append({**r, "source": r["source"] + " (univariate by design)"})
+    covered = {(r["model"], r["benchmark"], r["metric"]) for r in official}
+    for (model, bench, metric), (v, src) in sorted(computed.items()):
+        if (model, bench, metric) not in covered and model in (meta or {}):
+            m = meta[model]
+            out.append({"model": model, "params": m["params"], "license": m["license"], "permissive": m["permissive"],
+                        "benchmark": bench, "metric": metric, "value": v, "source": src, "date": DATE})
+    return out
+
+
+def computed_univariate() -> dict:
+    """{(model, benchmark, metric): (value, source)} from benchmarks/results/{gift,fev,time}_competitors."""
+    out = {}
+    for bench, folder in (("GIFT-Eval", "gift_competitors"), ("fev-bench", "fev_competitors"), ("TIME", "time_competitors")):
+        root = os.path.join(RESULTS, folder)
+        if not os.path.isdir(root):
+            continue
+        for d in sorted(os.listdir(root)):
+            p = os.path.join(root, d, "headline.json")
+            if not os.path.exists(p):
+                continue
+            with open(p) as f:
+                h = json.load(f)
+            src = f"computed by us, forced univariate (benchmarks/results/{folder}/{d})"
+            metrics = ("MASE", "SQL") if bench == "fev-bench" else ("MASE", "CRPS")
+            for m in metrics:
+                if m in h and isinstance(h[m], (int, float)):
+                    out[(d, bench, m)] = (float(h[m]), src)
+    return out
+
+
 def write_csv(path: str, rows: list[dict]) -> None:
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", newline="") as f:
@@ -187,12 +231,16 @@ def main():
     a = ap.parse_args()
     rows = collect(a.gift_eval, a.fev_bench, a.time_output, a.time_naive)
     write_csv(os.path.join(HERE, "data", "official.csv"), rows)
+    lst = load_models()
+    meta = {m["name"]: m for m in lst["models"]}
+    uni = univariate_rows(rows, computed_univariate(), {"TiRex", "TimesFM-2.5"}, lst["ours"]["name"], meta)
+    write_csv(os.path.join(HERE, "data", "univariate.csv"), uni)
     write_csv(os.path.join(HERE, "data", "same_protocol.csv"), same_protocol())
     print(f"{len(rows)} official values -> showcase/data/official.csv")
     if a.data_only:
         return
     from showcase import render
-    render.all(rows, same_protocol(), ours_scores(), load_models(), a.model)
+    render.all(rows, same_protocol(), ours_scores(), load_models(), a.model, uni)
 
 
 if __name__ == "__main__":

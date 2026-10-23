@@ -61,3 +61,28 @@ def test_no_internal_names_in_generated_text():
         if os.path.exists(p):
             text = open(p).read()
             assert not re.search(r"v11|_s0\b|tsfm|docs/research|registre", text), path
+
+
+def test_univariate_rows_prefer_our_runs_and_keep_only_univariate_official():
+    official = [
+        {"model": "Nom", "params": 1, "license": "a", "permissive": True, "benchmark": "TIME", "metric": "MASE",
+         "value": 0.65, "source": "this repository", "date": "d"},
+        {"model": "X", "params": 2, "license": "a", "permissive": True, "benchmark": "TIME", "metric": "MASE",
+         "value": 0.60, "source": "official", "date": "d"},      # joint on the leaderboard, our run replaces it
+        {"model": "U", "params": 3, "license": "a", "permissive": True, "benchmark": "TIME", "metric": "MASE",
+         "value": 0.70, "source": "official", "date": "d"},      # univariate by design: official kept
+        {"model": "J", "params": 4, "license": "a", "permissive": True, "benchmark": "TIME", "metric": "MASE",
+         "value": 0.50, "source": "official", "date": "d"},      # joint, no run of ours: left out
+    ]
+    computed = {("X", "TIME", "MASE"): (0.66, "computed by us")}
+    rows = build.univariate_rows(official, computed, natively_univariate={"U"}, ours="Nom")
+    got = {(r["model"], r["value"]) for r in rows}
+    assert got == {("Nom", 0.65), ("X", 0.66), ("U", 0.70)}
+
+
+def test_univariate_rows_include_our_runs_without_an_official_entry():
+    meta = {"T": {"params": 5, "license": "b", "permissive": False}}
+    rows = build.univariate_rows([], {("T", "GIFT-Eval", "MASE"): (0.71, "computed by us")}, set(), ours="Nom",
+                                 meta=meta)
+    assert rows == [{"model": "T", "params": 5, "license": "b", "permissive": False, "benchmark": "GIFT-Eval",
+                     "metric": "MASE", "value": 0.71, "source": "computed by us", "date": build.DATE}]

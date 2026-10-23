@@ -41,10 +41,18 @@ A small foundation model for zero-shot probabilistic time-series forecasting: 7.
 
 <!-- gen:results -->
 
-![Accuracy against size](showcase/figures/pareto.png)
+![Accuracy against size, univariate setting](showcase/figures/univariate.png)
 
-Official leaderboard results of well-known models, read on 2026-10-22, against their size; Pareto fronts over models
-with a permissive license, the others shown hollow. Sources: `showcase/data/official.csv` in the code repository.
+Univariate setting: every model forecasts each series alone, without covariates (competitors run by us in forced
+univariate mode with their public packages; TiRex and TimesFM-2.5 univariate by design). Pareto fronts over models with
+a permissive license, the others shown hollow.
+
+<!-- gen:univariate -->
+
+![Accuracy against size, official leaderboards](showcase/figures/pareto.png)
+
+Official leaderboards, read on 2026-10-22 (some models use covariates or joint multivariate forecasting there).
+Sources: `showcase/data/` in the code repository.
 
 ## Usage
 

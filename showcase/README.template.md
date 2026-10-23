@@ -14,21 +14,27 @@ Headline numbers of this package (float32), computed with each benchmark's offic
 
 <!-- gen:results -->
 
-<p align="center"><img src="showcase/figures/pareto.png" alt="Accuracy against size on GIFT-Eval, TIME and fev-bench" width="100%"></p>
+### Univariate setting: every model forecasts each series alone
 
-Official leaderboard results of well-known models, read on 2026-10-22, against their size. The Pareto fronts are drawn
-over models with a permissive license; models under a non-commercial or restricted license are shown hollow. Every
-value, with its source, is in `showcase/data/official.csv`. Some of these models use covariates or forecast the
-variables of a series jointly on the leaderboards; this model forecasts each series alone.
+This model forecasts each series on its own, without covariates. Here every model is compared in that same setting:
+we ran Chronos-2, Toto-2.0, TiRex and Timestral in forced univariate mode with their public packages; TiRex and
+TimesFM-2.5 forecast each series alone by design (official results used where we did not run them). The list and the
+settings were written before any score (`benchmarks/competitors.yaml`).
 
-### Same protocol, computed by us
+<p align="center"><img src="showcase/figures/univariate.png" alt="Accuracy against size, univariate setting" width="100%"></p>
 
-The same comparison with every model in the same setting: each series forecast alone, no covariates, public packages,
-GIFT-Eval (97 tasks). Settings and the list (written before any score) are in `benchmarks/competitors.yaml`.
+<!-- gen:univariate -->
 
-<!-- gen:same_protocol -->
+Pareto fronts are drawn over models with a permissive license; models under a non-commercial or restricted license are
+shown hollow. Every value, with its source, is in `showcase/data/univariate.csv`.
 
-<p align="center"><img src="showcase/figures/same_protocol.png" alt="Same protocol on GIFT-Eval" width="85%"></p>
+### Official leaderboards
+
+The official leaderboards mix settings: some models use covariates (fev-bench) or forecast the variables of a series
+jointly. Official results of well-known models, read on 2026-10-22, against their size (sources:
+`showcase/data/official.csv`):
+
+<p align="center"><img src="showcase/figures/pareto.png" alt="Accuracy against size on the official leaderboards" width="100%"></p>
 
 ## Install
 

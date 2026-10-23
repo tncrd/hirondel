@@ -40,15 +40,26 @@ def _style(plt):
 
 # (dx, dy, horizontal alignment) in points, to keep labels apart; default (5, 4, "left")
 LABEL_OFFSETS = {"t0-gamma": (-6, -12, "right"), "TimesFM-3": (6, 4, "left"), "Toto-2.0-22m": (5, -12, "left"),
-                 "TiRex": (6, 6, "left"), "Timestral-5M": (-6, -12, "right"), "Timestral-209M": (6, -12, "left"),
+                 "TiRex": (6, 6, "left"), "Timestral-5M": (-6, 6, "right"), "Timestral-209M": (6, -12, "left"),
                  "Moirai-2.0-small": (6, 4, "left")}
 LABEL_OFFSETS_BY_BENCH = {"GIFT-Eval": {"Toto-2.0-22m": (5, 4, "left"), "TiRex": (6, -12, "left")},
                           "TIME": {"t0-gamma": (6, -12, "left"), "Timestral-209M": (-6, 5, "right"),
-                                   "Timestral-5M": (-4, -17, "right")},
-                          "fev-bench": {"t0-gamma": (6, -12, "left"), "Timestral-209M": (-6, 5, "right")}}
+                                   "Timestral-5M": (-6, 6, "right")},
+                          "fev-bench": {"t0-gamma": (6, -12, "left"), "Timestral-209M": (-6, 5, "right"),
+                                        "TiRex": (8, 2, "left"), "Toto-2.0-22m": (-6, -12, "right")}}
 
 
-def pareto_figure(rows, models, ours_name, path):
+OFFICIAL_TITLE = "Official leaderboards (some models use covariates or forecast the variables of a series jointly)"
+OFFICIAL_NOTE = ("Official leaderboard results, read on 2026-10-22 (fev-bench: 1 - skill score). Pareto fronts over models "
+                 "with a permissive license; the others are shown hollow. Sizes from the official model cards. "
+                 "Sources: showcase/data/official.csv.")
+UNIVARIATE_TITLE = "Univariate setting: every model forecasts each series alone, without covariates"
+UNIVARIATE_NOTE = ("Our runs of each model in forced univariate mode with its public package (benchmarks/competitors.yaml); "
+                   "TiRex and TimesFM-2.5, univariate by design, from their official results. Pareto fronts over models "
+                   "with a permissive license; the others hollow. Sources: showcase/data/univariate.csv.")
+
+
+def pareto_figure(rows, models, ours_name, path, title=OFFICIAL_TITLE, note=OFFICIAL_NOTE):
     """Accuracy against size, one panel per benchmark and metric. The Pareto fronts are drawn over the models with a
     permissive license (the claim of the head sentence); models under a non-commercial or restricted license stay on
     the figure as hollow markers."""
@@ -105,6 +116,7 @@ def pareto_figure(rows, models, ours_name, path):
             ax.scatter([x], [y], s=120, color=ACCENT, zorder=6, edgecolors="white", linewidths=1.4)
             ax.annotate(f"{name} (ours)", (x, y), xytext=(-9, -4), textcoords="offset points", fontsize=10.5,
                         fontweight="bold", color=ACCENT, ha="right", va="top", zorder=7)
+        ax.margins(y=0.09)
         ax.set_xscale("log")
         ax.set_xlim(1.2e6, x_max)
         ax.set_xticks([1e7, 3e7, 1e8, 3e8, 1e9])
@@ -124,11 +136,11 @@ def pareto_figure(rows, models, ours_name, path):
         Line2D([], [], color=ACCENT, lw=1.7, label="Front with ours"),
         Patch(color=ACCENT_FILL, label="Improvement"),
     ]
-    fig.legend(handles=handles, loc="upper center", ncol=8, frameon=False, fontsize=9, bbox_to_anchor=(0.5, 0.995))
-    fig.text(0.5, 0.006, "Official leaderboard results, read on 2026-10-22 (fev-bench: 1 - skill score). Pareto fronts "
-             "over models with a permissive license; the others are shown hollow. Sizes from the official model cards. "
-             "Sources: showcase/data/official.csv.", ha="center", fontsize=8.5, color=GREY)
-    fig.tight_layout(rect=(0, 0.02, 1, 0.955))
+    fig.suptitle(title, x=0.012, y=0.997, ha="left", fontsize=14, fontweight="bold", color=INK)
+    fig.legend(handles=handles, loc="upper center", ncol=8, frameon=False, fontsize=9, bbox_to_anchor=(0.5, 0.965))
+    import textwrap
+    fig.text(0.5, 0.004, "\n".join(textwrap.wrap(note, 190)), ha="center", fontsize=8.5, color=GREY, linespacing=1.4)
+    fig.tight_layout(rect=(0, 0.035, 1, 0.93))
     os.makedirs(os.path.dirname(path), exist_ok=True)
     fig.savefig(path, dpi=160, metadata={"Software": None})
     plt.close(fig)
@@ -207,6 +219,21 @@ def _f(v, n=4):
     return f"{v:.{n}f}"
 
 
+def univariate_table(uni, models, name):
+    """Univariate setting, all three benchmarks: one row per model, sorted by size."""
+    t, meta = _table(uni)
+    lic = {m["name"]: m["license"] for m in models["models"]}
+    lic[name] = models["ours"]["license"]
+    cols = [("GIFT-Eval", "MASE"), ("GIFT-Eval", "CRPS"), ("TIME", "MASE"), ("TIME", "CRPS"), ("fev-bench", "SQL")]
+    lines = ["| Model | Parameters | License | GIFT-Eval MASE | GIFT-Eval CRPS | TIME MASE | TIME CRPS | fev-bench SQL skill |",
+             "|---|---|---|---|---|---|---|---|"]
+    for m in sorted(t, key=lambda m: float(meta[m]["params"])):
+        cells = [(_f(t[m][c], 2) if c[0] == "fev-bench" else _f(t[m][c])) if c in t[m] else "" for c in cols]
+        label = f"**{m} (ours)**" if m == name else m
+        lines.append(f"| {label} | {float(meta[m]['params']) / 1e6:.1f}M | {lic.get(m, '')} | " + " | ".join(cells) + " |")
+    return "\n".join(lines)
+
+
 def readme_values(rows, sp, ours, models, sentence):
     t, meta = _table(rows)
     name = models["ours"]["name"]
@@ -237,10 +264,12 @@ def readme_values(rows, sp, ours, models, sentence):
     return {"sentence": sentence, "results": results, "same_protocol": "\n".join(lines)}
 
 
-def all(rows, sp, ours, models, model_path):
+def all(rows, sp, ours, models, model_path, uni=None):
     name = models["ours"]["name"]
     os.makedirs(FIG, exist_ok=True)
     pareto_figure(rows, models, name, os.path.join(FIG, "pareto.png"))
+    if uni:
+        pareto_figure(uni, models, name, os.path.join(FIG, "univariate.png"), UNIVARIATE_TITLE, UNIVARIATE_NOTE)
     sizes = {m["name"]: m["params"] for m in models["models"]}
     sizes[name] = models["ours"]["params"]
     sp_all = sp + [{"model": name, "MASE": ours["GIFT-Eval"]["MASE"], "CRPS": ours["GIFT-Eval"]["CRPS"]}]
@@ -253,6 +282,7 @@ def all(rows, sp, ours, models, model_path):
     with open(os.path.join(HERE, "sentence.txt")) as f:
         sentence = f.read().strip()
     values = readme_values(rows, sp_all, ours, models, sentence)
+    values["univariate"] = univariate_table(uni or [], models, name)
     for template, out in (("README.template.md", "README.md"), ("MODEL_CARD.template.md", "MODEL_CARD.md")):
         with open(os.path.join(HERE, template)) as f:
             text = fill(f.read(), {**values, **card_values(ours)})

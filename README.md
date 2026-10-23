@@ -22,28 +22,35 @@ Headline numbers of this package (float32), computed with each benchmark's offic
 
 On the fev-bench leaderboard this ranks 7 of 33 (SQL) and 6 of 33 (MASE) among the models the site shows by default (2026-10-22).
 
-<p align="center"><img src="showcase/figures/pareto.png" alt="Accuracy against size on GIFT-Eval, TIME and fev-bench" width="100%"></p>
+### Univariate setting: every model forecasts each series alone
 
-Official leaderboard results of well-known models, read on 2026-10-22, against their size. The Pareto fronts are drawn
-over models with a permissive license; models under a non-commercial or restricted license are shown hollow. Every
-value, with its source, is in `showcase/data/official.csv`. Some of these models use covariates or forecast the
-variables of a series jointly on the leaderboards; this model forecasts each series alone.
+This model forecasts each series on its own, without covariates. Here every model is compared in that same setting:
+we ran Chronos-2, Toto-2.0, TiRex and Timestral in forced univariate mode with their public packages; TiRex and
+TimesFM-2.5 forecast each series alone by design (official results used where we did not run them). The list and the
+settings were written before any score (`benchmarks/competitors.yaml`).
 
-### Same protocol, computed by us
+<p align="center"><img src="showcase/figures/univariate.png" alt="Accuracy against size, univariate setting" width="100%"></p>
 
-The same comparison with every model in the same setting: each series forecast alone, no covariates, public packages,
-GIFT-Eval (97 tasks). Settings and the list (written before any score) are in `benchmarks/competitors.yaml`.
+| Model | Parameters | License | GIFT-Eval MASE | GIFT-Eval CRPS | TIME MASE | TIME CRPS | fev-bench SQL skill |
+|---|---|---|---|---|---|---|---|
+| Timestral-5M | 5.2M | Modified MIT (revenue cap) | 0.7102 | 0.4836 | 0.6571 | 0.5490 | 44.36 |
+| **Nom (ours)** | 7.5M | Apache-2.0 | 0.7011 | 0.4825 | 0.6555 | 0.5527 | 44.80 |
+| Toto-2.0-22m | 21.9M | Apache-2.0 | 0.7226 | 0.5009 | 0.6751 | 0.5654 | 42.37 |
+| Timestral-28M | 27.8M | Modified MIT (revenue cap) | 0.6817 | 0.4641 |  |  | 45.86 |
+| TiRex | 35.0M | NX-AI Community License | 0.7213 | 0.4921 | 0.6831 | 0.5731 | 42.58 |
+| Chronos-2 | 119.5M | Apache-2.0 | 0.7037 | 0.4911 | 0.6659 | 0.5584 | 43.97 |
+| TimesFM-2.5 | 231.3M | Apache-2.0 | 0.7050 | 0.4903 | 0.6686 | 0.5674 | 42.20 |
 
-| Model | Parameters | License | GIFT-Eval MASE | GIFT-Eval CRPS |
-|---|---|---|---|---|
-| Timestral-28M | 27.8M | Modified MIT (revenue cap) | 0.6817 | 0.4641 |
-| **Nom (ours)** | 7.5M | Apache-2.0 | 0.7011 | 0.4825 |
-| Chronos-2 | 119.5M | Apache-2.0 | 0.7037 | 0.4911 |
-| Timestral-5M | 5.2M | Modified MIT (revenue cap) | 0.7102 | 0.4836 |
-| TiRex | 35.0M | NX-AI Community License | 0.7213 | 0.4921 |
-| Toto-2.0-22m | 21.9M | Apache-2.0 | 0.7226 | 0.5009 |
+Pareto fronts are drawn over models with a permissive license; models under a non-commercial or restricted license are
+shown hollow. Every value, with its source, is in `showcase/data/univariate.csv`.
 
-<p align="center"><img src="showcase/figures/same_protocol.png" alt="Same protocol on GIFT-Eval" width="85%"></p>
+### Official leaderboards
+
+The official leaderboards mix settings: some models use covariates (fev-bench) or forecast the variables of a series
+jointly. Official results of well-known models, read on 2026-10-22, against their size (sources:
+`showcase/data/official.csv`):
+
+<p align="center"><img src="showcase/figures/pareto.png" alt="Accuracy against size on the official leaderboards" width="100%"></p>
 
 ## Install
 

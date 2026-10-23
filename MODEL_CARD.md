@@ -49,10 +49,26 @@ A small foundation model for zero-shot probabilistic time-series forecasting: 7.
 
 On the fev-bench leaderboard this ranks 7 of 33 (SQL) and 6 of 33 (MASE) among the models the site shows by default (2026-10-22).
 
-![Accuracy against size](showcase/figures/pareto.png)
+![Accuracy against size, univariate setting](showcase/figures/univariate.png)
 
-Official leaderboard results of well-known models, read on 2026-10-22, against their size; Pareto fronts over models
-with a permissive license, the others shown hollow. Sources: `showcase/data/official.csv` in the code repository.
+Univariate setting: every model forecasts each series alone, without covariates (competitors run by us in forced
+univariate mode with their public packages; TiRex and TimesFM-2.5 univariate by design). Pareto fronts over models with
+a permissive license, the others shown hollow.
+
+| Model | Parameters | License | GIFT-Eval MASE | GIFT-Eval CRPS | TIME MASE | TIME CRPS | fev-bench SQL skill |
+|---|---|---|---|---|---|---|---|
+| Timestral-5M | 5.2M | Modified MIT (revenue cap) | 0.7102 | 0.4836 | 0.6571 | 0.5490 | 44.36 |
+| **Nom (ours)** | 7.5M | Apache-2.0 | 0.7011 | 0.4825 | 0.6555 | 0.5527 | 44.80 |
+| Toto-2.0-22m | 21.9M | Apache-2.0 | 0.7226 | 0.5009 | 0.6751 | 0.5654 | 42.37 |
+| Timestral-28M | 27.8M | Modified MIT (revenue cap) | 0.6817 | 0.4641 |  |  | 45.86 |
+| TiRex | 35.0M | NX-AI Community License | 0.7213 | 0.4921 | 0.6831 | 0.5731 | 42.58 |
+| Chronos-2 | 119.5M | Apache-2.0 | 0.7037 | 0.4911 | 0.6659 | 0.5584 | 43.97 |
+| TimesFM-2.5 | 231.3M | Apache-2.0 | 0.7050 | 0.4903 | 0.6686 | 0.5674 | 42.20 |
+
+![Accuracy against size, official leaderboards](showcase/figures/pareto.png)
+
+Official leaderboards, read on 2026-10-22 (some models use covariates or joint multivariate forecasting there).
+Sources: `showcase/data/` in the code repository.
 
 ## Usage
 
