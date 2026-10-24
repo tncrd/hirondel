@@ -1,0 +1,137 @@
+{
+ "source": "pronto",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Chronos-2": [
+   1.0205212978684475,
+   0.9556646983346199
+  ]
+ },
+ "tasks": {
+  "pronto_D2E1_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Chronos-2": [
+    1.0655472227722995,
+    1.2465317714593038
+   ]
+  },
+  "pronto_D2E1_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Chronos-2": [
+    1.0425427607988353,
+    1.0941829174485045
+   ]
+  },
+  "pronto_D2E2_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Chronos-2": [
+    0.7649222793505797,
+    0.7135742811962688
+   ]
+  },
+  "pronto_D2E2_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Chronos-2": [
+    0.9388332350971099,
+    0.8870428518805507
+   ]
+  },
+  "pronto_D3E1_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Chronos-2": [
+    0.9845179771411939,
+    1.0883385030512387
+   ]
+  },
+  "pronto_D3E1_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Chronos-2": [
+    0.9906785139397318,
+    1.0147402849159348
+   ]
+  },
+  "pronto_D3E2_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Chronos-2": [
+    1.58931876471236,
+    1.2990789528080167
+   ]
+  },
+  "pronto_D3E2_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Chronos-2": [
+    1.7619676790703742,
+    1.3189120536801582
+   ]
+  },
+  "pronto_D4E1_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Chronos-2": [
+    0.9118880983503478,
+    0.9079696365213826
+   ]
+  },
+  "pronto_D4E1_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Chronos-2": [
+    0.9412353511513122,
+    0.9174515176145314
+   ]
+  },
+  "pronto_D4E2_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Chronos-2": [
+    0.8159139431239868,
+    0.5929502637852341
+   ]
+  },
+  "pronto_D4E2_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Chronos-2": [
+    0.8362633275532697,
+    0.7191946661033439
+   ]
+  }
+ },
+ "n_pairs": 144,
+ "n_left_out_of_mase": 0
+}

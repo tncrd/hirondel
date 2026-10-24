@@ -303,7 +303,7 @@ def all(rows, sp, ours, models, model_path, uni=None):
         sentence = f.read().strip()
     values = readme_values(rows, sp_all, ours, models, sentence)
     values["univariate"] = univariate_table(uni or [], models, name)
-    values["indeval"] = indeval_section(name, models["ours"]["params"])
+    values.update(indeval_section(name, models["ours"]["params"]))
     for template, out in (("README.template.md", "README.md"), ("MODEL_CARD.template.md", "MODEL_CARD.md")):
         with open(os.path.join(HERE, template)) as f:
             text = fill(f.read(), {**values, **card_values(ours)})
@@ -339,10 +339,11 @@ def indeval_rows(pub, ours, name, computed=()):
     for c in computed:
         rows.append({"model": c["name"], "label": c.get("label"), "params": c["params"], "permissive": c["permissive"],
                      "ours": False, "covariates": c["covariates"], "offset": c.get("offset"),
+                     "offsets": c.get("offsets"),
                      "per_source": {s: tuple(c["per_source"][s]) for s in src9}})
     for m in pub["models"]:
         rows.append({"model": m["name"], "params": m["params"], "permissive": m["permissive"], "ours": False,
-                     "covariates": m.get("covariates", False),
+                     "covariates": m.get("covariates", False), "offset": m.get("offset"), "offsets": m.get("offsets"),
                      "per_source": {s: (m["nmase"][s], m["ncrps"][s]) for s in src9}})
     for r in rows:
         for key, ss in (("mean", src), ("mean9", src9)):
@@ -366,8 +367,8 @@ def indeval_table(rows, pub):
     lines = ["| " + " | ".join(head) + " |", "|" + "---|" * len(head)]
 
     def cells(get):
-        best = [min(get(r)[k] for r in rows) for k in (0, 1)]
-        return [" / ".join((f"**{get(r)[k]:.3f}**" if abs(get(r)[k] - best[k]) < 1e-12 else f"{get(r)[k]:.3f}")
+        best = [min(round(get(r)[k], 3) for r in rows) for k in (0, 1)]     # on the shown values: ties all bold
+        return [" / ".join((f"**{get(r)[k]:.3f}**" if round(get(r)[k], 3) == best[k] else f"{get(r)[k]:.3f}")
                            for k in (0, 1)) for r in rows]
     for s in pub["sources"]:
         lines.append(f"| {pub['source_names'][s]} | " + " | ".join(cells(lambda r: r["per_source"][s])) + " |")
@@ -379,73 +380,148 @@ def indeval_table(rows, pub):
     return "\n".join(lines)
 
 
-INDEVAL_NOTE = ("IND-Eval, five industrial sources (NEATS, 3W, PRONTO, Mesa del Sol, tablet compression); geometric mean of "
-                "the sources. {name} and Timestral-5M: our runs, same harness. Chronos-2, TiRex-2, TimesFM-3: numbers "
-                "published in the IND-Eval paper (arXiv 2610.16652), joint forecasting with PRONTO's covariates.")
+def indeval_univariate_rows(pub, ours, name, runs):
+    """Ours and every model we ran in forced univariate mode (`runs`: entries of `pub["univariate"]` with their
+    `per_source`), smallest first, with the same geometric means as `indeval_rows`."""
+    src, src9 = pub["sources"], pub["sources"] + pub["shared_sources"]
+    rows = [{"model": name, "params": ours["params"], "license": "Apache-2.0", "permissive": True, "ours": True,
+             "covariates": False, "per_source": {s: tuple(ours["per_source"][s]) for s in src9}}]
+    for u in runs:
+        rows.append({"model": u["name"], "label": u.get("label"), "params": u["params"], "license": u["license"],
+                     "permissive": u["permissive"], "ours": False, "covariates": False, "offset": u.get("offset"),
+                     "offsets": u.get("offsets"),
+                     "per_source": {s: tuple(u["per_source"][s]) for s in src9}})
+    for r in rows:
+        for key, ss in (("mean", src), ("mean9", src9)):
+            r[key] = (_gmean([r["per_source"][s][0] for s in ss]), _gmean([r["per_source"][s][1] for s in ss]))
+    return sorted(rows, key=lambda r: r["params"])
+
+
+def indeval_univariate_table(rows, pub):
+    """One line per model: size, license, nMASE / nCRPS over the five industrial sources (the headline) and over the
+    nine of the paper; the best value of each metric in bold."""
+    lines = ["| Model | Parameters | License | 5 industrial sources | 9 sources (the paper's aggregate) |",
+             "|---|---|---|---|---|"]
+    best = {key: [min(round(r[key][k], 3) for r in rows) for k in (0, 1)] for key in ("mean", "mean9")}
+
+    def cell(r, key):
+        return " / ".join(f"**{r[key][k]:.3f}**" if round(r[key][k], 3) == best[key][k] else f"{r[key][k]:.3f}"
+                          for k in (0, 1))
+    for r in rows:
+        model = f"**{r['model']} (ours)**" if r["ours"] else r["model"]
+        lines.append(f"| {model} | {_size(r['params'])} | {r['license']} | {cell(r, 'mean')} | {cell(r, 'mean9')} |")
+    return "\n".join(lines)
+
+
+INDEVAL_NOTE = ("Top: IND-Eval, five industrial sources (NEATS, 3W, PRONTO, Mesa del Sol, tablet compression); bottom: the nine "
+                "sources of the paper's aggregate (adds MetroPT-3, ETT, Electricity, Solar). Geometric means of the sources. "
+                "Circles: each channel alone, no covariates; our runs, same harness and data (TiRex is TiRex 1; TimesFM-2.5 "
+                "stands where the paper has TimesFM-3). Crosses: joint forecasting with PRONTO's covariates; Timestral-5M our "
+                "run, Chronos-2, TiRex-2 and TimesFM-3 the numbers published in the IND-Eval paper (arXiv 2610.16652). "
+                "Dashed: the same model in both settings.")
+
+
+def indeval_figure_rows(rows, uni):
+    """The points of the figure: the first table's rows, then the univariate runs not already among them."""
+    seen = {(r["model"], r["covariates"]) for r in rows}
+    return rows + [r for r in uni if (r["model"], r["covariates"]) not in seen]
+
+
+def indeval_links(rows):
+    """Models shown in both settings (each channel alone, and joint with covariates): their names."""
+    settings = {}
+    for r in rows:
+        settings.setdefault(r["model"].split(" (")[0], set()).add(r["covariates"])
+    return [m for m, s in settings.items() if s == {False, True}]
+
+
+INDEVAL_PANELS = (("mean", "5 industrial sources"), ("mean9", "9 sources"))
 
 
 def indeval_figure(rows, path):
+    """nMASE and nCRPS against size; top row the five industrial sources, bottom row the nine of the paper.
+    Circle: forecasts each channel alone; cross: joint with covariates; hollow: restricted license; dashed: the same
+    model in both settings. A row's label position per panel comes from `offsets` ({"nMASE": [dx, dy], "nCRPS 9":
+    [dx, dy, "right"]}, in points; a third item aligns the label's right end on the point)."""
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     import textwrap
+    from matplotlib.lines import Line2D
     _style(plt)
-    fig, axes = plt.subplots(1, 2, figsize=(11, 4.2))
-    for ax, k, metric in zip(axes, (0, 1), ("nMASE", "nCRPS")):
-        for r in rows:
-            x, y = r["params"], r["mean"][k]
-            marker = "X" if r["covariates"] else "o"             # cross: reads covariates; circle: univariate
-            if r["ours"]:
-                ax.scatter([x], [y], s=120, marker=marker, color=ACCENT, zorder=4, edgecolors="white", linewidths=1.4)
-            elif r["permissive"]:
-                ax.scatter([x], [y], s=60, marker=marker, color=DARK, zorder=4, edgecolors="none")
-            else:
-                ax.scatter([x], [y], s=60, marker=marker, facecolors=BG, edgecolors=DARK, linewidths=1.1, zorder=4)
-            ax.annotate(f"{r['model']} (ours)" if r["ours"] else r.get("label") or r["model"], (x, y),
-                        xytext=(9, -4) if r["ours"] else tuple(r.get("offset") or (6, 4)), textcoords="offset points",
-                        va="top" if r["ours"] else "baseline",
-                        fontsize=10 if r["ours"] else 8, fontweight="bold" if r["ours"] else "normal",
-                        color=ACCENT if r["ours"] else INK)
-        ax.margins(y=0.25)
-        ax.set_xscale("log")
-        ax.set_xlim(3e6, 6e8)
-        ax.set_xticks([1e7, 3e7, 1e8, 3e8])
-        ax.set_xticklabels(["10M", "30M", "100M", "300M"])
-        ax.set_title(f"IND-Eval · {metric}", loc="left", fontsize=12, fontweight="bold", color=INK)
-        if k == 1:                                        # nCRPS panel: its upper left corner is empty
-            from matplotlib.lines import Line2D
-            ax.legend(handles=[Line2D([], [], ls="", marker="o", color=DARK, label="univariate, no covariates"),
-                               Line2D([], [], ls="", marker="X", color=DARK, markersize=8,
-                                      label="joint, with covariates (PRONTO)"),
-                               Line2D([], [], ls="", marker="o", markerfacecolor=BG, markeredgecolor=DARK,
-                                      label="hollow: non-commercial or restricted license")],
-                      loc="upper left", fontsize=8, frameon=False)
-        ax.text(1.0, 1.02, "lower is better", transform=ax.transAxes, ha="right", fontsize=8.5, color=GREY)
-        ax.set_xlabel("Parameters (log scale)")
-    note = INDEVAL_NOTE.format(name=next(r["model"] for r in rows if r["ours"]))
-    lines = textwrap.wrap(note, 150)
+    fig, axes = plt.subplots(2, 2, figsize=(11, 8.4))
+    for i, (key, scope) in enumerate(INDEVAL_PANELS):
+        for k, metric in enumerate(("nMASE", "nCRPS")):
+            ax = axes[i][k]
+            panel = metric if i == 0 else f"{metric} 9"
+            for m in indeval_links(rows):                     # the same model in both settings
+                pts = sorted((r["params"], r[key][k], r["covariates"]) for r in rows if r["model"].split(" (")[0] == m)
+                ax.plot([p[0] for p in pts], [p[1] for p in pts], ls=(0, (3, 3)), lw=1.0, color=GREY, zorder=2)
+            for r in rows:
+                x, y = r["params"], r[key][k]
+                marker = "X" if r["covariates"] else "o"         # cross: reads covariates; circle: univariate
+                if r["ours"]:
+                    ax.scatter([x], [y], s=120, marker=marker, color=ACCENT, zorder=4, edgecolors="white",
+                               linewidths=1.4)
+                elif r["permissive"]:
+                    ax.scatter([x], [y], s=60, marker=marker, color=DARK, zorder=4, edgecolors="none")
+                else:
+                    ax.scatter([x], [y], s=60, marker=marker, facecolors=BG, edgecolors=DARK, linewidths=1.1, zorder=4)
+                offset = (r.get("offsets") or {}).get(panel) or r.get("offset") or (6, 4)
+                ha = "center" if r["ours"] else (offset[2] if len(offset) > 2 else "left")
+                ax.annotate(f"{r['model']} (ours)" if r["ours"] else r.get("label") or r["model"], (x, y),
+                            xytext=(0, -11) if r["ours"] else tuple(offset[:2]), textcoords="offset points",
+                            va="top" if r["ours"] else "baseline", ha=ha,
+                            fontsize=10 if r["ours"] else 8, fontweight="bold" if r["ours"] else "normal",
+                            color=ACCENT if r["ours"] else INK)
+            ax.margins(y=0.25)
+            ax.set_xscale("log")
+            ax.set_xlim(3e6, 6e8)
+            ax.set_xticks([1e7, 3e7, 1e8, 3e8])
+            ax.set_xticklabels(["10M", "30M", "100M", "300M"])
+            ax.set_title(f"IND-Eval · {metric} · {scope}", loc="left", fontsize=12, fontweight="bold", color=INK)
+            ax.text(1.0, 1.02, "lower is better", transform=ax.transAxes, ha="right", fontsize=8.5, color=GREY)
+            if i == 1:
+                ax.set_xlabel("Parameters (log scale)")
+            if i == 0 and k == 1:                           # top nCRPS panel: its lower middle is empty
+                ax.legend(handles=[Line2D([], [], ls="", marker="o", color=DARK, label="univariate, no covariates"),
+                                   Line2D([], [], ls="", marker="X", color=DARK, markersize=8,
+                                          label="joint, with covariates (PRONTO)"),
+                                   Line2D([], [], ls="", marker="o", markerfacecolor=BG, markeredgecolor=DARK,
+                                          label="hollow: non-commercial or restricted license")],
+                          loc="lower center", fontsize=8, frameon=False)
+    lines = textwrap.wrap(INDEVAL_NOTE, 150)
     fig.text(0.5, 0.01, "\n".join(lines), ha="center", fontsize=8.5, color=GREY, linespacing=1.4)
-    fig.tight_layout(rect=(0, 0.03 + 0.035 * len(lines), 1, 1))
+    fig.tight_layout(rect=(0, 0.015 + 0.02 * len(lines), 1, 1))
     fig.savefig(path, dpi=160, metadata={"Software": None})
     plt.close(fig)
 
 
 def indeval_section(name, params, results=os.path.join(ROOT, "benchmarks", "results", "indeval", "headline.json")):
-    """Figure + table from our results and the published numbers; empty when IND-Eval was not run."""
+    """Figure and tables from our results and the published numbers; empty when IND-Eval was not run.
+    `indeval`: our runs next to the paper's published numbers; `indeval_univariate`: every model in forced univariate
+    mode (one line per model), and the same per source in a folded table."""
     if not os.path.exists(results):
-        return ""
+        return {"indeval": "", "indeval_univariate": ""}
     import json
     with open(results) as f:
         hd = json.load(f)
     pub = load_indeval()
-    computed = []
-    for c in pub.get("computed", []):
-        path = os.path.join(ROOT, "benchmarks", "results", "indeval_competitors", c["name"], "headline.json")
-        if os.path.exists(path):
-            with open(path) as f:
-                computed.append({**c, "per_source": {s: v[c["name"]] for s, v in json.load(f)["per_source"].items()}})
     src9 = pub["sources"] + pub["shared_sources"]
-    rows = indeval_rows(pub, {"params": params, "per_source": {s: hd["per_source"][s][name] for s in src9}}, name,
-                        computed)
-    indeval_figure(rows, os.path.join(FIG, "indeval.png"))
-    return indeval_table(rows, pub)
+
+    def ours_runs(entries):
+        out = []
+        for c in entries:
+            path = os.path.join(ROOT, "benchmarks", "results", "indeval_competitors", c["name"], "headline.json")
+            if os.path.exists(path):
+                with open(path) as f:
+                    out.append({**c, "per_source": {s: v[c["name"]] for s, v in json.load(f)["per_source"].items()}})
+        return out
+    ours = {"params": params, "per_source": {s: hd["per_source"][s][name] for s in src9}}
+    rows = indeval_rows(pub, ours, name, ours_runs(pub.get("computed", [])))
+    uni = indeval_univariate_rows(pub, ours, name, ours_runs(pub.get("univariate", [])))
+    indeval_figure(indeval_figure_rows(rows, uni), os.path.join(FIG, "indeval.png"))
+    detail = ("<details><summary>Per source, every model in the univariate setting</summary>\n\n"
+              + indeval_table(uni, pub) + "\n\n</details>")
+    return {"indeval": indeval_table(rows, pub),
+            "indeval_univariate": indeval_univariate_table(uni, pub) + "\n\n" + detail if len(uni) > 1 else ""}

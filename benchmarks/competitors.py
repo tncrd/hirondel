@@ -208,6 +208,13 @@ def toto2(m: dict, device: str):
     return fn
 
 
+def indeval_meta(meta: dict, head: dict) -> dict:
+    """A run's summary: the model's metadata, then the harness's headline, whose `revision` (the IND-Eval data) is kept
+    as `data_revision` so that it does not overwrite the model's revision."""
+    head = dict(head)
+    return {**meta, **head, "revision": meta["revision"], "data_revision": head.pop("revision", None)}
+
+
 VARIANTS = {("TiRex", "resample"): "TiRex (resampling)",
             ("Timestral-5M", "joint"): "Timestral-5M (joint, covariates)"}
 
@@ -276,7 +283,7 @@ def main():
         model = fn if hasattr(fn, "task") else (lambda C, H, Y: list(fn(C, H)))
         indeval.run(a.data, indeval.SOURCES + indeval.SHARED, {line: model}, out, log=lambda *x: print(*x, flush=True))
         with open(os.path.join(out, "headline.json")) as f:
-            meta.update(json.load(f))
+            meta = indeval_meta(meta, json.load(f))
         print(f"\n{line} IND-Eval: 5 industrial sources {meta['nMASE_nCRPS_industrial'][line]}, "
               f"9 sources {meta['nMASE_nCRPS'][line]}")
     else:

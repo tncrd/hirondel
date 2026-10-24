@@ -67,6 +67,8 @@ Who computed what:
   --variant joint`).
 - **Chronos-2, TiRex-2, TimesFM-3**: the numbers **published in the IND-Eval paper**, where they forecast the channels
   of a window jointly and read PRONTO's control signals as covariates.
+- **Every model of our competitor list** (Timestral-5M and 28M, Chronos-2, TiRex, TimesFM-2.5, Toto-2.0-22m and 4m):
+  our runs with the same harness, each channel alone as Hirondel, in the second table below.
 
 <p align="center"><img src="showcase/figures/indeval.png" alt="IND-Eval, accuracy against size" width="100%"></p>
 
@@ -74,7 +76,7 @@ nMASE / nCRPS (normalised by Seasonal Naive; lower is better), best of each metr
 
 | Source | Hirondel (7.5M, ours) | Timestral-5M (5.2M) | Timestral-5M, joint + covariates (5.2M) | Chronos-2 (119M) | TiRex-2 (83M) | TimesFM-3 (331M) |
 |---|---|---|---|---|---|---|
-| NEATS (offshore drilling) | 0.937 / 0.496 | 0.903 / 0.484 | 0.900 / **0.484** | 0.915 / 0.516 | **0.899** / 0.551 | 0.924 / 0.494 |
+| NEATS (offshore drilling) | 0.937 / 0.496 | 0.903 / **0.484** | 0.900 / **0.484** | 0.915 / 0.516 | **0.899** / 0.551 | 0.924 / 0.494 |
 | 3W (oil wells) | **0.754** / **0.653** | 0.768 / 0.685 | 0.762 / 0.681 | 0.847 / 0.749 | 0.837 / 0.786 | 0.756 / 0.690 |
 | PRONTO (multiphase flow) | 0.956 / 0.853 | 0.968 / 0.888 | 0.696 / 0.591 | 0.754 / 0.569 | 0.957 / 0.719 | **0.617** / **0.473** |
 | Mesa del Sol (solar and battery microgrid) | **0.838** / 0.493 | 0.853 / 0.491 | 0.846 / 0.492 | 0.864 / 0.948 | 0.901 / 0.542 | 0.841 / **0.481** |
@@ -93,7 +95,50 @@ anticipate the changes they cause. On the four other industrial sources, the geo
 0.840 / 0.587, TiRex-2 0.840 / 0.524. On each of these four sources Hirondel is within 5 % of the best model or ahead of
 it, with 11 to 44 times fewer parameters than Chronos-2, TiRex-2 and TimesFM-3.
 
-Hirondel's and Timestral-5M's numbers are our runs of `benchmarks/indeval.py` on the published data
+#### Every model in the univariate setting
+
+The table above compares settings that differ: in the paper, Chronos-2, TiRex-2 and TimesFM-3 forecast the channels of
+a window jointly and read PRONTO's covariates. Below, every model of our competitor list (`benchmarks/competitors.yaml`,
+fixed before any score) forecasts each channel alone, with the same harness and the same data as Hirondel
+(`benchmarks/competitors.py indeval`). In this setting, on the five industrial sources, Hirondel is ahead of Chronos-2,
+TimesFM-2.5 and TiRex, level with Timestral-5M and Toto-2.0-22m, and behind Timestral-28M. Chronos-2, the one model in
+both tables, goes from 0.822 / 0.583 forecasting jointly with covariates (the paper) to 0.895 / 0.580 alone (our run).
+
+Two of these models are not the paper's versions: TiRex here is TiRex 1 (`NX-AI/TiRex`, 35M; the paper has TiRex-2), and
+TimesFM-2.5 stands where the paper has TimesFM-3. They are the versions of our list, fixed before any score.
+
+nMASE / nCRPS, geometric means (lower is better), best of each metric in bold:
+
+| Model | Parameters | License | 5 industrial sources | 9 sources (the paper's aggregate) |
+|---|---|---|---|---|
+| Toto-2.0-4m | 4.1M | Apache-2.0 | 0.863 / 0.567 | 0.801 / 0.555 |
+| Timestral-5M | 5.2M | Modified MIT (revenue cap) | 0.840 / 0.542 | 0.762 / 0.520 |
+| **Hirondel (ours)** | 7.5M | Apache-2.0 | 0.839 / 0.536 | 0.766 / 0.519 |
+| Toto-2.0-22m | 22M | Apache-2.0 | 0.833 / 0.536 | 0.764 / 0.523 |
+| Timestral-28M | 28M | Modified MIT (revenue cap) | **0.817** / **0.523** | **0.735** / **0.498** |
+| TiRex | 35M | NX-AI Community License | 0.925 / 0.593 | 0.825 / 0.559 |
+| Chronos-2 | 119M | Apache-2.0 | 0.895 / 0.580 | 0.795 / 0.541 |
+| TimesFM-2.5 | 231M | Apache-2.0 | 0.883 / 0.579 | 0.800 / 0.553 |
+
+<details><summary>Per source, every model in the univariate setting</summary>
+
+| Source | Toto-2.0-4m (4.1M) | Timestral-5M (5.2M) | Hirondel (7.5M, ours) | Toto-2.0-22m (22M) | Timestral-28M (28M) | TiRex (35M) | Chronos-2, univariate (119M) | TimesFM-2.5 (231M) |
+|---|---|---|---|---|---|---|---|---|
+| NEATS (offshore drilling) | 0.904 / 0.502 | 0.903 / 0.484 | 0.937 / 0.496 | 0.905 / 0.494 | **0.897** / **0.481** | 0.982 / 0.536 | 0.929 / 0.516 | 0.939 / 0.528 |
+| 3W (oil wells) | 0.814 / 0.733 | 0.768 / 0.685 | **0.754** / 0.653 | 0.783 / 0.688 | **0.754** / **0.640** | 0.855 / 0.747 | 0.961 / 0.818 | 0.887 / 0.813 |
+| PRONTO (multiphase flow) | 1.018 / 0.960 | 0.968 / 0.888 | 0.956 / 0.853 | **0.902** / **0.819** | 0.907 / 0.838 | 1.071 / 0.958 | 1.021 / 0.956 | 0.942 / 0.897 |
+| Mesa del Sol (solar and battery microgrid) | 0.864 / 0.509 | 0.853 / 0.491 | 0.838 / 0.493 | 0.860 / 0.493 | **0.824** / **0.475** | 1.006 / 0.580 | 0.844 / 0.495 | 0.911 / 0.513 |
+| Tablet compression (pharmaceutical) | 0.737 / 0.326 | 0.730 / 0.323 | 0.737 / 0.325 | 0.728 / 0.323 | **0.719** / **0.318** | 0.748 / 0.328 | 0.747 / 0.329 | 0.750 / 0.330 |
+| **Geometric mean, 5 industrial sources** | 0.863 / 0.567 | 0.840 / 0.542 | 0.839 / 0.536 | 0.833 / 0.536 | **0.817** / **0.523** | 0.925 / 0.593 | 0.895 / 0.580 | 0.883 / 0.579 |
+| MetroPT-3 (metro compressor; in TIME) | 0.441 / 0.351 | 0.388 / 0.311 | 0.414 / 0.327 | 0.388 / 0.318 | **0.349** / **0.279** | 0.508 / 0.395 | 0.428 / 0.341 | 0.437 / 0.356 |
+| ETT (electricity transformers; in GIFT-Eval) | 0.878 / 0.688 | 0.846 / 0.660 | 0.847 / 0.666 | 0.855 / 0.674 | **0.833** / **0.657** | 0.867 / 0.684 | 0.850 / 0.667 | 0.862 / 0.678 |
+| Electricity (370 meters; in GIFT-Eval) | 0.797 / 0.657 | 0.722 / 0.582 | 0.715 / 0.576 | 0.756 / 0.619 | 0.703 / 0.561 | 0.703 / 0.562 | **0.681** / **0.546** | 0.721 / 0.578 |
+| Solar (137 PV plants; in GIFT-Eval) | 0.919 / 0.539 | 0.878 / 0.494 | 0.864 / 0.495 | 0.883 / 0.501 | 0.844 / **0.470** | **0.842** / 0.481 | 0.891 / 0.487 | 0.921 / 0.532 |
+| **Geometric mean, 9 sources (the paper's aggregate)** | 0.801 / 0.555 | 0.762 / 0.520 | 0.766 / 0.519 | 0.764 / 0.523 | **0.735** / **0.498** | 0.825 / 0.559 | 0.795 / 0.541 | 0.800 / 0.553 |
+
+</details>
+
+Hirondel's numbers and those of the models we ran are our runs of `benchmarks/indeval.py` on the published data
 (`benchmarks/results/indeval/`, `benchmarks/results/indeval_competitors/`). Our Seasonal Naive normalisation matches the
 paper's to a few thousandths on the industrial sources and to about 1 % on the four others, not bit for bit. Windows
 whose context is constant (a fifth of Mesa del Sol's) have no MASE scale: they are left out of the MASE of every model

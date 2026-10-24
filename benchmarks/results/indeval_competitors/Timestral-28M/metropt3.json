@@ -1,0 +1,47 @@
+{
+ "source": "metropt3",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Timestral-28M": [
+   0.3493606021524833,
+   0.2789370125997998
+  ]
+ },
+ "tasks": {
+  "metropt3_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-28M": [
+    0.4312896928577873,
+    0.3177541075120427
+   ]
+  },
+  "metropt3_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-28M": [
+    0.3173655842964027,
+    0.2683516815926553
+   ]
+  },
+  "metropt3_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Timestral-28M": [
+    0.3115249778181612,
+    0.25452060191265286
+   ]
+  }
+ },
+ "n_pairs": 2850,
+ "n_left_out_of_mase": 0
+}

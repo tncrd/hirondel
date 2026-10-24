@@ -5,6 +5,7 @@
 - `data/official.csv`: every official value shown, with its source and the date it was read;
 - `data/same_protocol.csv`: GIFT-Eval in forced univariate mode, computed by us (`benchmarks/competitors.yaml`);
 - `figures/pareto.png`, `figures/same_protocol.png`, `figures/banner.png` (a real forecast of the model);
+- `figures/indeval.png`: IND-Eval, five and nine sources, both settings (`indeval.yaml`);
 - `README.md` and `MODEL_CARD.md` from `README.template.md` and `MODEL_CARD.template.md`.
 
 ```bash

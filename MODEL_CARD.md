@@ -75,31 +75,11 @@ a permissive license, the others shown hollow.
 ![IND-Eval, accuracy against size](showcase/figures/indeval.png)
 
 Five industrial sources of [IND-Eval](https://huggingface.co/datasets/cognitedata/IND-Eval), none in the training
-data, then the four the paper adds from public benchmarks (MetroPT-3 in TIME; ETT, Electricity, Solar in GIFT-Eval).
-Hirondel: our run, each channel alone, no covariates. Timestral-5M: our run with the same harness, univariate, then
-joint with PRONTO's covariates. Chronos-2, TiRex-2, TimesFM-3: numbers published in the IND-Eval paper (joint
-forecasting, PRONTO's covariates). nMASE / nCRPS, lower is better:
-
-| Source | Hirondel (7.5M, ours) | Timestral-5M (5.2M) | Timestral-5M, joint + covariates (5.2M) | Chronos-2 (119M) | TiRex-2 (83M) | TimesFM-3 (331M) |
-|---|---|---|---|---|---|---|
-| NEATS (offshore drilling) | 0.937 / 0.496 | 0.903 / 0.484 | 0.900 / **0.484** | 0.915 / 0.516 | **0.899** / 0.551 | 0.924 / 0.494 |
-| 3W (oil wells) | **0.754** / **0.653** | 0.768 / 0.685 | 0.762 / 0.681 | 0.847 / 0.749 | 0.837 / 0.786 | 0.756 / 0.690 |
-| PRONTO (multiphase flow) | 0.956 / 0.853 | 0.968 / 0.888 | 0.696 / 0.591 | 0.754 / 0.569 | 0.957 / 0.719 | **0.617** / **0.473** |
-| Mesa del Sol (solar and battery microgrid) | **0.838** / 0.493 | 0.853 / 0.491 | 0.846 / 0.492 | 0.864 / 0.948 | 0.901 / 0.542 | 0.841 / **0.481** |
-| Tablet compression (pharmaceutical) | 0.737 / 0.325 | 0.730 / 0.323 | **0.727** / 0.323 | 0.744 / 0.324 | 0.736 / 0.321 | 0.729 / **0.318** |
-| **Geometric mean, 5 industrial sources** | 0.839 / 0.536 | 0.840 / 0.542 | 0.783 / 0.499 | 0.822 / 0.583 | 0.863 / 0.558 | **0.766** / **0.477** |
-| MetroPT-3 (metro compressor; in TIME) | 0.414 / 0.327 | 0.388 / 0.311 | 0.358 / **0.274** | 0.409 / 0.322 | 0.394 / 0.322 | **0.354** / 0.277 |
-| ETT (electricity transformers; in GIFT-Eval) | 0.847 / 0.666 | 0.846 / 0.660 | 0.840 / 0.656 | 0.853 / 0.674 | 0.856 / 0.692 | **0.836** / **0.649** |
-| Electricity (370 meters; in GIFT-Eval) | 0.715 / 0.576 | 0.722 / 0.582 | 0.722 / 0.582 | **0.680** / **0.545** | 0.723 / 0.590 | 0.699 / 0.558 |
-| Solar (137 PV plants; in GIFT-Eval) | **0.864** / 0.495 | 0.878 / 0.494 | 0.878 / 0.494 | 0.891 / **0.478** | 0.911 / 0.523 | 0.869 / 0.482 |
-| **Geometric mean, 9 sources (the paper's aggregate)** | 0.766 / 0.519 | 0.762 / 0.520 | 0.726 / 0.489 | 0.755 / 0.539 | 0.779 / 0.537 | **0.713** / **0.473** |
-
-On PRONTO, a process driven by control signals, the models that read these signals as covariates are far ahead:
-Timestral-5M goes from 0.968 / 0.888 without them to 0.696 / 0.591 with them. Hirondel, being univariate, cannot
-anticipate the changes they cause. On the four other industrial sources, the geometric means are close: Hirondel
-0.813 / 0.477, TimesFM-3 0.809 / 0.478, Timestral-5M 0.811 / 0.479 (joint, with covariates: 0.806 / 0.478), Chronos-2
-0.840 / 0.587, TiRex-2 0.840 / 0.524. On each of these four sources Hirondel is within 5 % of the best model or ahead of
-it, with 11 to 44 times fewer parameters than Chronos-2, TiRex-2 and TimesFM-3.
+data (top row), then the nine of the paper's aggregate (bottom row). Hirondel: 0.839 / 0.536 (nMASE / nCRPS) on the
+five. With every model forecasting each channel alone (circles, our runs with the same harness), Hirondel is ahead of
+Chronos-2, TimesFM-2.5 and TiRex, level with Timestral-5M and Toto-2.0-22m, and behind Timestral-28M. Forecasting the
+channels jointly with PRONTO's covariates (crosses) moves Chronos-2 from 0.895 to 0.822. Tables per source, protocol
+and model versions: [README, IND-Eval](https://github.com/tncrd/hirondel#industrial-data-ind-eval).
 
 ![Accuracy against size, official leaderboards](showcase/figures/pareto.png)
 

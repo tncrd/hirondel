@@ -1,0 +1,136 @@
+{
+ "model": "TimesFM-2.5",
+ "variant": null,
+ "repo_id": "google/timesfm-2.5-200m-pytorch",
+ "revision": "1d952420fba87f3c6dee4f240de0f1a0fbc790e3",
+ "data_revision": "9b0dce3fd91a97b9428ab1da532f08403f4106e1",
+ "package": "timesfm",
+ "package_version": "3.0.2",
+ "date": "2026-10-23",
+ "protocol": "forced univariate, computed by us",
+ "sources": [
+  "neats",
+  "3w",
+  "pronto",
+  "mds",
+  "tablet_compression",
+  "metropt3",
+  "ett",
+  "electricity",
+  "solar"
+ ],
+ "nMASE_nCRPS": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "TimesFM-2.5": [
+   0.7997630867893205,
+   0.5530774718525218
+  ]
+ },
+ "nMASE_nCRPS_industrial": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "TimesFM-2.5": [
+   0.8826583163862861,
+   0.5791612603227239
+  ]
+ },
+ "per_source": {
+  "neats": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.9387429417366362,
+    0.5280983684937124
+   ]
+  },
+  "3w": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.8869568140249676,
+    0.8132554640296397
+   ]
+  },
+  "pronto": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.9418740485820957,
+    0.896508187269444
+   ]
+  },
+  "mds": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.9114371764406495,
+    0.5128902142400523
+   ]
+  },
+  "tablet_compression": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.7495392128534927,
+    0.32997195807922536
+   ]
+  },
+  "metropt3": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.43682292073303675,
+    0.3563953222250561
+   ]
+  },
+  "ett": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.8615405227928065,
+    0.6784356243599718
+   ]
+  },
+  "electricity": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.7208689972009057,
+    0.5778465528974582
+   ]
+  },
+  "solar": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.920983044288572,
+    0.531891477700108
+   ]
+  }
+ },
+ "univariate": true,
+ "covariates": "none"
+}

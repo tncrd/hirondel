@@ -1,0 +1,136 @@
+{
+ "model": "Toto-2.0-22m",
+ "variant": null,
+ "repo_id": "Datadog/Toto-2.0-22m",
+ "revision": "685e4ae3e2be8d8998025e53dd98e7fdcb296a89",
+ "data_revision": "9b0dce3fd91a97b9428ab1da532f08403f4106e1",
+ "package": "toto-models",
+ "package_version": "1.0.0",
+ "date": "2026-10-23",
+ "protocol": "forced univariate, computed by us",
+ "sources": [
+  "neats",
+  "3w",
+  "pronto",
+  "mds",
+  "tablet_compression",
+  "metropt3",
+  "ett",
+  "electricity",
+  "solar"
+ ],
+ "nMASE_nCRPS": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Toto-2.0-22m": [
+   0.7639784061016615,
+   0.5230896669593385
+  ]
+ },
+ "nMASE_nCRPS_industrial": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Toto-2.0-22m": [
+   0.832743940485253,
+   0.5357599709402506
+  ]
+ },
+ "per_source": {
+  "neats": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.9051022142981484,
+    0.4936476759332282
+   ]
+  },
+  "3w": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.7833319660226333,
+    0.6875308493512917
+   ]
+  },
+  "pronto": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.9022721392991383,
+    0.8185389474829439
+   ]
+  },
+  "mds": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.8598578697803199,
+    0.49257665348606117
+   ]
+  },
+  "tablet_compression": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.7280307304236668,
+    0.3225736236654959
+   ]
+  },
+  "metropt3": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.3879937219749116,
+    0.318100493252935
+   ]
+  },
+  "ett": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.8554403108030497,
+    0.6736883249904606
+   ]
+  },
+  "electricity": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.7555470344316757,
+    0.6189551088992413
+   ]
+  },
+  "solar": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.882869328001385,
+    0.5007851506045975
+   ]
+  }
+ },
+ "univariate": true,
+ "covariates": "none"
+}

@@ -13,6 +13,7 @@ shared_sources: [metropt3, ett, electricity, solar]
 source_names: {neats: NEATS (offshore drilling), 3w: 3W (oil wells), pronto: PRONTO (multiphase flow), mds: Mesa del Sol (solar and battery microgrid), tablet_compression: Tablet compression (pharmaceutical), metropt3: MetroPT-3 (metro compressor; in TIME), ett: ETT (electricity transformers; in GIFT-Eval), electricity: Electricity (370 meters; in GIFT-Eval), solar: Solar (137 PV plants; in GIFT-Eval)}
 models:
   - name: Chronos-2
+    offsets: {nCRPS 9: [8, -3]}    # figure: right of its point, clear of the univariate run's label
     covariates: true           # in the paper: PRONTO's control channels as covariates, joint forecasting
     params: 119477664
     license: Apache-2.0
@@ -20,6 +21,7 @@ models:
     nmase: {neats: 0.915, 3w: 0.847, pronto: 0.754, mds: 0.864, tablet_compression: 0.744, metropt3: 0.409, ett: 0.853, electricity: 0.680, solar: 0.891}
     ncrps: {neats: 0.516, 3w: 0.749, pronto: 0.569, mds: 0.948, tablet_compression: 0.324, metropt3: 0.322, ett: 0.674, electricity: 0.545, solar: 0.478}
   - name: TiRex-2
+    offsets: {nCRPS 9: [6, -12]}   # figure: below its point, clear of Chronos-2's label
     covariates: true           # in the paper: PRONTO's control channels as covariates, joint forecasting
     params: 82501744           # huggingface.co/NX-AI/TiRex-2; its card: 38.4M parameters active in univariate mode
     license: Apache-2.0
@@ -38,6 +40,8 @@ models:
 # paper (variant "joint").
 computed:
   - name: Timestral-5M
+    offset: [-22, 12]            # figure: above its point, clear of Hirondel's
+    offsets: {nMASE 9: [-38, 14]}
     covariates: false
     params: 5208960
     license: Modified MIT (no rights for companies above $20M monthly revenue)
@@ -48,3 +52,16 @@ computed:
     params: 5208960
     license: Modified MIT (no rights for companies above $20M monthly revenue)
     permissive: false
+# Every model of benchmarks/competitors.yaml in forced univariate mode, same harness and same data as ours
+# (benchmarks/results/indeval_competitors/<name>/; amendment of 2026-10-23 in competitors.yaml). Second IND-Eval table:
+# all models in the same setting. Not the paper's versions for two of them: TiRex here is TiRex 1 (NX-AI/TiRex; the
+# paper has TiRex-2) and TimesFM-2.5 (the paper has TimesFM-3); Chronos-2 is the same model in both tables.
+# Sizes and licenses as in models.yaml. `offsets`: label position per panel of the figure (nMASE, nCRPS; nMASE 9, nCRPS 9), in points.
+univariate:
+  - {name: Timestral-5M, params: 5208960, license: Modified MIT (revenue cap), permissive: false, offset: [-22, 12], offsets: {nMASE 9: [-38, 14]}}
+  - {name: Timestral-28M, params: 27821184, license: Modified MIT (revenue cap), permissive: false}
+  - {name: Chronos-2, params: 119477664, license: Apache-2.0, permissive: true, label: "Chronos-2, univariate", offsets: {nCRPS: [6, -12], nMASE 9: [-6, 5, right], nCRPS 9: [-6, 6, right]}}
+  - {name: TiRex, params: 35000000, license: NX-AI Community License, permissive: false}
+  - {name: TimesFM-2.5, params: 231289280, license: Apache-2.0, permissive: true}
+  - {name: Toto-2.0-22m, params: 21915584, license: Apache-2.0, permissive: true}
+  - {name: Toto-2.0-4m, params: 4144448, license: Apache-2.0, permissive: true}

@@ -48,6 +48,8 @@ Who computed what:
   --variant joint`).
 - **Chronos-2, TiRex-2, TimesFM-3**: the numbers **published in the IND-Eval paper**, where they forecast the channels
   of a window jointly and read PRONTO's control signals as covariates.
+- **Every model of our competitor list** (Timestral-5M and 28M, Chronos-2, TiRex, TimesFM-2.5, Toto-2.0-22m and 4m):
+  our runs with the same harness, each channel alone as Hirondel, in the second table below.
 
 <p align="center"><img src="showcase/figures/indeval.png" alt="IND-Eval, accuracy against size" width="100%"></p>
 
@@ -62,7 +64,23 @@ anticipate the changes they cause. On the four other industrial sources, the geo
 0.840 / 0.587, TiRex-2 0.840 / 0.524. On each of these four sources Hirondel is within 5 % of the best model or ahead of
 it, with 11 to 44 times fewer parameters than Chronos-2, TiRex-2 and TimesFM-3.
 
-Hirondel's and Timestral-5M's numbers are our runs of `benchmarks/indeval.py` on the published data
+#### Every model in the univariate setting
+
+The table above compares settings that differ: in the paper, Chronos-2, TiRex-2 and TimesFM-3 forecast the channels of
+a window jointly and read PRONTO's covariates. Below, every model of our competitor list (`benchmarks/competitors.yaml`,
+fixed before any score) forecasts each channel alone, with the same harness and the same data as Hirondel
+(`benchmarks/competitors.py indeval`). In this setting, on the five industrial sources, Hirondel is ahead of Chronos-2,
+TimesFM-2.5 and TiRex, level with Timestral-5M and Toto-2.0-22m, and behind Timestral-28M. Chronos-2, the one model in
+both tables, goes from 0.822 / 0.583 forecasting jointly with covariates (the paper) to 0.895 / 0.580 alone (our run).
+
+Two of these models are not the paper's versions: TiRex here is TiRex 1 (`NX-AI/TiRex`, 35M; the paper has TiRex-2), and
+TimesFM-2.5 stands where the paper has TimesFM-3. They are the versions of our list, fixed before any score.
+
+nMASE / nCRPS, geometric means (lower is better), best of each metric in bold:
+
+<!-- gen:indeval_univariate -->
+
+Hirondel's numbers and those of the models we ran are our runs of `benchmarks/indeval.py` on the published data
 (`benchmarks/results/indeval/`, `benchmarks/results/indeval_competitors/`). Our Seasonal Naive normalisation matches the
 paper's to a few thousandths on the industrial sources and to about 1 % on the four others, not bit for bit. Windows
 whose context is constant (a fifth of Mesa del Sol's) have no MASE scale: they are left out of the MASE of every model

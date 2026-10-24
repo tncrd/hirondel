@@ -1,0 +1,97 @@
+{
+ "source": "electricity",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Toto-2.0-4m": [
+   0.7971542083594092,
+   0.6570673272175195
+  ]
+ },
+ "tasks": {
+  "electricity-15T_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-4m": [
+    0.8627442418201591,
+    0.7413116544511084
+   ]
+  },
+  "electricity-15T_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-4m": [
+    0.8402349496604857,
+    0.7600456193400926
+   ]
+  },
+  "electricity-15T_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-4m": [
+    0.6544425833571862,
+    0.5973984188566431
+   ]
+  },
+  "electricity-D_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-4m": [
+    0.7456176398081809,
+    0.5723591715747184
+   ]
+  },
+  "electricity-H_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-4m": [
+    0.8747098984448768,
+    0.6502829935207842
+   ]
+  },
+  "electricity-H_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-4m": [
+    0.8495111666192222,
+    0.6790530384315336
+   ]
+  },
+  "electricity-H_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-4m": [
+    0.815522605007113,
+    0.7402823466582914
+   ]
+  },
+  "electricity-W_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-4m": [
+    0.7606748772063487,
+    0.5516991177512457
+   ]
+  }
+ },
+ "n_pairs": 37117,
+ "n_left_out_of_mase": 98
+}

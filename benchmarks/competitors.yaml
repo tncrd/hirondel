@@ -119,3 +119,10 @@ gift_eval_variants:
 # not fit the release day.
 fev_time_univariate_runs: [Chronos-2, Toto-2.0-22m, Timestral-5M, Timestral-28M, Toto-2.0-4m]
 natively_univariate: [TiRex, TimesFM-2.5, FlowState-r1.1, Moirai-2.0-small]
+
+# Amendment, 2026-10-23 (user decision), after IND-Eval scores of our model and of Timestral-5M only: IND-Eval is run
+# in forced univariate mode for every model of the list above, so that the IND-Eval comparison has one table where all
+# models are in the same setting (the paper's numbers are joint forecasting with covariates). The list is unchanged;
+# TiRex here is NX-AI/TiRex (TiRex 1), and TimesFM-2.5 stands where the paper has TimesFM-3. Timestral-5M's run was
+# made earlier the same day, with the same harness.
+indeval_univariate_runs: [Timestral-5M, Timestral-28M, Chronos-2, TiRex, TimesFM-2.5, Toto-2.0-22m, Toto-2.0-4m]

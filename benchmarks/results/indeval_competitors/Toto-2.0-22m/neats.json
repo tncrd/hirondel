@@ -1,0 +1,437 @@
+{
+ "source": "neats",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Toto-2.0-22m": [
+   0.9051022142981484,
+   0.4936476759332282
+  ]
+ },
+ "tasks": {
+  "banambu-deep-1__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.8853832822964416,
+    0.4913767968386886
+   ]
+  },
+  "banambu-deep-1__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.8393192198486726,
+    0.54705797476878
+   ]
+  },
+  "bassett-deep-1__mwd-lwd-dml_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.926682222048273,
+    0.5677955279118748
+   ]
+  },
+  "bassett-deep-1__mwd-lwd-dml_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.9321355534564029,
+    0.5825883879457305
+   ]
+  },
+  "bdc-2-01__mwd-lwd-dml-st1_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.9622741405331227,
+    0.6418394041133831
+   ]
+  },
+  "bdc-2-01__mwd-lwd-dml-st1_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.8983772299600578,
+    0.5940527984229385
+   ]
+  },
+  "bdc-2-01__mwd-lwd-dml_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.9532919967962706,
+    0.6204619562081257
+   ]
+  },
+  "bdc-2-01__mwd-lwd-dml_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.9696382167883785,
+    0.6143569603220048
+   ]
+  },
+  "bdc-2-04-phase-2__mwd-lwd-dml_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    1.0955270116157139,
+    0.7493531235474584
+   ]
+  },
+  "bdc-2-04-phase-2__mwd-lwd-dml_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    1.0761457979136066,
+    0.8145963526918087
+   ]
+  },
+  "bdc-3-05-p__mwd-lwd-dml_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.993560902853144,
+    0.704744345839177
+   ]
+  },
+  "bdc-3-05-p__mwd-lwd-dml_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.9573309054600211,
+    0.7202596840876841
+   ]
+  },
+  "gemtree-1__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.8798093058802706,
+    0.4206367768618212
+   ]
+  },
+  "gemtree-1__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.8219041461789761,
+    0.43828885230183323
+   ]
+  },
+  "holonema-1__mwd-lwd-dml_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    1.2205918929664574,
+    0.41005853374440704
+   ]
+  },
+  "holonema-1__mwd-lwd-dml_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    1.2663506185919604,
+    0.4132709693191715
+   ]
+  },
+  "la-rocca-1__lwd-dds_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.70932891935933,
+    0.26822092834235856
+   ]
+  },
+  "la-rocca-1__lwd-dds_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.6742380388033123,
+    0.35460854284145693
+   ]
+  },
+  "la-rocca-1__lwd-pwd_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.9628814828789036,
+    0.1451056791919318
+   ]
+  },
+  "la-rocca-1__lwd-pwd_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    1.040377837964433,
+    0.21294428680773725
+   ]
+  },
+  "lpa-01__mudlogging_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.9690843857684154,
+    0.6895200203653017
+   ]
+  },
+  "lpa-01__mudlogging_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.9296860063284443,
+    0.6595132748110617
+   ]
+  },
+  "lpa-01__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.7409756710594367,
+    0.5412182682206355
+   ]
+  },
+  "lpa-01__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.8049514879732209,
+    0.6058588364671619
+   ]
+  },
+  "lpa-01__mwd-lwd_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.9601977846318899,
+    0.5846808486266841
+   ]
+  },
+  "lpa-01__mwd-lwd_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.9480293779670291,
+    0.604681177892727
+   ]
+  },
+  "lpa-02__mudlogging_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.9059866846595842,
+    0.6428712819351529
+   ]
+  },
+  "lpa-02__mudlogging_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.9004101302334567,
+    0.6694991546912432
+   ]
+  },
+  "lpa-02__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.851104550506302,
+    0.15177544343514562
+   ]
+  },
+  "lpa-02__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.7762215419014339,
+    0.17064717547794964
+   ]
+  },
+  "lpa-03__mudlogging_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.9602235090901968,
+    0.7716903409665947
+   ]
+  },
+  "lpa-03__mudlogging_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.9482332466203743,
+    0.6989574244131672
+   ]
+  },
+  "lpa-03__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.9290379680201646,
+    0.7057992204956933
+   ]
+  },
+  "lpa-03__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.9119822753342869,
+    0.7000977964805682
+   ]
+  },
+  "psa-02-phase-1__mudlogging-gravel-pack_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.5778369185290708,
+    0.18088854079687516
+   ]
+  },
+  "psa-02-phase-1__mudlogging-gravel-pack_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.5578501487883212,
+    0.2130884045536737
+   ]
+  },
+  "psa-02-phase-1__mudlogging_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.9380715393204582,
+    0.557736017329668
+   ]
+  },
+  "psa-02-phase-1__mudlogging_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.8844406974322346,
+    0.49987513495482866
+   ]
+  },
+  "psa-02-phase-1__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.9721165841490873,
+    0.6412801900935742
+   ]
+  },
+  "psa-02-phase-1__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.9927142884954674,
+    0.7360225059465695
+   ]
+  },
+  "sca-03__lwd-pwd_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.9630750715181305,
+    0.6406692777808778
+   ]
+  },
+  "sca-03__lwd-pwd_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Toto-2.0-22m": [
+    0.9750041295105,
+    0.7101280160575377
+   ]
+  }
+ },
+ "n_pairs": 9934,
+ "n_left_out_of_mase": 138
+}

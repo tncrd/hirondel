@@ -69,3 +69,27 @@ def test_univariate_runs_on_fev_and_time_are_listed():
     assert c["fev_time_univariate_runs"] == ["Chronos-2", "Toto-2.0-22m", "Timestral-5M", "Timestral-28M",
                                            "Toto-2.0-4m"]
     assert c["natively_univariate"] == ["TiRex", "TimesFM-2.5", "FlowState-r1.1", "Moirai-2.0-small"]
+
+
+def test_indeval_summary_keeps_the_model_revision():
+    """The harness's own `revision` (the IND-Eval data) must not overwrite the model's revision in a result summary."""
+    meta = {"model": "TiRex", "repo_id": "NX-AI/TiRex", "revision": "63c7409"}
+    out = competitors.indeval_meta(meta, {"revision": "9b0dce3", "sources": ["neats"], "nMASE_nCRPS": {}})
+    assert out["revision"] == "63c7409" and out["data_revision"] == "9b0dce3" and out["sources"] == ["neats"]
+
+
+def test_indeval_univariate_runs_are_listed_and_their_summaries_name_the_model_revision():
+    pytest.importorskip("yaml")
+    import json
+    from benchmarks import indeval
+    c = competitors.load_list(os.path.join(ROOT, "benchmarks", "competitors.yaml"))
+    assert c["indeval_univariate_runs"] == ["Timestral-5M", "Timestral-28M", "Chronos-2", "TiRex", "TimesFM-2.5",
+                                            "Toto-2.0-22m", "Toto-2.0-4m"]       # amendment of 2026-10-23
+    for name in c["indeval_univariate_runs"]:
+        path = os.path.join(competitors.out_dir("indeval", name), "headline.json")
+        if not os.path.exists(path):
+            continue
+        with open(path) as f:
+            h = json.load(f)
+        assert h["revision"] == competitors.entry(c, name, "indeval")["revision"], name
+        assert h["data_revision"] == indeval.REV and h["protocol"] == "forced univariate, computed by us", name

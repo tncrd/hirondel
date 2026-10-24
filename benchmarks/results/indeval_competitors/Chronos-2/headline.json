@@ -1,0 +1,136 @@
+{
+ "model": "Chronos-2",
+ "variant": null,
+ "repo_id": "amazon/chronos-2",
+ "revision": "29ec3766d36d6f73f0696f85560a422f50e8498c",
+ "data_revision": "9b0dce3fd91a97b9428ab1da532f08403f4106e1",
+ "package": "chronos-forecasting",
+ "package_version": "2.3.2",
+ "date": "2026-10-23",
+ "protocol": "forced univariate, computed by us",
+ "sources": [
+  "neats",
+  "3w",
+  "pronto",
+  "mds",
+  "tablet_compression",
+  "metropt3",
+  "ett",
+  "electricity",
+  "solar"
+ ],
+ "nMASE_nCRPS": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Chronos-2": [
+   0.7949518209749051,
+   0.5412351946709745
+  ]
+ },
+ "nMASE_nCRPS_industrial": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Chronos-2": [
+   0.8949875575723182,
+   0.5801228659545821
+  ]
+ },
+ "per_source": {
+  "neats": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Chronos-2": [
+    0.928609024630451,
+    0.5161072312560613
+   ]
+  },
+  "3w": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Chronos-2": [
+    0.9609906075391902,
+    0.8178624710355018
+   ]
+  },
+  "pronto": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Chronos-2": [
+    1.0205212978684475,
+    0.9556646983346199
+   ]
+  },
+  "mds": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Chronos-2": [
+    0.8443234793387104,
+    0.49469137265025764
+   ]
+  },
+  "tablet_compression": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Chronos-2": [
+    0.7467960393577239,
+    0.32926063742436185
+   ]
+  },
+  "metropt3": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Chronos-2": [
+    0.4283446390598286,
+    0.3414506911512691
+   ]
+  },
+  "ett": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Chronos-2": [
+    0.8502534976723228,
+    0.6671513817489719
+   ]
+  },
+  "electricity": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Chronos-2": [
+    0.6805159531273156,
+    0.5463847975925483
+   ]
+  },
+  "solar": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Chronos-2": [
+    0.8908451391265586,
+    0.48733023124440783
+   ]
+  }
+ },
+ "univariate": true,
+ "covariates": "none"
+}

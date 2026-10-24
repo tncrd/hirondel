@@ -1,0 +1,136 @@
+{
+ "model": "TiRex",
+ "variant": null,
+ "repo_id": "NX-AI/TiRex",
+ "revision": "63c740922493f5fbe60b277609ec62babfba2762",
+ "data_revision": "9b0dce3fd91a97b9428ab1da532f08403f4106e1",
+ "package": "tirex-ts",
+ "package_version": "1.4.2",
+ "date": "2026-10-23",
+ "protocol": "forced univariate, computed by us",
+ "sources": [
+  "neats",
+  "3w",
+  "pronto",
+  "mds",
+  "tablet_compression",
+  "metropt3",
+  "ett",
+  "electricity",
+  "solar"
+ ],
+ "nMASE_nCRPS": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "TiRex": [
+   0.8247254958689026,
+   0.55909442090632
+  ]
+ },
+ "nMASE_nCRPS_industrial": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "TiRex": [
+   0.9249305569227652,
+   0.5925088306577027
+  ]
+ },
+ "per_source": {
+  "neats": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TiRex": [
+    0.981866454214859,
+    0.5362365221804613
+   ]
+  },
+  "3w": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TiRex": [
+    0.8553364814977025,
+    0.7467057822638923
+   ]
+  },
+  "pronto": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TiRex": [
+    1.0710499345407254,
+    0.9577109428780157
+   ]
+  },
+  "mds": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TiRex": [
+    1.006276623544205,
+    0.580005335083226
+   ]
+  },
+  "tablet_compression": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TiRex": [
+    0.7478751728086582,
+    0.32832336839918
+   ]
+  },
+  "metropt3": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TiRex": [
+    0.5079190517884222,
+    0.3954724588649593
+   ]
+  },
+  "ett": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TiRex": [
+    0.8673013942555209,
+    0.684178516847332
+   ]
+  },
+  "electricity": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TiRex": [
+    0.7030641964263605,
+    0.5617155783279075
+   ]
+  },
+  "solar": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TiRex": [
+    0.8419370457733131,
+    0.4809391638580896
+   ]
+  }
+ },
+ "univariate": true,
+ "covariates": "none"
+}

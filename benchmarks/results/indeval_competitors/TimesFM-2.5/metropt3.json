@@ -1,0 +1,47 @@
+{
+ "source": "metropt3",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "TimesFM-2.5": [
+   0.43682292073303675,
+   0.3563953222250561
+  ]
+ },
+ "tasks": {
+  "metropt3_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.497627539254914,
+    0.3760187549881148
+   ]
+  },
+  "metropt3_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.39938332914485974,
+    0.34517869390145695
+   ]
+  },
+  "metropt3_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.41939371277670356,
+    0.3487727111564296
+   ]
+  }
+ },
+ "n_pairs": 2850,
+ "n_left_out_of_mase": 0
+}

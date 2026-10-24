@@ -1,0 +1,437 @@
+{
+ "source": "neats",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "TimesFM-2.5": [
+   0.9387429417366362,
+   0.5280983684937124
+  ]
+ },
+ "tasks": {
+  "banambu-deep-1__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.9377291712779287,
+    0.5237051341150011
+   ]
+  },
+  "banambu-deep-1__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.865840219207817,
+    0.5599451387354344
+   ]
+  },
+  "bassett-deep-1__mwd-lwd-dml_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.9978450859788903,
+    0.6406053481286207
+   ]
+  },
+  "bassett-deep-1__mwd-lwd-dml_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.975944898315999,
+    0.6498836933058525
+   ]
+  },
+  "bdc-2-01__mwd-lwd-dml-st1_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    1.051878731708762,
+    0.7766125501017541
+   ]
+  },
+  "bdc-2-01__mwd-lwd-dml-st1_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    1.016729904868694,
+    0.7110853137371592
+   ]
+  },
+  "bdc-2-01__mwd-lwd-dml_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.9627476285937755,
+    0.7435379597635218
+   ]
+  },
+  "bdc-2-01__mwd-lwd-dml_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.9834146920290855,
+    0.7014552415218483
+   ]
+  },
+  "bdc-2-04-phase-2__mwd-lwd-dml_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    1.1901750670371418,
+    0.8554561351322385
+   ]
+  },
+  "bdc-2-04-phase-2__mwd-lwd-dml_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    1.2041159259790766,
+    0.8824199729909409
+   ]
+  },
+  "bdc-3-05-p__mwd-lwd-dml_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    1.0683117739139065,
+    0.7678831216786776
+   ]
+  },
+  "bdc-3-05-p__mwd-lwd-dml_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    1.0865549143712732,
+    0.7899253751358263
+   ]
+  },
+  "gemtree-1__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.8952422531642863,
+    0.46320479284877475
+   ]
+  },
+  "gemtree-1__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.8590210469871098,
+    0.4903900729740201
+   ]
+  },
+  "holonema-1__mwd-lwd-dml_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    1.2488499196239764,
+    0.49635161119275717
+   ]
+  },
+  "holonema-1__mwd-lwd-dml_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    1.1632051983945377,
+    0.49441722228165497
+   ]
+  },
+  "la-rocca-1__lwd-dds_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.7696461835507414,
+    0.29049737773509393
+   ]
+  },
+  "la-rocca-1__lwd-dds_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.7164757097138615,
+    0.35541601676647644
+   ]
+  },
+  "la-rocca-1__lwd-pwd_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    1.0547706195750568,
+    0.14079754941780875
+   ]
+  },
+  "la-rocca-1__lwd-pwd_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    1.0173706914170733,
+    0.1992485574825117
+   ]
+  },
+  "lpa-01__mudlogging_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.9751612521711903,
+    0.6766618340220996
+   ]
+  },
+  "lpa-01__mudlogging_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.9344648841527105,
+    0.6616339658779896
+   ]
+  },
+  "lpa-01__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.7107683876610501,
+    0.48533903910400644
+   ]
+  },
+  "lpa-01__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.7784542825189856,
+    0.5523553335443528
+   ]
+  },
+  "lpa-01__mwd-lwd_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.9871916680138267,
+    0.8085052472787095
+   ]
+  },
+  "lpa-01__mwd-lwd_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.9878617085366013,
+    0.8230682091358644
+   ]
+  },
+  "lpa-02__mudlogging_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.9073244393542343,
+    0.6723669227976132
+   ]
+  },
+  "lpa-02__mudlogging_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.8947889235818886,
+    0.6564390600826515
+   ]
+  },
+  "lpa-02__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    1.0550264816319679,
+    0.16119873717712466
+   ]
+  },
+  "lpa-02__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.9429279622906694,
+    0.17364603662199005
+   ]
+  },
+  "lpa-03__mudlogging_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.9903276029879484,
+    0.7753103622645092
+   ]
+  },
+  "lpa-03__mudlogging_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.9424285952228646,
+    0.7024010414177948
+   ]
+  },
+  "lpa-03__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.9168798534948126,
+    0.7125904098036236
+   ]
+  },
+  "lpa-03__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.8416994291850064,
+    0.7009736856377474
+   ]
+  },
+  "psa-02-phase-1__mudlogging-gravel-pack_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.5930573642900604,
+    0.1841564662383216
+   ]
+  },
+  "psa-02-phase-1__mudlogging-gravel-pack_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.5646233553074832,
+    0.2141986336936468
+   ]
+  },
+  "psa-02-phase-1__mudlogging_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.937175261008901,
+    0.6194104692860127
+   ]
+  },
+  "psa-02-phase-1__mudlogging_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.8970658262120101,
+    0.5785697924868941
+   ]
+  },
+  "psa-02-phase-1__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.969489128978367,
+    0.6265020172417467
+   ]
+  },
+  "psa-02-phase-1__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    0.9748830341040592,
+    0.6924251328057214
+   ]
+  },
+  "sca-03__lwd-pwd_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    1.0378077139537274,
+    0.7128910635898932
+   ]
+  },
+  "sca-03__lwd-pwd_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "TimesFM-2.5": [
+    1.010959855011887,
+    0.7407222815989806
+   ]
+  }
+ },
+ "n_pairs": 9934,
+ "n_left_out_of_mase": 138
+}
