@@ -132,7 +132,8 @@ def test_indeval_bold_marks_every_model_tied_on_the_shown_value():
 
 
 def test_indeval_one_figure_with_both_settings_and_links_between_them(tmp_path):
-    from PIL import Image
+    pytest.importorskip("matplotlib")
+    Image = pytest.importorskip("PIL.Image")
     pub = render.load_indeval()
     src9 = pub["sources"] + pub["shared_sources"]
     ours = {"params": 7_462_049, "per_source": {s: [0.9, 0.5] for s in src9}}
