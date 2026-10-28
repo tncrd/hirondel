@@ -7,6 +7,8 @@
 # Timestral, merged on 2026-10-16). Result keys: the model's name in each leaderboard's published results
 # (gift: results/<key>/all_results.csv of gift-eval; fev: model_name in fev's results; time: results/<key>/ of
 # Real-TSF/TIME-Output). null = not on that leaderboard.
+# Corrected on 2026-10-28: t0-gamma's GIFT-Eval results (gift-eval #230, merged on 2026-10-16, present at cfaefe0)
+# had been left out (gift: null); they are now read at the same commit as the others.
 
 ours:
   name: Hirondel
@@ -25,4 +27,4 @@ models:
   - {name: Timestral-209M, family: Timestral, params: 209312256, size_source: "https://huggingface.co/mistralai/Timestral-209M (safetensors)", license: Modified MIT, permissive: false, gift: Timestral-209M, fev: Timestral-209M, time: Timestral-209M}
   - {name: FlowState-r1.1, family: FlowState, params: 18500000, size_source: "https://huggingface.co/ibm-granite/granite-timeseries-flowstate-r1 (card: r1.1, 18.5M)", license: Apache-2.0, permissive: true, gift: Granite-FlowState-r1.1, fev: null, time: null}
   - {name: Moirai-2.0-small, family: Moirai, params: 11387208, size_source: "https://huggingface.co/Salesforce/moirai-2.0-R-small (safetensors)", license: CC-BY-NC-4.0, permissive: false, gift: Moirai2, fev: Moirai-2.0, time: Moirai2}
-  - {name: t0-gamma, family: t0, params: 255614293, size_source: "https://huggingface.co/theforecastingcompany/t0-gamma (safetensors)", license: Apache-2.0, permissive: true, gift: null, fev: t0-gamma, time: t0_gamma}
+  - {name: t0-gamma, family: t0, params: 255614293, size_source: "https://huggingface.co/theforecastingcompany/t0-gamma (safetensors)", license: Apache-2.0, permissive: true, gift: t0-gamma, fev: t0-gamma, time: t0_gamma}

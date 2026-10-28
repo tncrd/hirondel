@@ -43,7 +43,8 @@ LABEL_OFFSETS = {"t0-gamma": (-6, -12, "right"), "TimesFM-3": (6, 4, "left"), "T
                  "TiRex": (6, 6, "left"), "Timestral-5M": (-6, 6, "right"), "Timestral-209M": (6, -12, "left"),
                  "Moirai-2.0-small": (6, 4, "left")}
 LABEL_OFFSETS_BY_BENCH = {"GIFT-Eval": {"Toto-2.0-22m": (5, 4, "left"), "TiRex": (6, -12, "left"),
-                                        "FlowState-r1.1": (-6, 5, "right")},
+                                        "FlowState-r1.1": (-6, 5, "right"), "t0-gamma": (6, -12, "left"),
+                                        "Timestral-209M": (-6, 5, "right")},
                           "TIME": {"t0-gamma": (6, -12, "left"), "Timestral-209M": (-6, 5, "right"),
                                    "Timestral-5M": (-6, 6, "right")},
                           "fev-bench": {"t0-gamma": (6, -12, "left"), "Timestral-209M": (-6, 5, "right"),

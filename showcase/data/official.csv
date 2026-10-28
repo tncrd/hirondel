@@ -65,6 +65,8 @@ Moirai-2.0-small,11387208,CC-BY-NC-4.0,False,fev-bench,MASE,27.224649,"github.co
 Moirai-2.0-small,11387208,CC-BY-NC-4.0,False,fev-bench,SQL,39.313741,"github.com/autogluon/fev @ ceb25ae, benchmarks/fev_bench/results",2026-10-22
 Moirai-2.0-small,11387208,CC-BY-NC-4.0,False,TIME,MASE,0.702996,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/Moirai2",2026-10-22
 Moirai-2.0-small,11387208,CC-BY-NC-4.0,False,TIME,CRPS,0.588487,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/Moirai2",2026-10-22
+t0-gamma,255614293,Apache-2.0,True,GIFT-Eval,MASE,0.660842,"github.com/SalesforceAIResearch/gift-eval @ cfaefe0, results/t0-gamma/all_results.csv",2026-10-22
+t0-gamma,255614293,Apache-2.0,True,GIFT-Eval,CRPS,0.451973,"github.com/SalesforceAIResearch/gift-eval @ cfaefe0, results/t0-gamma/all_results.csv",2026-10-22
 t0-gamma,255614293,Apache-2.0,True,fev-bench,MASE,37.991582,"github.com/autogluon/fev @ ceb25ae, benchmarks/fev_bench/results",2026-10-22
 t0-gamma,255614293,Apache-2.0,True,fev-bench,SQL,49.416652,"github.com/autogluon/fev @ ceb25ae, benchmarks/fev_bench/results",2026-10-22
 t0-gamma,255614293,Apache-2.0,True,TIME,MASE,0.637016,"huggingface.co/datasets/Real-TSF/TIME-Output @ 4c93dea, results/t0_gamma",2026-10-22
