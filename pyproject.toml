@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "hirondel"
-version = "1.0.0"
+version = "1.1.0"
 dynamic = ["readme"]
 description = "Zero-shot time-series forecasting model (7M parameters)"
 authors = [{ name = "The Hirondel Author" }]
@@ -45,4 +45,4 @@ path = "README.md"
 
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.substitutions]]
 pattern = 'src="showcase/'
-replacement = 'src="https://raw.githubusercontent.com/tncrd/hirondel/v1.0.0/showcase/'
+replacement = 'src="https://raw.githubusercontent.com/tncrd/hirondel/v1.1.0/showcase/'

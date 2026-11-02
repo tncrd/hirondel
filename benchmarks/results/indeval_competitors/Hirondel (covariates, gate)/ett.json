@@ -1,0 +1,177 @@
+{
+ "source": "ett",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Hirondel (covariates, gate)": [
+   0.847272839367857,
+   0.6661316760930123
+  ]
+ },
+ "tasks": {
+  "ett1-15T_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8218668746808214,
+    0.6521939447219187
+   ]
+  },
+  "ett1-15T_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8238111986093253,
+    0.7046286300806819
+   ]
+  },
+  "ett1-15T_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7126351325476714,
+    0.6648548604685062
+   ]
+  },
+  "ett1-D_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.9616226581282077,
+    0.6845804667655555
+   ]
+  },
+  "ett1-H_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.9427300973958196,
+    0.5571889070350062
+   ]
+  },
+  "ett1-H_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.781238629878258,
+    0.5542615935700105
+   ]
+  },
+  "ett1-H_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8235525428311342,
+    0.7293739249507061
+   ]
+  },
+  "ett1-W_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.9768052492727248,
+    0.9066735282500407
+   ]
+  },
+  "ett2-15T_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8755783583971579,
+    0.7770041654371419
+   ]
+  },
+  "ett2-15T_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8165888864867962,
+    0.7837950510011242
+   ]
+  },
+  "ett2-15T_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.6882779777769243,
+    0.6605243985103935
+   ]
+  },
+  "ett2-D_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.902435311747859,
+    0.5850847759296912
+   ]
+  },
+  "ett2-H_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8912325999564066,
+    0.5199163378134675
+   ]
+  },
+  "ett2-H_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8357900600378294,
+    0.5895615672768317
+   ]
+  },
+  "ett2-H_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8011977919964883,
+    0.7563148477683911
+   ]
+  },
+  "ett2-W_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.9680429855689306,
+    0.6448456520436008
+   ]
+  }
+ },
+ "n_pairs": 1078,
+ "n_left_out_of_mase": 0
+}

@@ -22,9 +22,9 @@ def test_license_is_the_apache_2_text():
 
 
 def test_version_is_consistent():
-    assert hirondel.__version__ == "1.0.0"
-    assert re.search(r'^version = "1\.0\.0"$', _read("pyproject.toml"), re.M)
-    assert re.search(r"^version: 1\.0\.0$", _read("CITATION.cff"), re.M)
+    assert hirondel.__version__ == "1.1.0"
+    assert re.search(r'^version = "1\.1\.0"$', _read("pyproject.toml"), re.M)
+    assert re.search(r"^version: 1\.1\.0$", _read("CITATION.cff"), re.M)
 
 
 def test_contributing_is_three_lines():
@@ -56,6 +56,24 @@ def _readme_example() -> str:
     blocks = re.findall(r"```python\n(.*?)```", _read("README.md"), re.S)
     assert blocks, "README has no python example"
     return blocks[0]
+
+
+def test_readme_covariate_example_runs_as_written(monkeypatch):
+    """Runs the README's covariate block after the first one, as a reader would, and checks what it prints."""
+    src = os.environ.get("HIRONDEL_WEIGHTS") or (os.path.join(ROOT, "weights")
+                                             if os.path.isfile(os.path.join(ROOT, "weights", "model.safetensors")) else None)
+    if src is None:
+        pytest.skip("no weights: set HIRONDEL_WEIGHTS")
+    real = hirondel.HirondelForecaster.from_pretrained.__func__
+    monkeypatch.setattr(hirondel.HirondelForecaster, "from_pretrained",
+                        classmethod(lambda cls, _repo_id, **kw: real(cls, src, **kw)))
+    blocks = re.findall(r"```python\n(.*?)```", _read("README.md"), re.S)
+    cov = [b for b in blocks if "future_covariates" in b]
+    assert len(cov) == 1, "README should have one covariate example"
+    scope = {}
+    exec(compile(blocks[0], "README.md", "exec"), scope)
+    exec(compile(cov[0], "README.md", "exec"), scope)
+    assert scope["forecast"].covariate_used.tolist() == [True]
 
 
 def test_readme_example_runs_as_written(monkeypatch):

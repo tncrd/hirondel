@@ -1,0 +1,437 @@
+{
+ "source": "neats",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Hirondel (covariates, gate)": [
+   0.9368143629224203,
+   0.4958287895820759
+  ]
+ },
+ "tasks": {
+  "banambu-deep-1__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8957325456259947,
+    0.4678586651921028
+   ]
+  },
+  "banambu-deep-1__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.868315052713767,
+    0.5238302738365628
+   ]
+  },
+  "bassett-deep-1__mwd-lwd-dml_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.9409371975257551,
+    0.587635655890049
+   ]
+  },
+  "bassett-deep-1__mwd-lwd-dml_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.932288323412815,
+    0.6079427859326999
+   ]
+  },
+  "bdc-2-01__mwd-lwd-dml-st1_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    1.049788548349348,
+    0.7047439558695086
+   ]
+  },
+  "bdc-2-01__mwd-lwd-dml-st1_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    1.0614842676865075,
+    0.6505420657376911
+   ]
+  },
+  "bdc-2-01__mwd-lwd-dml_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.965298617013272,
+    0.6402196915457089
+   ]
+  },
+  "bdc-2-01__mwd-lwd-dml_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.990924608850187,
+    0.671308429788088
+   ]
+  },
+  "bdc-2-04-phase-2__mwd-lwd-dml_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    1.214147166321139,
+    0.8204344881089353
+   ]
+  },
+  "bdc-2-04-phase-2__mwd-lwd-dml_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    1.2023674973356977,
+    0.8642415814632597
+   ]
+  },
+  "bdc-3-05-p__mwd-lwd-dml_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    1.0415359589410025,
+    0.6954508587593601
+   ]
+  },
+  "bdc-3-05-p__mwd-lwd-dml_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    1.071580579053012,
+    0.7112718746683284
+   ]
+  },
+  "gemtree-1__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8913364835694711,
+    0.4158262930646969
+   ]
+  },
+  "gemtree-1__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8941136103065689,
+    0.4673452251200394
+   ]
+  },
+  "holonema-1__mwd-lwd-dml_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    1.1616669719975588,
+    0.4334612786312818
+   ]
+  },
+  "holonema-1__mwd-lwd-dml_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    1.1433896679052329,
+    0.4423087420529757
+   ]
+  },
+  "la-rocca-1__lwd-dds_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.710379784072415,
+    0.26607344626501184
+   ]
+  },
+  "la-rocca-1__lwd-dds_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.6767851414847644,
+    0.35064349685274293
+   ]
+  },
+  "la-rocca-1__lwd-pwd_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    1.005810873224843,
+    0.14155020874361543
+   ]
+  },
+  "la-rocca-1__lwd-pwd_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    1.0155830733537057,
+    0.20183414266172528
+   ]
+  },
+  "lpa-01__mudlogging_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.9891011228283951,
+    0.6538960031305023
+   ]
+  },
+  "lpa-01__mudlogging_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.9341700268228706,
+    0.6657941514096969
+   ]
+  },
+  "lpa-01__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.672890394124387,
+    0.49802510398427424
+   ]
+  },
+  "lpa-01__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7388013237708955,
+    0.5803976852530086
+   ]
+  },
+  "lpa-01__mwd-lwd_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    1.0076377580049165,
+    0.7054236796311045
+   ]
+  },
+  "lpa-01__mwd-lwd_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    1.012136370870862,
+    0.7262203565107576
+   ]
+  },
+  "lpa-02__mudlogging_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.9593293238051667,
+    0.5991819967776943
+   ]
+  },
+  "lpa-02__mudlogging_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.9449906190915591,
+    0.6428565053056741
+   ]
+  },
+  "lpa-02__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    1.0655435113161018,
+    0.14673193573982835
+   ]
+  },
+  "lpa-02__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.9511797294484358,
+    0.15708575585271267
+   ]
+  },
+  "lpa-03__mudlogging_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.9998610386109813,
+    0.6852850063672319
+   ]
+  },
+  "lpa-03__mudlogging_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.9952463493659593,
+    0.6330114489467089
+   ]
+  },
+  "lpa-03__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8905665334683683,
+    0.6973055093096013
+   ]
+  },
+  "lpa-03__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8208192873362959,
+    0.6745859157474813
+   ]
+  },
+  "psa-02-phase-1__mudlogging-gravel-pack_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.5797692014648347,
+    0.18064172834773903
+   ]
+  },
+  "psa-02-phase-1__mudlogging-gravel-pack_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.5565693535655736,
+    0.21199465848733262
+   ]
+  },
+  "psa-02-phase-1__mudlogging_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.9512275720617166,
+    0.5419458772238023
+   ]
+  },
+  "psa-02-phase-1__mudlogging_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8982303010125717,
+    0.5208439143517665
+   ]
+  },
+  "psa-02-phase-1__mwd-lwd-drilling-mechanics_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    1.0618789035651388,
+    0.5822752061170806
+   ]
+  },
+  "psa-02-phase-1__mwd-lwd-drilling-mechanics_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    1.1137276515158594,
+    0.7102624392487372
+   ]
+  },
+  "sca-03__lwd-pwd_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    1.0087952690323232,
+    0.6868170865170281
+   ]
+  },
+  "sca-03__lwd-pwd_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    1.0164229734317125,
+    0.742170511025232
+   ]
+  }
+ },
+ "n_pairs": 9934,
+ "n_left_out_of_mase": 138
+}

@@ -1,0 +1,767 @@
+{
+ "source": "tablet_compression",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Hirondel (covariates, gate)": [
+   0.7367138332807963,
+   0.32524115754609023
+  ]
+ },
+ "tasks": {
+  "code_01_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.761152999031035,
+    0.25964348990990854
+   ]
+  },
+  "code_01_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7178722433290475,
+    0.36527423033693507
+   ]
+  },
+  "code_01_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7057970590847881,
+    0.4435344066356784
+   ]
+  },
+  "code_02_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7625328672284808,
+    0.22483695433917447
+   ]
+  },
+  "code_02_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7273816853567234,
+    0.3095928385940692
+   ]
+  },
+  "code_02_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7342890959480519,
+    0.37419488614028606
+   ]
+  },
+  "code_03_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.5406684163480907,
+    0.2159347401056676
+   ]
+  },
+  "code_03_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.4669016311795328,
+    0.2920427756318499
+   ]
+  },
+  "code_03_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.46992875552078434,
+    0.37031224588089906
+   ]
+  },
+  "code_04_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8321975672756341,
+    0.20701115450845628
+   ]
+  },
+  "code_04_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7962122799374006,
+    0.30549574618767367
+   ]
+  },
+  "code_04_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7813066992535259,
+    0.3904034510434753
+   ]
+  },
+  "code_05_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.6242480215250897,
+    0.4491102119395445
+   ]
+  },
+  "code_05_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.5803843884369482,
+    0.37546849465878923
+   ]
+  },
+  "code_05_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.6118506772854877,
+    0.4591525375567282
+   ]
+  },
+  "code_06_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8619331881313699,
+    0.20394115278350894
+   ]
+  },
+  "code_06_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.735407715644202,
+    0.2727565505118236
+   ]
+  },
+  "code_06_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7306282075712061,
+    0.36808964756147255
+   ]
+  },
+  "code_07_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.49855040665311884,
+    0.18557073679708488
+   ]
+  },
+  "code_07_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.48905839668259216,
+    0.2802102452950378
+   ]
+  },
+  "code_07_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.46058427419808384,
+    0.3642967251025973
+   ]
+  },
+  "code_08_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.6390826253346878,
+    0.21481191852053946
+   ]
+  },
+  "code_08_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.5407252402518492,
+    0.2891526226744632
+   ]
+  },
+  "code_08_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.493879303738772,
+    0.32507418649189834
+   ]
+  },
+  "code_09_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7514363893135052,
+    0.3021838543430018
+   ]
+  },
+  "code_09_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7405692291530347,
+    0.43168702523316366
+   ]
+  },
+  "code_09_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7579616623455782,
+    0.5183652435446895
+   ]
+  },
+  "code_10_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7794958009846854,
+    0.4022983735824024
+   ]
+  },
+  "code_10_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7225377375584229,
+    0.442442528654663
+   ]
+  },
+  "code_10_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.6920722145778962,
+    0.43328823842538466
+   ]
+  },
+  "code_11_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8241011790336785,
+    0.19682972094079323
+   ]
+  },
+  "code_11_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.759588295797236,
+    0.2827159143632525
+   ]
+  },
+  "code_11_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8213238992112526,
+    0.30513697102649207
+   ]
+  },
+  "code_12_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8521090897920349,
+    0.24393804856136586
+   ]
+  },
+  "code_12_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.803470024870338,
+    0.3478050414808167
+   ]
+  },
+  "code_12_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8240034068037492,
+    0.4488716425684727
+   ]
+  },
+  "code_13_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7271715091031755,
+    0.18203387619565906
+   ]
+  },
+  "code_13_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7105130054826709,
+    0.26518987843324254
+   ]
+  },
+  "code_13_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7293137449916335,
+    0.3348572831040932
+   ]
+  },
+  "code_14_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.9782505564209713,
+    0.2094961638442688
+   ]
+  },
+  "code_14_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.9598442596634524,
+    0.30335175199550257
+   ]
+  },
+  "code_14_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8651826407284133,
+    0.3864315608521477
+   ]
+  },
+  "code_15_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7511084502654175,
+    0.17450242978013245
+   ]
+  },
+  "code_15_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7311532997810934,
+    0.2353533281909731
+   ]
+  },
+  "code_15_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7588084906525041,
+    0.28714857017761974
+   ]
+  },
+  "code_16_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    1.1277908171008493,
+    0.36161392390002306
+   ]
+  },
+  "code_16_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    1.1550800646095154,
+    0.5043706657708825
+   ]
+  },
+  "code_16_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    1.1902829592336386,
+    0.6307380953638042
+   ]
+  },
+  "code_17_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7916600437317414,
+    0.231163686834786
+   ]
+  },
+  "code_17_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7651279872774739,
+    0.33569242390593423
+   ]
+  },
+  "code_17_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7639903449339766,
+    0.42459371863023715
+   ]
+  },
+  "code_18_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.996351690940436,
+    0.4019213323809044
+   ]
+  },
+  "code_18_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8076020480876682,
+    0.5209423495343939
+   ]
+  },
+  "code_18_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.46979792839295004,
+    0.4612866736208279
+   ]
+  },
+  "code_19_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7515550157965077,
+    0.27133770981484645
+   ]
+  },
+  "code_19_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7795648107878296,
+    0.3801824380055724
+   ]
+  },
+  "code_19_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7624234816629365,
+    0.4185683393498279
+   ]
+  },
+  "code_20_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8415095270560011,
+    0.22491257248861593
+   ]
+  },
+  "code_20_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.868184015386443,
+    0.3324816758193716
+   ]
+  },
+  "code_20_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8537640403128917,
+    0.40579183848030054
+   ]
+  },
+  "code_21_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8365171807759892,
+    0.23936554385610592
+   ]
+  },
+  "code_21_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8100022375239613,
+    0.3434808292560923
+   ]
+  },
+  "code_21_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.780573765626258,
+    0.4357878974108556
+   ]
+  },
+  "code_22_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7983770429863991,
+    0.3164152554116056
+   ]
+  },
+  "code_22_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7418115129492144,
+    0.4904046108445818
+   ]
+  },
+  "code_22_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7061842485324749,
+    0.5921178567616205
+   ]
+  },
+  "code_23_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7808582150603962,
+    0.2932730804939333
+   ]
+  },
+  "code_23_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7442797483500213,
+    0.3865747093532911
+   ]
+  },
+  "code_23_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.737169840925619,
+    0.46484283718764996
+   ]
+  },
+  "code_24_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7614185185063213,
+    0.16800584584090308
+   ]
+  },
+  "code_24_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7132590478950182,
+    0.24646872113898785
+   ]
+  },
+  "code_24_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7065600476204037,
+    0.3070743533158019
+   ]
+  },
+  "code_25_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7636998344613292,
+    0.28700407160242397
+   ]
+  },
+  "code_25_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.6870957684810084,
+    0.3535875392896994
+   ]
+  },
+  "code_25_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.6698312055248485,
+    0.4007789401498758
+   ]
+  }
+ },
+ "n_pairs": 13785,
+ "n_left_out_of_mase": 63
+}

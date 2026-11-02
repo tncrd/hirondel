@@ -1,0 +1,97 @@
+{
+ "source": "solar",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Hirondel (covariates, gate)": [
+   0.8638837308926172,
+   0.49484287085556733
+  ]
+ },
+ "tasks": {
+  "solar-10T_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.9291272365814579,
+    0.48970371218545744
+   ]
+  },
+  "solar-10T_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8671705108864708,
+    0.5175874505402924
+   ]
+  },
+  "solar-10T_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8601264032955394,
+    0.5851905781864594
+   ]
+  },
+  "solar-D_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8347201602883356,
+    0.4941942839713422
+   ]
+  },
+  "solar-H_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.882148409312689,
+    0.3346135915768716
+   ]
+  },
+  "solar-H_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.9200323956143659,
+    0.36745850164412097
+   ]
+  },
+  "solar-H_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8775561043964434,
+    0.5577623110292846
+   ]
+  },
+  "solar-W_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7529043753228972,
+    0.7151964057517541
+   ]
+  }
+ },
+ "n_pairs": 8905,
+ "n_left_out_of_mase": 0
+}

@@ -1,0 +1,137 @@
+{
+ "source": "pronto",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Hirondel (covariates, gate)": [
+   0.8698258666751357,
+   0.7006413397918656
+  ]
+ },
+ "tasks": {
+  "pronto_D2E1_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    1.001640106217202,
+    0.8712829157361434
+   ]
+  },
+  "pronto_D2E1_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    1.0072080547716773,
+    0.9407515569718982
+   ]
+  },
+  "pronto_D2E2_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.6956562769807293,
+    0.625127806244931
+   ]
+  },
+  "pronto_D2E2_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8877605737764922,
+    0.6426609973930151
+   ]
+  },
+  "pronto_D3E1_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.9705332356174109,
+    1.0233214121806846
+   ]
+  },
+  "pronto_D3E1_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.9884481432673435,
+    1.01819125826614
+   ]
+  },
+  "pronto_D3E2_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    1.048414651984771,
+    1.1913167890351042
+   ]
+  },
+  "pronto_D3E2_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.9971099069821366,
+    1.1822643753601254
+   ]
+  },
+  "pronto_D4E1_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7644089330633598,
+    0.5528852504529933
+   ]
+  },
+  "pronto_D4E1_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.9203343330835462,
+    0.596639535046515
+   ]
+  },
+  "pronto_D4E2_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.4481809801263734,
+    0.2545024059480722
+   ]
+  },
+  "pronto_D4E2_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.9521407425949528,
+    0.34493874548316455
+   ]
+  }
+ },
+ "n_pairs": 144,
+ "n_left_out_of_mase": 0
+}

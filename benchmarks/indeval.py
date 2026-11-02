@@ -248,23 +248,86 @@ def _with_period(models: dict, path: str) -> dict:
     return {k: (naive if k == NAIVE else v) for k, v in models.items()}
 
 
+def covariate_model(forecaster, mode: str, batch: int = 256):
+    """Hirondel with the known-future covariates of each window (PRONTO's control channels): every target channel is
+    still forecast alone, with `forecast(..., future_covariates, covariate_mode=mode)`. Windows without covariates
+    get the univariate forecast, bit for bit. Contexts with no observed value go through `hirondel_forecast_fn`."""
+    from benchmarks.adapter import hirondel_forecast_fn
+    plain = hirondel_forecast_fn(forecaster)
+
+    def task(path):
+        for w in iter_windows(path):
+            H, targets = w["H"], w["targets"]
+            covs = []
+            for ctx in targets:
+                cols = {}
+                for j, (cctx, cfut) in enumerate(w["covariates"]):
+                    past = np.full(len(ctx), np.nan, np.float32)    # aligned on the end of the target's context
+                    m = min(len(ctx), len(cctx))
+                    past[len(ctx) - m:] = cctx[-m:]
+                    cols[f"covariate_{j}"] = np.concatenate([past, cfut[:H]])
+                covs.append(cols or None)
+            out = [None] * len(targets)
+            empty = [i for i, x in enumerate(targets) if not np.isfinite(x).any()]
+            for i, q in zip(empty, plain([targets[i] for i in empty], H) if empty else []):
+                out[i] = q
+            keep = [i for i in range(len(targets)) if out[i] is None]
+            for lo in range(0, len(keep), batch):
+                idx = keep[lo:lo + batch]
+                q = forecaster.forecast([targets[i] for i in idx], H, future_covariates=[covs[i] for i in idx],
+                                        covariate_mode=mode).quantiles
+                for i, qi in zip(idx, q):
+                    out[i] = qi
+            yield from out
+
+    def fn(contexts, H, futures=None):
+        raise ValueError("covariate_model reads the windows of a task file, see `task`")
+    fn.task = task
+    return fn
+
+
 def main():
     import argparse
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--data", required=True, help="folder holding data/<source>/*.parquet (revision REV)")
-    ap.add_argument("--out", default="benchmarks/results/indeval")
-    ap.add_argument("--sources", default="industrial", choices=["industrial", "all"],
-                    help="the five industrial sources, or the nine of the paper (with MetroPT-3, ETT, Electricity, Solar)")
+    ap.add_argument("--out", default=None, help="default: benchmarks/results/indeval, or "
+                    "benchmarks/results/indeval_competitors/Hirondel (covariates, <mode>) with --covariate-mode")
+    ap.add_argument("--sources", default="industrial", choices=["industrial", "all", "pronto"],
+                    help="the five industrial sources, the nine of the paper (with MetroPT-3, ETT, Electricity, Solar), "
+                         "or PRONTO alone (the only source with covariates)")
     ap.add_argument("--model", default="weights", help="local folder or Hugging Face repo id")
     ap.add_argument("--device", default="cpu")
+    ap.add_argument("--covariate-mode", default="off", choices=["off", "gate", "always"],
+                    help="read PRONTO's control channels as known-future covariates (see hirondel.covariates)")
     a = ap.parse_args()
     from benchmarks.adapter import hirondel_forecast_fn
-    from hirondel import HirondelForecaster
-    fn = hirondel_forecast_fn(HirondelForecaster.from_pretrained(a.model, device=a.device))
-    sources = SOURCES + (SHARED if a.sources == "all" else ())
-    res = run(a.data, sources, {"Hirondel": lambda C, H, Y: list(fn(C, H))}, a.out, log=lambda *x: print(*x, flush=True))
+    from hirondel import HirondelForecaster, __version__
+    forecaster = HirondelForecaster.from_pretrained(a.model, device=a.device)
+    sources = ("pronto",) if a.sources == "pronto" else SOURCES + (SHARED if a.sources == "all" else ())
+    if a.covariate_mode == "off":
+        name, out = "Hirondel", a.out or "benchmarks/results/indeval"
+        fn = hirondel_forecast_fn(forecaster)
+        model = lambda C, H, Y: list(fn(C, H))                       # noqa: E731
+    else:
+        name = f"Hirondel (covariates, {a.covariate_mode})"
+        out = a.out or os.path.join("benchmarks", "results", "indeval_competitors", name)
+        model = covariate_model(forecaster, a.covariate_mode)
+    res = run(a.data, sources, {name: model}, out, log=lambda *x: print(*x, flush=True))
+    if a.covariate_mode != "off":
+        path = os.path.join(out, "headline.json")
+        with open(path) as f:
+            head = json.load(f)
+        head.update({"model": name, "package_version": __version__, "univariate": True,
+                     "covariates": f"PRONTO's control channels as known-future covariates, covariate_mode="
+                                   f"{a.covariate_mode!r}; each target channel forecast alone"})
+        with open(path, "w") as f:
+            json.dump(head, f, indent=1)
+    if a.sources == "pronto":
+        m, c = res["sources"]["pronto"][name]
+        print(f"IND-Eval (PRONTO): nMASE {m:.3f}  nCRPS {c:.3f}  ({res['seconds']:.0f} s)")
+        return
     for label, src in (("5 industrial sources", SOURCES), ("9 sources", sources))[:1 + (a.sources == "all")]:
-        m, c = aggregate(res["sources"], src, ["Hirondel"])["Hirondel"]
+        m, c = aggregate(res["sources"], src, [name])[name]
         print(f"IND-Eval ({label}): nMASE {m:.3f}  nCRPS {c:.3f}  ({res['seconds']:.0f} s)")
 
 

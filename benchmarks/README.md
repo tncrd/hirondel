@@ -114,3 +114,18 @@ python -m benchmarks.indeval --data indeval_data --out benchmarks/results/indeva
 Results in `results/indeval/` (`headline.json`, one file per source with per-task scores): nMASE 0.839, nCRPS 0.536 over
 the five sources. Seasonal Naive normalisation: Mesa del Sol's plain naive gives 1.278 / 1.405 here, 1.280 / 1.410 in the
 paper.
+
+## Known-future covariates (v1.1)
+
+The same model with `future_covariates` (`hirondel.covariates`), before and after, on the tasks that have covariates:
+the 42 fev-bench tasks with covariates (three runs per task: `off`, `always`, `gate`; the 12 with past-only covariates
+get the univariate forecast) and PRONTO, the only IND-Eval source with covariates (its control channels).
+
+```bash
+python -m benchmarks.fev_covariates --fev-bench fev/benchmarks/fev_bench --out benchmarks/results/fev_covariates --device cuda
+python -m benchmarks.indeval --data indeval_data --sources all --covariate-mode gate --device cuda   # or --sources pronto
+```
+
+Results in `results/fev_covariates/` (`headline.json`: skill scores over the 42 tasks and over all 100 with the others
+unchanged, per-task errors; `tasks.jsonl`: the evaluation summaries) and `results/indeval_competitors/Hirondel
+(covariates, gate)/` (the eight sources without covariates match `results/indeval/`). The 2 % margin of the gate was chosen on synthetic series only, before this single check.

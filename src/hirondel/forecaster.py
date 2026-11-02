@@ -9,6 +9,7 @@ from typing import Sequence, Union
 import numpy as np
 import torch
 
+from . import covariates as cov
 from .config import HirondelConfig
 from .fusion import CoarseReadings, block_mean_view
 from .model import HirondelModel
@@ -21,6 +22,7 @@ class Forecast:
     quantiles: np.ndarray                 # [n_series, prediction_length, n_quantiles], raw scale
     quantile_levels: tuple[float, ...]
     nonnegative: np.ndarray | None = None  # [n_series] bool: series clipped at 0 (their extrapolated tails too)
+    covariate_used: np.ndarray | None = None  # [n_series] bool: covariate effect applied (None: no covariates passed)
 
     # Not predicted by the network: extrapolated from the predicted levels by an exponential tail (see `quantile`).
     EXTRAPOLATED_LEVELS = (0.01, 0.05, 0.95, 0.99)
@@ -212,8 +214,14 @@ class HirondelForecaster:
             out.append(bool(obs.any() and (s[obs] >= 0).all()))
         return np.array(out, bool)
 
+    def _raw(self, series: list[np.ndarray], prediction_length: int, flip: bool) -> np.ndarray:
+        out = [self._forecast_batch(series[i:i + self.batch_size], prediction_length, flip)
+               for i in range(0, len(series), self.batch_size)]
+        return np.concatenate(out, 0)
+
     def forecast(self, context, prediction_length: int, flip: bool | None = None,
-                 clip_nonnegative: bool | None = None) -> Forecast:
+                 clip_nonnegative: bool | None = None, future_covariates=None,
+                 covariate_mode: str = "gate", covariate_model: str = "ridge") -> Forecast:
         """Forecast each series of `context` (1-D array, 2-D array [n, length], or a list of 1-D series).
 
         NaN values are treated as missing. The last `context_length` points are read at full resolution;
@@ -221,32 +229,119 @@ class HirondelForecaster:
         flip=True (default) averages the forecast of the series with the mirrored forecast of its negation;
         flip=False runs one pass instead of two.
         clip_nonnegative=True (default) clamps every quantile at 0, after the flip average, for each series whose
-        observed context is non-negative; other series are left as they are."""
+        observed context is non-negative; other series are left as they are.
+
+        future_covariates: known-future covariates, one entry per series (a single entry for a 1-D context): a dict
+        {name: values} or a 2-D array [length + prediction_length, p], values over the context AND the horizon
+        (numeric or categorical), or None for a series without covariates. NaN values are filled. See `covariates`.
+        covariate_mode, when the covariate effect is applied: "gate" (default) to a series only if it beats the
+        plain forecast by 2 % on the last min(prediction_length, length // 4) points of its context (about 4 times
+        the cost of a plain forecast); "always" to every series where it can be fitted (about 2 times); "off" never.
+        covariate_model, how the effect is fitted: "ridge" (default, the only one), a per-series ridge on the
+        context (see `covariates.impact`). Without covariates the output is exactly the univariate one."""
         flip = self.cfg.flip if flip is None else flip
         clip = self.cfg.clip_nonnegative if clip_nonnegative is None else clip_nonnegative
         if isinstance(prediction_length, bool) or not isinstance(prediction_length, (int, np.integer)) \
                 or prediction_length < 1:
             raise ValueError(f"prediction_length must be a positive integer, got {prediction_length!r}")
+        if covariate_mode not in cov.MODES:
+            raise ValueError(f"covariate_mode must be one of {cov.MODES}, got {covariate_mode!r}")
+        if covariate_model not in cov.MODELS:
+            raise ValueError(f"covariate_model must be one of {tuple(cov.MODELS)}, got {covariate_model!r}")
         prediction_length = int(prediction_length)
         series = self._as_series(context)
-        out = [self._forecast_batch(series[i:i + self.batch_size], prediction_length, flip)
-               for i in range(0, len(series), self.batch_size)]
-        q = np.concatenate(out, 0)
+        used = None
+        if future_covariates is None:
+            q = self._raw(series, prediction_length, flip)
+        else:
+            X = self._covariate_matrices(future_covariates, series, prediction_length)
+            q = self._raw(series, prediction_length, flip)
+            used = np.zeros(len(series), bool)
+            if covariate_mode != "off":
+                q, used = self._with_covariates(q, series, X, prediction_length, flip, covariate_mode,
+                                                cov.MODELS[covariate_model])
         if not clip:
-            return Forecast(q, tuple(self.cfg.quantile_levels))
+            return Forecast(q, tuple(self.cfg.quantile_levels), covariate_used=used)
         nonneg = self._nonnegative(series)
         q = np.where(nonneg[:, None, None], np.maximum(q, 0), q)
-        return Forecast(q, tuple(self.cfg.quantile_levels), nonneg)
+        return Forecast(q, tuple(self.cfg.quantile_levels), nonneg, used)
+
+    def _covariate_matrices(self, future_covariates, series: list[np.ndarray], H: int) -> list[np.ndarray | None]:
+        entries = [future_covariates] if isinstance(future_covariates, dict) else list(future_covariates)
+        if isinstance(future_covariates, np.ndarray) and future_covariates.ndim == 2 and len(series) == 1:
+            entries = [future_covariates]
+        if len(entries) != len(series):
+            raise ValueError(f"future_covariates has {len(entries)} entries for {len(series)} series "
+                             f"(one dict or 2-D array per series, or None)")
+        return [None if c is None else cov.as_matrix(c, len(s), H, f"future_covariates of series {i}")
+                for i, (s, c) in enumerate(zip(series, entries))]
+
+    def _reach(self) -> int:
+        """Points of history the model reads: the fine window, times the largest coarse factor."""
+        return self.cfg.context_length * max((1,) + tuple(self.cfg.coarse_factors))
+
+    def _regressed(self, q0, series, X, H, flip, fit_effect):
+        """Forecast of every series with a fitted covariate effect -> (quantiles [n, H, Q], fitted [n] bool)."""
+        q, fitted, todo, residuals, effects = q0.copy(), np.zeros(len(series), bool), [], [], []
+        for i, (s, x) in enumerate(zip(series, X)):
+            if x is None:
+                continue
+            T = len(s)
+            r = min(T, self._reach())
+            fit = fit_effect(s[-r:].astype(np.float64), x[T - r:T], x[T:T + H])
+            if fit is None:
+                continue
+            todo.append(i)
+            residuals.append((s[-r:] - fit[0]).astype(np.float32))
+            effects.append(fit[1])
+        if todo:
+            q1 = self._raw(residuals, H, flip) + np.stack(effects)[:, :, None].astype(np.float32)
+            q[todo] = q1
+            fitted[todo] = True
+        return q, fitted
+
+    def _with_covariates(self, q0, series, X, H, flip, mode, fit_effect):
+        q1, fitted = self._regressed(q0, series, X, H, flip, fit_effect)
+        if mode == "always" or not fitted.any():
+            return q1, fitted
+        # Gate: replay both forecasts on the context cut by h points and keep the covariate one only if its median
+        # is closer to these held-out points by GATE_MARGIN. Series are grouped by h, so that a choice never depends
+        # on other series.
+        med = list(self.cfg.quantile_levels).index(0.5)
+        choose = np.zeros(len(series), bool)
+        groups: dict[int, list[int]] = {}
+        for i in np.flatnonzero(fitted):
+            h = min(H, len(series[i]) // 4)
+            if h > 0 and np.isfinite(series[i][-h:]).any() and np.isfinite(series[i][:-h]).any():
+                groups.setdefault(h, []).append(int(i))
+        for h, idx in groups.items():
+            cut = [series[i][:-h] for i in idx]
+            b0 = self._raw(cut, h, flip)
+            b1, ok = self._regressed(b0, cut, [X[i][:len(series[i])] for i in idx], h, flip, fit_effect)
+            for k, i in enumerate(idx):
+                if not ok[k]:
+                    continue
+                truth = series[i][-h:]
+                m = np.isfinite(truth)
+                e0 = np.abs(b0[k, :, med][m] - truth[m]).mean()
+                e1 = np.abs(b1[k, :, med][m] - truth[m]).mean()
+                choose[i] = e1 < (1 - cov.GATE_MARGIN) * e0
+        return np.where(choose[:, None, None], q1, q0), choose
 
     def forecast_df(self, df, prediction_length: int, id_column: str = "item_id", timestamp_column: str = "timestamp",
                     target: str = "target", freq: str | None = None, flip: bool | None = None,
-                    clip_nonnegative: bool | None = None, tail_quantiles: bool = False):
+                    clip_nonnegative: bool | None = None, tail_quantiles: bool = False,
+                    known_covariates: list[str] | None = None, future_df=None, covariate_mode: str = "gate",
+                    covariate_model: str = "ridge"):
         """Forecast every series of a long DataFrame (one row per id and timestamp) and return a long DataFrame.
 
         Each series is sorted by timestamp and placed on a regular grid; missing rows and NaN targets count as
         missing values. `freq` (a pandas offset alias) fixes the grid and the future timestamps; when None it is
         inferred per series. Returns columns [id_column, timestamp_column, "predictions" (the median), "0.1", ...];
         tail_quantiles=True adds the extrapolated levels "0.01", "0.05", "0.95", "0.99" (see `Forecast.quantile`).
+        known_covariates: columns whose values are known in advance; their past rows are read from df and their
+        horizon rows from future_df, which must hold exactly the prediction_length timestamps that follow each
+        series (same id and timestamp columns). covariate_mode and covariate_model as in `forecast`.
         Requires pandas (`pip install pandas`)."""
         try:
             import pandas as pd
@@ -257,7 +352,17 @@ class HirondelForecaster:
             raise ValueError(f"columns not found in df: {missing}")
         if len(df) == 0:
             raise ValueError("df is empty: pass at least one series")
-        ids, series, futures = [], [], []
+        known = list(known_covariates or [])
+        if known:
+            if future_df is None:
+                raise ValueError("known_covariates needs future_df: the covariate values over the horizon")
+            for name, frame, cols in (("df", df, known), ("future_df", future_df,
+                                                          [id_column, timestamp_column] + known)):
+                absent = [c for c in cols if c not in frame.columns]
+                if absent:
+                    raise ValueError(f"columns not found in {name}: {absent}")
+            future_groups = {k: g for k, g in future_df.groupby(id_column, sort=False)}
+        ids, series, futures, covariates = [], [], [], []
         for item, g in df.groupby(id_column, sort=False):
             g = g.sort_values(timestamp_column)
             ts = pd.DatetimeIndex(pd.to_datetime(g[timestamp_column]))
@@ -273,7 +378,22 @@ class HirondelForecaster:
             ids.append(item)
             series.append(values)
             futures.append(pd.date_range(grid[-1], periods=prediction_length + 1, freq=f)[1:])
-        out = self.forecast(series, prediction_length, flip=flip, clip_nonnegative=clip_nonnegative)
+            if known:
+                if item not in future_groups:
+                    raise ValueError(f"series {item!r}: no rows in future_df")
+                fg = future_groups[item]
+                fts = pd.DatetimeIndex(pd.to_datetime(fg[timestamp_column]))
+                if len(fts) != prediction_length or not fts.sort_values().equals(futures[-1]):
+                    raise ValueError(f"series {item!r}: future_df must hold exactly the {prediction_length} "
+                                     f"timestamps that follow the series ({futures[-1][0]} to {futures[-1][-1]}), "
+                                     f"got {len(fts)} rows")
+                fg = fg.set_index(fts).loc[futures[-1]]
+                g_on_grid = g.set_index(ts).reindex(grid)
+                covariates.append({c: np.concatenate([g_on_grid[c].to_numpy(dtype=object),
+                                                      fg[c].to_numpy(dtype=object)]) for c in known})
+        out = self.forecast(series, prediction_length, flip=flip, clip_nonnegative=clip_nonnegative,
+                            future_covariates=covariates if known else None, covariate_mode=covariate_mode,
+                            covariate_model=covariate_model)
         levels = out.all_levels if tail_quantiles else out.quantile_levels
         values = np.stack([out.quantile(q) for q in levels], -1)
         frames = []

@@ -80,7 +80,7 @@ forecast = forecaster.forecast(context, prediction_length=48)
 print(forecast.quantiles.shape)   # (1, 48, 9)
 ```
 
-Install with `pip install "hirondel @ git+https://github.com/tncrd/hirondel@v1.0.0"` (\* `pip install hirondel`:
+Install with `pip install "hirondel @ git+https://github.com/tncrd/hirondel@v1.1.0"` (\* `pip install hirondel`:
 PyPI release in preparation). Inference details, tail levels, hardware and numerical parity: see the code
 repository's README (https://github.com/tncrd/hirondel).
 
@@ -92,7 +92,8 @@ split, fev-bench or TIME is in the training data.
 
 ## Limitations
 
-- Univariate: no covariates, no cross-series information.
+- Univariate: no cross-series information; known-future covariates only through a training-free per-series ridge
+  (v1.1, `future_covariates`; linear, instantaneous).
 - Context: 2 048 points at full resolution plus a coarse reading of up to 8 192 points.
 - Tail levels 0.01 / 0.05 / 0.95 / 0.99 are extrapolated, not learned.
 

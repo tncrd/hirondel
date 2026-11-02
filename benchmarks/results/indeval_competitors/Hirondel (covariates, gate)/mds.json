@@ -1,0 +1,47 @@
+{
+ "source": "mds",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Hirondel (covariates, gate)": [
+   0.8378814909541248,
+   0.4928967642513512
+  ]
+ },
+ "tasks": {
+  "mds-10s_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8472629834661757,
+    0.4897061214165565
+   ]
+  },
+  "mds-2min_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8127327739211068,
+    0.484591853040583
+   ]
+  },
+  "mds-5min_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8542436998904391,
+    0.5046104731937198
+   ]
+  }
+ },
+ "n_pairs": 115515,
+ "n_left_out_of_mase": 23829
+}

@@ -305,6 +305,7 @@ def all(rows, sp, ours, models, model_path, uni=None):
     values = readme_values(rows, sp_all, ours, models, sentence)
     values["univariate"] = univariate_table(uni or [], models, name)
     values.update(indeval_section(name, models["ours"]["params"]))
+    values.update(covariates_section(models))
     for template, out in (("README.template.md", "README.md"), ("MODEL_CARD.template.md", "MODEL_CARD.md")):
         with open(os.path.join(HERE, template)) as f:
             text = fill(f.read(), {**values, **card_values(ours)})
@@ -526,3 +527,176 @@ def indeval_section(name, params, results=os.path.join(ROOT, "benchmarks", "resu
               + indeval_table(uni, pub) + "\n\n</details>")
     return {"indeval": indeval_table(rows, pub),
             "indeval_univariate": indeval_univariate_table(uni, pub) + "\n\n" + detail if len(uni) > 1 else ""}
+
+
+# ---- known-future covariates (hirondel.covariates) -------------------------------------------------------------------
+COV_FEV = os.path.join(ROOT, "benchmarks", "results", "fev_covariates")
+COV_PRONTO = os.path.join(ROOT, "benchmarks", "results", "indeval_competitors", "Hirondel (covariates, gate)",
+                          "headline.json")
+WORSE = "#B5523B"          # tasks where the covariates make the forecast worse
+COV_LABEL_OFFSETS = {"TimesFM-3": (6, 6, "left"), "t0-gamma": (6, -10, "left"), "Timestral-5M": (-6, -12, "right")}
+
+
+def covariates_section(models, fev_dir=COV_FEV, pronto=COV_PRONTO,
+                       uni=os.path.join(ROOT, "benchmarks", "results", "indeval", "headline.json")):
+    """Before / after figure and numbers of the covariate section; empty when the covariate runs are missing.
+    Left: 1 - skill (SQL) against size over the 42 fev-bench tasks with covariates, published models and ours without
+    and with covariates. Right: per task, SQL with covariates / without (the 30 tasks with known-future covariates),
+    and PRONTO's nCRPS (IND-Eval)."""
+    import csv
+    import json
+    path = os.path.join(fev_dir, "headline.json")
+    if not (os.path.exists(path) and os.path.exists(pronto) and os.path.exists(uni)):
+        return {"covariates_numbers": ""}
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    _style(plt)
+    with open(path) as f:
+        h = json.load(f)
+    with open(pronto) as f:
+        after = json.load(f)["per_source"]["pronto"]["Hirondel (covariates, gate)"]
+    with open(uni) as f:
+        before = json.load(f)["per_source"]["pronto"][models["ours"]["name"]]
+    with open(os.path.join(fev_dir, "leaderboard_SQL.csv")) as f:
+        skill = {r["model_name"]: float(r["skill_score"]) for r in csv.DictReader(f)}
+    off, gate = "Hirondel", "Hirondel (covariates, gate)"
+    ratios = sorted([(t, h["per_task_test_error"][t]["gate"] / h["per_task_test_error"][t]["off"])
+                     for t in h["known_future_tasks"]] + [("PRONTO (IND-Eval, nCRPS)", after[1] / before[1])],
+                    key=lambda p: p[1])
+
+    with open(pronto) as f:
+        cov_sources = json.load(f)["per_source"]
+    pub = load_indeval()
+    with_ind = set(pub["sources"]) <= set(cov_sources)        # (`all` is the build function of this module)
+    ind = None
+    if with_ind:
+        fig, (a, c, b) = plt.subplots(1, 3, figsize=(22, 8.2), gridspec_kw={"width_ratios": [1.1, 1, 1]})
+        ind = _indeval_before_after(c, pub, cov_sources, uni, models["ours"])
+    else:
+        fig, (a, b) = plt.subplots(1, 2, figsize=(16, 8.2), gridspec_kw={"width_ratios": [1.15, 1]})
+    for m in models["models"]:
+        if m["fev"] in skill:
+            x, y = m["params"], 1 - skill[m["fev"]]
+            if m["permissive"]:
+                a.scatter([x], [y], s=26, color=DARK, zorder=3, edgecolors="none")
+            else:
+                a.scatter([x], [y], s=22, facecolors=BG, edgecolors=GREY, linewidths=1.1, zorder=3)
+            dx, dy, ha = COV_LABEL_OFFSETS.get(m["name"], (6, 3, "left"))
+            a.annotate(m["name"], (x, y), xytext=(dx, dy), textcoords="offset points", ha=ha, fontsize=8,
+                       color=INK if m["permissive"] else "#7A7A7A", style="normal" if m["permissive"] else "italic")
+    x0 = models["ours"]["params"]
+    y0, y1 = 1 - skill[off], 1 - skill[gate]
+    a.scatter([x0], [y0], s=110, facecolors=BG, edgecolors=ACCENT, linewidths=1.8, zorder=5)
+    a.scatter([x0], [y1], s=120, color=ACCENT, zorder=6, edgecolors="white", linewidths=1.4)
+    a.annotate("", (x0, y1), (x0, y0), arrowprops={"arrowstyle": "-|>", "color": ACCENT, "lw": 1.6,
+                                                 "shrinkA": 7, "shrinkB": 7}, zorder=4)
+    a.annotate(f"Hirondel, univariate  {y0:.3f}", (x0, y0), xytext=(10, 0), textcoords="offset points",
+               ha="left", va="center", fontsize=9.5, color=ACCENT)
+    a.annotate(f"Hirondel + covariates  {y1:.3f}", (x0, y1), xytext=(10, 0), textcoords="offset points",
+               ha="left", va="center", fontsize=10.5, fontweight="bold", color=ACCENT)
+    a.set_xscale("log")
+    a.set_xlim(1.2e6, 1.5e9)
+    a.margins(y=0.08)
+    a.set_xlabel("Parameters")
+    a.set_ylabel("SQL (1 - skill)")
+    a.set_title(f"fev-bench, the {h['n_tasks']} tasks with covariates", loc="left", fontsize=12, fontweight="bold",
+                color=INK)
+    a.text(1.0, 1.02, "lower is better", transform=a.transAxes, ha="right", fontsize=8.5, color=GREY)
+
+    ys = range(len(ratios))
+    vals = [r for _, r in ratios]
+    b.barh(list(ys), [v - 1 for v in vals], left=1, height=0.72,
+           color=[ACCENT if v < 1 else WORSE for v in vals], zorder=3)
+    b.axvline(1, color=DARK, lw=1.0, zorder=4)
+    b.set_yticks(list(ys))
+    b.set_yticklabels([t for t, _ in ratios], fontsize=8)
+    b.invert_yaxis()
+    for y, v in zip(ys, vals):
+        if v > 1.03:
+            b.text(v + 0.006, y, f"×{v:.2f}", va="center", ha="left", fontsize=7.5, color=INK)
+        elif v < 0.97:                          # inside the bar, by its end
+            b.text(v + 0.006, y, f"×{v:.2f}", va="center", ha="left", fontsize=7.5, color="white",
+                   fontweight="bold")
+    b.grid(axis="y", visible=False)
+    b.set_xlim(min(vals) - 0.03, max(vals) + 0.05)
+    b.set_xlabel("Error with covariates / without (SQL; PRONTO: nCRPS)")
+    b.set_title("Per task, with the gate (default)", loc="left", fontsize=12, fontweight="bold", color=INK)
+    b.text(1.0, 1.02, "left of 1: covariates help", transform=b.transAxes, ha="right", fontsize=8.5, color=GREY)
+    fig.suptitle("Known-future covariates (v1.1): the same model, with and without them", x=0.012, y=0.995,
+                 ha="left", fontsize=14, fontweight="bold", color=INK)
+    import textwrap
+    note = ("Our runs: benchmarks/fev_covariates.py and benchmarks/indeval.py --covariate-mode gate. "
+             "fev-bench: the other models' published results over the same tasks (some read the covariates natively). "
+             "IND-Eval: Chronos-2, TiRex-2, TimesFM-3 as published in the paper, Timestral-5M our runs (crosses: "
+             "joint, with PRONTO's covariates). Hollow: non-commercial or restricted license.")
+    lines = textwrap.wrap(note, 190 if with_ind else 150)
+    fig.text(0.5, 0.008, "\n".join(lines), ha="center", fontsize=8.5, color=GREY, linespacing=1.4)
+    fig.tight_layout(rect=(0, 0.01 + 0.022 * len(lines), 1, 0.97))
+    os.makedirs(FIG, exist_ok=True)
+    fig.savefig(os.path.join(FIG, "covariates.png"), dpi=160, metadata={"Software": None})
+    plt.close(fig)
+    g = h["gate_vs_off"]
+    text = (f"On the {h['n_tasks']} fev-bench tasks with covariates, the skill score (SQL) goes from {100 * skill[off]:.1f} to "
+            f"**{100 * skill[gate]:.1f}** (Chronos-2, which reads covariates natively: {100 * skill['Chronos-2']:.1f}). Per task, "
+            f"the error changes by a factor ×{g['gmean']:.3f} on average (geometric mean), from ×{g['best']:.2f} "
+            f"({g['best_task']}) to **×{g['worst']:.2f} ({g['worst_task']})**, the worst case; {g['n_better']} tasks "
+            f"improve, {g['n_worse']} get worse. On PRONTO (IND-Eval), nMASE goes from {before[0]:.3f} to "
+            f"**{after[0]:.3f}** and nCRPS from {before[1]:.3f} to **{after[1]:.3f}**"
+            + (f"; over the five industrial sources (the other four have no covariates and are unchanged), nCRPS goes "
+               f"from {ind[0]:.3f} to **{ind[1]:.3f}**" if ind else "")
+            + f". The 12 fev-bench tasks whose "
+            f"covariates are known only in the past are unchanged.")
+    if "all_tasks" in h:
+        full = h["all_tasks"]["skill_SQL"]
+        text += (f" Over all {h['all_tasks']['n_tasks']} fev-bench tasks (the others unchanged), the skill score goes "
+                 f"from {100 * full[off]:.1f} to **{100 * full[gate]:.1f}** (Chronos-2: {100 * full['Chronos-2']:.1f}).")
+    return {"covariates_numbers": text}
+
+
+def _indeval_before_after(ax, pub, cov_sources, uni_path, ours):
+    """IND-Eval, five industrial sources, nCRPS against size: ours without and with PRONTO's covariates (arrow), the
+    paper's models (joint, with covariates) and Timestral-5M (our runs, alone and joint)."""
+    import json
+    src = pub["sources"]
+    with open(uni_path) as f:
+        uni = json.load(f)["per_source"]
+    gm = lambda d, key: _gmean([d[s][key][1] for s in src])            # noqa: E731
+    pts = [(m["name"], m["params"], _gmean([m["ncrps"][s] for s in src]), m["permissive"], True)
+           for m in pub["models"]]
+    for c in pub.get("computed", []):
+        path = os.path.join(ROOT, "benchmarks", "results", "indeval_competitors", c["name"], "headline.json")
+        if os.path.exists(path):
+            with open(path) as f:
+                per = json.load(f)["per_source"]
+            pts.append((c.get("label") or c["name"], c["params"], gm(per, c["name"]), c["permissive"],
+                        c["covariates"]))
+    for name, x, y, permissive, cov in pts:
+        marker = "X" if cov else "o"
+        if permissive:
+            ax.scatter([x], [y], s=50, marker=marker, color=DARK, zorder=3, edgecolors="none")
+        else:
+            ax.scatter([x], [y], s=46, marker=marker, facecolors=BG, edgecolors=GREY, linewidths=1.1, zorder=3)
+        dx, dy, ha = COV_IND_LABEL_OFFSETS.get(name, (7, 3, "left"))
+        ax.annotate(name, (x, y), xytext=(dx, dy), textcoords="offset points", ha=ha, fontsize=8,
+                    color=INK if permissive else "#7A7A7A", style="normal" if permissive else "italic")
+    x0, y0, y1 = ours["params"], gm(uni, ours["name"]), gm(cov_sources, "Hirondel (covariates, gate)")
+    ax.scatter([x0], [y0], s=110, facecolors=BG, edgecolors=ACCENT, linewidths=1.8, zorder=5)
+    ax.scatter([x0], [y1], s=130, marker="X", color=ACCENT, zorder=6, edgecolors="white", linewidths=1.2)
+    ax.annotate("", (x0, y1), (x0, y0), arrowprops={"arrowstyle": "-|>", "color": ACCENT, "lw": 1.6,
+                                                 "shrinkA": 7, "shrinkB": 7}, zorder=4)
+    ax.annotate(f"Hirondel, univariate  {y0:.3f}", (x0, y0), xytext=(10, 0), textcoords="offset points",
+                ha="left", va="center", fontsize=9.5, color=ACCENT)
+    ax.annotate(f"Hirondel + covariates  {y1:.3f}", (x0, y1), xytext=(10, 0), textcoords="offset points",
+                ha="left", va="center", fontsize=10.5, fontweight="bold", color=ACCENT)
+    ax.set_xscale("log")
+    ax.set_xlim(2e6, 8e8)
+    ax.margins(y=0.12)
+    ax.set_xlabel("Parameters")
+    ax.set_ylabel("nCRPS (geometric mean)")
+    ax.set_title("IND-Eval, 5 industrial sources", loc="left", fontsize=12, fontweight="bold", color=INK)
+    ax.text(1.0, 1.02, "lower is better", transform=ax.transAxes, ha="right", fontsize=8.5, color=GREY)
+    return y0, y1
+
+
+COV_IND_LABEL_OFFSETS = {}

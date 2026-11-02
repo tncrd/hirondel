@@ -158,8 +158,8 @@ jointly. Official results of well-known models, read on 2026-10-23, against thei
 Python 3.10 or newer, PyTorch 2.4 or newer:
 
 ```bash
-pip install "hirondel @ git+https://github.com/tncrd/hirondel@v1.0.0"           # core: torch, numpy, safetensors, huggingface_hub
-pip install "hirondel[pandas] @ git+https://github.com/tncrd/hirondel@v1.0.0"   # adds forecast_df for pandas DataFrames
+pip install "hirondel @ git+https://github.com/tncrd/hirondel@v1.1.0"           # core: torch, numpy, safetensors, huggingface_hub
+pip install "hirondel[pandas] @ git+https://github.com/tncrd/hirondel@v1.1.0"   # adds forecast_df for pandas DataFrames
 ```
 
 \* `pip install hirondel`: the PyPI release is in preparation; until then, install from GitHub as above.
@@ -210,6 +210,38 @@ values of non-negative series, so their lower coverage can only go up):
 Source: our measurement on the released weights, averaged over windows (fresh series, GIFT-Eval) or over tasks (TIME,
 fev-bench). The upper tail runs slightly short, most on fev-bench (spiky and intermittent series).
 
+## Known-future covariates (v1.1)
+
+When some inputs are known in advance over the horizon (calendar, promotions, prices, planned set-points, weather
+forecasts), pass them with `future_covariates`; the weights are unchanged, no training is involved. Per series, a ridge
+regression of the target on the covariates is fitted over the context, the model forecasts what the covariates do not
+explain, and their effect over the horizon is added back to every quantile. By default a gate keeps it only when it
+beats the plain forecast by 2 % on the end of the context; otherwise the series gets the plain forecast.
+
+```python
+day = np.arange(1000 + 48) % 7                          # covariate over context + horizon
+context = context + 2.0 * (day[:1000] >= 5)             # weekends are higher
+forecast = forecaster.forecast(context, 48, future_covariates={"weekend": day >= 5})
+print(forecast.covariate_used)                          # [ True]: the gate kept the covariate
+```
+
+One dict `{name: values}` (or a 2-D array) per series, each column of length context + horizon, numeric or
+categorical; NaN values are filled. `covariate_mode="gate"` (default), `"always"` or `"off"`; `forecast_df()` takes
+`known_covariates=[...]` and a `future_df` holding the horizon rows. Without covariates the output is the univariate
+one, bit for bit. Cost: about 4 times a plain forecast with the gate.
+
+<p align="center"><img src="showcase/figures/covariates.png" alt="With and without covariates" width="100%"></p>
+
+On the 42 fev-bench tasks with covariates, the skill score (SQL) goes from 41.5 to **44.5** (Chronos-2, which reads covariates natively: 47.0). Per task, the error changes by a factor ×0.949 on average (geometric mean), from ×0.51 (epf_de) to **×1.11 (walmart)**, the worst case; 14 tasks improve, 12 get worse. On PRONTO (IND-Eval), nMASE goes from 0.956 to **0.870** and nCRPS from 0.853 to **0.701**; over the five industrial sources (the other four have no covariates and are unchanged), nCRPS goes from 0.536 to **0.515**. The 12 fev-bench tasks whose covariates are known only in the past are unchanged. Over all 100 fev-bench tasks (the others unchanged), the skill score goes from 44.9 to **46.1** (Chronos-2: 47.3).
+
+It helps most where the covariates drive the series (electricity prices, retail sales with promotions, PRONTO's control
+signals). It does not always help: it is worse on walmart (×1.11, irregular markdown promotions), on the electricity
+prices of France and Belgium (×1.06, ×1.04) and slightly on some grid-load and solar tasks. To rule out any loss, use `covariate_mode="off"`, or
+compare both on your own data. Limits: the effect is linear and instantaneous (shift a column yourself for a lag, build
+a feature such as `max(temperature - 18, 0)` for a threshold); covariates known only in the past and static ones are not
+used; the intervals do not include the uncertainty of the fitted effect. Not a substitute for a model that reads
+covariates natively (Chronos-2 above).
+
 ## Hardware
 
 Tested on CPU (Linux, PyTorch 2.12.1 and 2.4.1) and on an AMD GPU with ROCm 7.2 (RX 7900 XTX, PyTorch 2.12.1,
@@ -225,8 +257,9 @@ of the input series; on the ROCm GPU above (float32), 2.7e-5.
 
 ## Limitations
 
-- Univariate: each series is forecast on its own; covariates and cross-series information are not used. Models that use
-  them (for example Chronos-2 on GIFT-Eval, Timestral with covariates on fev-bench) can do better on such tasks.
+- Univariate: each series is forecast on its own, without cross-series information. Known-future covariates are used
+  only through the training-free regression above (linear, instantaneous); models that read covariates natively (for
+  example Chronos-2 on GIFT-Eval, Timestral with covariates on fev-bench) can do better on such tasks.
 - Context: the last 2 048 points at full resolution, plus a coarse reading of up to 8 192 points. Very long seasonal
   histories are read coarsely.
 - Tail levels 0.01, 0.05, 0.95, 0.99 are extrapolated, not learned; the upper tail runs slightly short.

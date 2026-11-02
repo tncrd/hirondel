@@ -1,0 +1,130 @@
+{
+ "sources": [
+  "neats",
+  "3w",
+  "pronto",
+  "mds",
+  "tablet_compression",
+  "metropt3",
+  "ett",
+  "electricity",
+  "solar"
+ ],
+ "revision": "9b0dce3fd91a97b9428ab1da532f08403f4106e1",
+ "nMASE_nCRPS": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Hirondel (covariates, gate)": [
+   0.7576225010338896,
+   0.5080990289683045
+  ]
+ },
+ "nMASE_nCRPS_industrial": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Hirondel (covariates, gate)": [
+   0.8237653434023798,
+   0.5153655227706321
+  ]
+ },
+ "per_source": {
+  "neats": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.9368143629224203,
+    0.4958287895820759
+   ]
+  },
+  "3w": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7541370947566972,
+    0.6528115717416779
+   ]
+  },
+  "pronto": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8698258666751357,
+    0.7006413397918656
+   ]
+  },
+  "mds": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8378814909541248,
+    0.4928967642513512
+   ]
+  },
+  "tablet_compression": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7367138332807963,
+    0.32524115754609023
+   ]
+  },
+  "metropt3": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.4143708256898967,
+    0.3269352254388122
+   ]
+  },
+  "ett": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.847272839367857,
+    0.6661316760930123
+   ]
+  },
+  "electricity": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.7148097144372663,
+    0.5760621716719935
+   ]
+  },
+  "solar": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.8638837308926172,
+    0.49484287085556733
+   ]
+  }
+ },
+ "univariate": true,
+ "covariates": "PRONTO's control channels as known-future covariates, covariate_mode='gate'; each target channel forecast alone",
+ "model": "Hirondel (covariates, gate)",
+ "package_version": "1.1.0"
+}

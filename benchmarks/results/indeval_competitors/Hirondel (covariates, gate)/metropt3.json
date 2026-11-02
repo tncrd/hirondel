@@ -1,0 +1,47 @@
+{
+ "source": "metropt3",
+ "scores": {
+  "seasonal naive": [
+   1.0,
+   1.0
+  ],
+  "Hirondel (covariates, gate)": [
+   0.4143708256898967,
+   0.3269352254388122
+  ]
+ },
+ "tasks": {
+  "metropt3_long": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.48890150347726,
+    0.3543793422497519
+   ]
+  },
+  "metropt3_medium": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.3753901336501678,
+    0.3136383560192672
+   ]
+  },
+  "metropt3_short": {
+   "seasonal naive": [
+    1.0,
+    1.0
+   ],
+   "Hirondel (covariates, gate)": [
+    0.38767097412797713,
+    0.31440365141272153
+   ]
+  }
+ },
+ "n_pairs": 2850,
+ "n_left_out_of_mase": 0
+}
