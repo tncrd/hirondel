@@ -103,6 +103,28 @@ Install with `pip install "hirondel @ git+https://github.com/tncrd/hirondel@v1.1
 PyPI release in preparation). Inference details, tail levels, hardware and numerical parity: see the code
 repository's README (https://github.com/tncrd/hirondel).
 
+## Known-future covariates (v1.1)
+
+Inputs known in advance over the horizon (calendar, promotions, prices, set-points) can be passed with
+`future_covariates`, without retraining: per series, a ridge regression of the target on the covariates over the
+context, the model forecasts the rest, and their effect over the horizon is added back to every quantile. A gate (the
+default) keeps the correction only when it beats the plain forecast by 2 % on the end of the context.
+
+```python
+day = np.arange(1000 + 48) % 7                          # covariate over context + horizon
+context = context + 2.0 * (day[:1000] >= 5)             # weekends are higher
+forecast = forecaster.forecast(context, 48, future_covariates={"weekend": day >= 5})
+print(forecast.covariate_used)                          # [ True]: the gate kept the covariate
+```
+
+![With and without covariates](showcase/figures/covariates.png)
+
+On the 42 fev-bench tasks with covariates, the skill score (SQL) goes from 41.5 to **44.5** (Chronos-2, which reads covariates natively: 47.0). Per task, the error changes by a factor ×0.949 on average (geometric mean), from ×0.51 (epf_de) to **×1.11 (walmart)**, the worst case; 14 tasks improve, 12 get worse. On PRONTO (IND-Eval), nMASE goes from 0.956 to **0.870** and nCRPS from 0.853 to **0.701**; over the five industrial sources (the other four have no covariates and are unchanged), nCRPS goes from 0.536 to **0.515**. The 12 fev-bench tasks whose covariates are known only in the past are unchanged. Over all 100 fev-bench tasks (the others unchanged), the skill score goes from 44.9 to **46.1** (Chronos-2: 47.3).
+
+Linear and instantaneous effect; covariates known only in the past and static ones are not used. Without covariates
+the output is the univariate one, bit for bit; `covariate_mode="off"` turns them off. Details: the code repository's
+README, section "Known-future covariates".
+
 ## Training data
 
 Real data under licenses that allow this release, plus synthetic data. Every source, its license, its attribution and

@@ -58,8 +58,10 @@ def _readme_example() -> str:
     return blocks[0]
 
 
-def test_readme_covariate_example_runs_as_written(monkeypatch):
-    """Runs the README's covariate block after the first one, as a reader would, and checks what it prints."""
+@pytest.mark.parametrize("doc", ["README.md", "MODEL_CARD.md"])
+def test_covariate_example_runs_as_written(monkeypatch, doc):
+    """Runs the covariate block of the README and of the model card after their first block, as a reader would, and
+    checks what it prints."""
     src = os.environ.get("HIRONDEL_WEIGHTS") or (os.path.join(ROOT, "weights")
                                              if os.path.isfile(os.path.join(ROOT, "weights", "model.safetensors")) else None)
     if src is None:
@@ -67,12 +69,12 @@ def test_readme_covariate_example_runs_as_written(monkeypatch):
     real = hirondel.HirondelForecaster.from_pretrained.__func__
     monkeypatch.setattr(hirondel.HirondelForecaster, "from_pretrained",
                         classmethod(lambda cls, _repo_id, **kw: real(cls, src, **kw)))
-    blocks = re.findall(r"```python\n(.*?)```", _read("README.md"), re.S)
+    blocks = re.findall(r"```python\n(.*?)```", _read(doc), re.S)
     cov = [b for b in blocks if "future_covariates" in b]
-    assert len(cov) == 1, "README should have one covariate example"
+    assert len(cov) == 1, f"{doc} should have one covariate example"
     scope = {}
-    exec(compile(blocks[0], "README.md", "exec"), scope)
-    exec(compile(cov[0], "README.md", "exec"), scope)
+    exec(compile(blocks[0], doc, "exec"), scope)
+    exec(compile(cov[0], doc, "exec"), scope)
     assert scope["forecast"].covariate_used.tolist() == [True]
 
 
